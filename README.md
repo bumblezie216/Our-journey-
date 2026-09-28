@@ -12,7 +12,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
     min-height: 100%;
     font-family: Georgia, "Times New Roman", serif;
     background: #020005;
@@ -25,7 +24,7 @@ body {
 }
 
 /* =========================
-   GALAXY BACKGROUND
+   SPACE
 ========================= */
 
 .space {
@@ -33,45 +32,54 @@ body {
     inset: 0;
     overflow: hidden;
     pointer-events: none;
+    z-index: -10;
+
     background:
-        radial-gradient(circle at 50% 45%, rgba(91, 0, 55, .22), transparent 32%),
-        radial-gradient(circle at 15% 20%, rgba(120, 0, 70, .18), transparent 28%),
-        radial-gradient(circle at 85% 80%, rgba(65, 0, 80, .15), transparent 30%),
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(100, 0, 60, .25),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(100, 0, 55, .18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(60, 0, 85, .16),
+            transparent 30%
+        ),
         #020005;
-    z-index: -5;
 }
 
 .nebula {
     position: absolute;
     width: 70vw;
     height: 70vw;
-    max-width: 900px;
-    max-height: 900px;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: .3;
+    filter: blur(90px);
+    opacity: .25;
 }
 
 .nebula.one {
-    background: #450027;
-    top: -25%;
-    left: -20%;
+    background: #65002f;
+    top: -30%;
+    left: -25%;
 }
 
 .nebula.two {
-    background: #25003d;
+    background: #35004d;
+    right: -25%;
     bottom: -30%;
-    right: -20%;
 }
 
 .nebula.three {
-    background: #700033;
-    top: 35%;
+    background: #85003f;
     left: 40%;
-    opacity: .12;
+    top: 35%;
+    opacity: .08;
 }
-
-/* stars in background */
 
 .bg-star {
     position: absolute;
@@ -79,42 +87,57 @@ body {
     height: 2px;
     background: white;
     border-radius: 50%;
-    opacity: .7;
     animation: twinkle 3s infinite ease-in-out;
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: .2; transform: scale(.7); }
-    50% { opacity: 1; transform: scale(1.5); }
+    0%,100% {
+        opacity: .2;
+        transform: scale(.7);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
 }
 
-/* shooting stars */
+/* =========================
+   SHOOTING STARS
+========================= */
 
 .shooting-star {
     position: absolute;
-    width: 120px;
+    width: 130px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, white);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.9)
+        );
+
     transform: rotate(-35deg);
     opacity: 0;
     animation: shoot 7s linear infinite;
 }
 
 .shooting-star:nth-child(1) {
-    top: 10%;
-    left: 80%;
+    top: 8%;
+    left: 85%;
     animation-delay: 1s;
 }
 
 .shooting-star:nth-child(2) {
-    top: 30%;
-    left: 60%;
+    top: 28%;
+    left: 65%;
     animation-delay: 4s;
 }
 
 .shooting-star:nth-child(3) {
-    top: 65%;
-    left: 90%;
+    top: 60%;
+    left: 92%;
     animation-delay: 7s;
 }
 
@@ -124,18 +147,27 @@ body {
     animation-delay: 10s;
 }
 
+.shooting-star:nth-child(5) {
+    top: 15%;
+    left: 35%;
+    animation-delay: 13s;
+}
+
 @keyframes shoot {
     0% {
-        transform: translate(0, 0) rotate(-35deg);
+        transform: translate(0,0) rotate(-35deg);
         opacity: 0;
     }
+
     8% {
         opacity: 1;
     }
+
     18% {
-        transform: translate(-260px, 180px) rotate(-35deg);
+        transform: translate(-280px,190px) rotate(-35deg);
         opacity: 0;
     }
+
     100% {
         opacity: 0;
     }
@@ -151,39 +183,46 @@ body {
     left: 0;
     width: 100%;
     height: 70px;
+
     z-index: 100;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 22px;
-    background: rgba(2, 0, 5, .75);
+
+    background: rgba(2,0,5,.78);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(155, 0, 80, .35);
+
+    border-bottom:
+        1px solid rgba(185,40,105,.35);
 }
 
 .logo {
-    font-size: 17px;
+    font-size: 16px;
     letter-spacing: 3px;
-    color: #f5c5dc;
+    color: #f7c9dc;
 }
 
 .star-counter {
-    color: #ffd7e9;
     font-size: 15px;
+    color: #ffe0ed;
 }
 
 .star-counter span {
-    color: #ff8fc3;
+    color: #ff83b7;
     font-weight: bold;
 }
 
 /* =========================
-   GAME WRAPPER
+   GAME
 ========================= */
 
 .game {
     min-height: 100vh;
     padding: 100px 20px 60px;
+
     display: flex;
     justify-content: center;
 }
@@ -192,7 +231,8 @@ body {
     width: 100%;
     max-width: 1100px;
     display: none;
-    animation: fadeIn .7s ease;
+
+    animation: fadeIn .65s ease;
 }
 
 .screen.active {
@@ -204,6 +244,7 @@ body {
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -215,30 +256,31 @@ body {
 ========================= */
 
 .panel {
-    background: rgba(12, 0, 14, .84);
-    border: 1px solid rgba(193, 34, 110, .4);
-    border-radius: 24px;
+    background: rgba(11,0,13,.88);
+
+    border:
+        1px solid rgba(195,45,113,.38);
+
+    border-radius: 25px;
+
     padding: 35px;
+
     box-shadow:
-        0 0 50px rgba(113, 0, 61, .15),
-        inset 0 0 30px rgba(255, 255, 255, .015);
+        0 0 60px rgba(110,0,60,.16),
+        inset 0 0 30px rgba(255,255,255,.015);
 }
 
 h1 {
-    font-size: clamp(34px, 7vw, 72px);
+    font-size: clamp(35px,7vw,72px);
     line-height: 1;
     margin: 0 0 20px;
-    color: #ffe5f0;
+    color: #ffe7f0;
 }
 
 h2 {
-    font-size: clamp(28px, 5vw, 45px);
+    font-size: clamp(28px,5vw,45px);
     margin: 0 0 15px;
-    color: #ffd6e7;
-}
-
-h3 {
-    color: #ffb4d3;
+    color: #ffd8e8;
 }
 
 p {
@@ -249,13 +291,13 @@ p {
 
 .small {
     font-size: 14px;
-    color: #ad9da7;
+    color: #a998a3;
 }
 
 .eyebrow {
     text-transform: uppercase;
     letter-spacing: 4px;
-    color: #e66c9f;
+    color: #e66b9f;
     font-size: 12px;
     margin-bottom: 12px;
 }
@@ -264,10 +306,6 @@ p {
    BUTTONS
 ========================= */
 
-button {
-    font-family: inherit;
-}
-
 .choice-container {
     display: grid;
     gap: 13px;
@@ -275,34 +313,65 @@ button {
 }
 
 .choice {
-    border: 1px solid rgba(225, 74, 145, .45);
-    background: rgba(74, 0, 42, .32);
-    color: #fff;
+    border:
+        1px solid rgba(225,74,145,.45);
+
+    background:
+        rgba(75,0,42,.32);
+
+    color: white;
+
     padding: 17px 20px;
+
     border-radius: 14px;
+
     cursor: pointer;
+
     text-align: left;
+
     font-size: 16px;
+
     transition: .25s;
 }
 
 .choice:hover {
     transform: translateX(7px);
-    background: rgba(116, 0, 65, .48);
+
+    background:
+        rgba(115,0,65,.48);
+
     border-color: #ec75a9;
-    box-shadow: 0 0 25px rgba(190, 25, 100, .18);
+
+    box-shadow:
+        0 0 25px rgba(190,25,100,.18);
 }
 
 .primary {
     border: 0;
-    background: linear-gradient(135deg, #7e164c, #bd3976);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7d164c,
+            #bd3976
+        );
+
     color: white;
+
     padding: 15px 25px;
+
     border-radius: 30px;
+
     cursor: pointer;
+
     font-size: 16px;
+
     margin-top: 20px;
-    box-shadow: 0 0 25px rgba(185, 43, 112, .22);
+
+    box-shadow:
+        0 0 25px rgba(185,43,112,.22);
+
+    transition: .25s;
 }
 
 .primary:hover {
@@ -315,9 +384,11 @@ button {
 
 .intro {
     min-height: 70vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     text-align: center;
 }
 
@@ -326,239 +397,38 @@ button {
 }
 
 .big-heart {
-    font-size: 55px;
+    font-size: 60px;
     animation: heartbeat 2s infinite;
 }
 
 @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-}
-
-/* =========================
-   GALAXY MAP
-========================= */
-
-.galaxy-map {
-    position: relative;
-    height: 650px;
-    border-radius: 30px;
-    overflow: hidden;
-    border: 1px solid rgba(210, 48, 119, .35);
-    background:
-        radial-gradient(circle at 50% 50%, rgba(128, 0, 68, .22), transparent 20%),
-        radial-gradient(circle at 50% 50%, transparent 12%, rgba(112, 0, 67, .12) 13%, transparent 14%),
-        radial-gradient(circle at 50% 50%, transparent 25%, rgba(154, 0, 77, .09) 26%, transparent 27%),
-        #030006;
-}
-
-.orbit {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid rgba(220, 98, 156, .14);
-    border-radius: 50%;
-}
-
-.orbit.one { width: 180px; height: 180px; }
-.orbit.two { width: 310px; height: 310px; }
-.orbit.three { width: 450px; height: 450px; }
-.orbit.four { width: 590px; height: 590px; }
-
-.sun {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 75px;
-    height: 75px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle, #ffd9ec, #9b1d5b 50%, #250014);
-    box-shadow: 0 0 45px rgba(213, 55, 125, .55);
-}
-
-.planet {
-    position: absolute;
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 205, 229, .35);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
-    text-align: center;
-    padding: 8px;
-    transition: .3s;
-    box-shadow: 0 0 25px rgba(177, 32, 100, .3);
-}
-
-.planet:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 40px rgba(240, 98, 158, .6);
-}
-
-.planet.visited {
-    border-color: #f38db8;
-}
-
-.planet.locked {
-    filter: grayscale(1);
-    opacity: .35;
-    cursor: not-allowed;
-}
-
-.planet small {
-    display: block;
-}
-
-.p1 { left: 20%; top: 16%; background: radial-gradient(circle at 35% 30%, #c18bff, #4e145f); }
-.p2 { left: 48%; top: 10%; background: radial-gradient(circle at 35% 30%, #b87a46, #29120a); }
-.p3 { right: 15%; top: 26%; background: radial-gradient(circle at 35% 30%, #7592ff, #15215d); }
-.p4 { left: 12%; top: 46%; background: radial-gradient(circle at 35% 30%, #8a5bff, #24103d); }
-.p5 { right: 12%; top: 52%; background: radial-gradient(circle at 35% 30%, #6db8ff, #093a55); }
-.p6 { left: 28%; bottom: 9%; background: radial-gradient(circle at 35% 30%, #ff9cc5, #551331); }
-.p7 { right: 28%; bottom: 9%; background: radial-gradient(circle at 35% 30%, #ffbb73, #6d2711); }
-.p8 { left: 46%; bottom: 3%; background: radial-gradient(circle at 35% 30%, #9ed8ff, #183a61); }
-.p9 { left: 4%; top: 20%; background: radial-gradient(circle at 35% 30%, #d7a6ff, #36165e); }
-.p10 { right: 3%; top: 12%; background: radial-gradient(circle at 35% 30%, #ef88bd, #53112f); }
-
-.planet-label {
-    position: absolute;
-    bottom: -26px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    color: #d9c4ce;
-    font-size: 12px;
-}
-
-.spaceship {
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 27px;
-    transition: all 1s ease;
-    z-index: 20;
-}
-
-/* =========================
-   STORY PLANET
-========================= */
-
-.story-card {
-    position: relative;
-    min-height: 500px;
-}
-
-.scene-art {
-    min-height: 210px;
-    border-radius: 20px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    font-size: 80px;
-    background:
-        radial-gradient(circle at center, rgba(161, 28, 95, .25), transparent 45%),
-        #060008;
-    border: 1px solid rgba(220, 80, 144, .2);
-}
-
-/* =========================
-   HIDDEN COLLECTIBLE STARS
-========================= */
-
-.hidden-star {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    color: #fff5fb;
-    font-size: 19px;
-    line-height: 25px;
-    cursor: pointer;
-    z-index: 50;
-    text-shadow:
-        0 0 5px white,
-        0 0 12px #ff72ad,
-        0 0 22px #b40060;
-    animation: starPulse 1.8s infinite ease-in-out;
-}
-
-.hidden-star:hover {
-    transform: scale(1.5);
-}
-
-.hidden-star.collected {
-    display: none;
-}
-
-@keyframes starPulse {
-    0%, 100% {
-        opacity: .45;
-        transform: scale(.8);
+    0%,100% {
+        transform: scale(1);
     }
+
     50% {
-        opacity: 1;
-        transform: scale(1.15);
-    }
-}
-
-.star-found {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 999;
-    background: rgba(24, 0, 18, .96);
-    border: 1px solid #d95b96;
-    padding: 20px 28px;
-    border-radius: 18px;
-    box-shadow: 0 0 50px rgba(218, 62, 133, .45);
-    text-align: center;
-    animation: found .35s ease;
-}
-
-@keyframes found {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.7);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1.12);
     }
 }
 
 /* =========================
-   MEMORY CARDS
+   MEMORY
 ========================= */
-
-.memory-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 25px;
-}
 
 .memory {
     padding: 22px;
+
     border-radius: 18px;
-    background: rgba(81, 0, 46, .2);
-    border: 1px solid rgba(210, 77, 139, .25);
-    min-height: 130px;
+
+    background:
+        rgba(82,0,47,.2);
+
+    border:
+        1px solid rgba(210,77,139,.25);
+
+    margin: 20px 0;
+
+    line-height: 1.7;
 }
 
 .memory strong {
@@ -568,18 +438,390 @@ button {
 }
 
 /* =========================
+   STORY ART
+========================= */
+
+.scene-art {
+    min-height: 230px;
+
+    border-radius: 20px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    font-size: 80px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(161,28,95,.25),
+            transparent 45%
+        ),
+        #060008;
+
+    border:
+        1px solid rgba(220,80,144,.2);
+}
+
+/* =========================
+   HIDDEN STARS
+========================= */
+
+.hidden-star {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+
+    border: 0;
+
+    padding: 0;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 20px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    z-index: 50;
+
+    text-shadow:
+        0 0 5px white,
+        0 0 12px #ff72ad,
+        0 0 25px #b40060;
+
+    animation:
+        starPulse 1.8s infinite ease-in-out;
+}
+
+.hidden-star:hover {
+    transform: scale(1.5);
+}
+
+@keyframes starPulse {
+    0%,100% {
+        opacity: .45;
+        transform: scale(.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+.star-found {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%,-50%);
+
+    z-index: 999;
+
+    background:
+        rgba(24,0,18,.97);
+
+    border:
+        1px solid #d95b96;
+
+    padding: 20px 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 50px rgba(218,62,133,.45);
+
+    text-align: center;
+
+    animation: found .35s ease;
+}
+
+@keyframes found {
+    from {
+        opacity: 0;
+        transform:
+            translate(-50%,-50%)
+            scale(.7);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+}
+
+/* =========================
+   GALAXY MAP
+========================= */
+
+.galaxy-map {
+    position: relative;
+
+    height: 650px;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(210,48,119,.35);
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(128,0,68,.22),
+            transparent 20%
+        ),
+        #030006;
+}
+
+.orbit {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border:
+        1px solid rgba(220,98,156,.14);
+
+    border-radius: 50%;
+}
+
+.orbit.one {
+    width: 180px;
+    height: 180px;
+}
+
+.orbit.two {
+    width: 310px;
+    height: 310px;
+}
+
+.orbit.three {
+    width: 450px;
+    height: 450px;
+}
+
+.orbit.four {
+    width: 590px;
+    height: 590px;
+}
+
+.sun {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 75px;
+    height: 75px;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffd9ec,
+            #9b1d5b 50%,
+            #250014
+        );
+
+    box-shadow:
+        0 0 45px rgba(213,55,125,.55);
+}
+
+.planet {
+    position: absolute;
+
+    width: 75px;
+    height: 75px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid rgba(255,205,229,.35);
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 20px;
+
+    text-align: center;
+
+    transition: .3s;
+
+    box-shadow:
+        0 0 25px rgba(177,32,100,.3);
+}
+
+.planet:hover {
+    transform: scale(1.15);
+
+    box-shadow:
+        0 0 40px rgba(240,98,158,.6);
+}
+
+.planet.visited {
+    border-color: #f38db8;
+}
+
+.planet-label {
+    position: absolute;
+
+    bottom: -27px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    white-space: nowrap;
+
+    color: #d9c4ce;
+
+    font-size: 12px;
+}
+
+.p1 {
+    left: 20%;
+    top: 16%;
+    background:
+        radial-gradient(circle at 35% 30%,#c18bff,#4e145f);
+}
+
+.p2 {
+    left: 48%;
+    top: 10%;
+    background:
+        radial-gradient(circle at 35% 30%,#b87a46,#29120a);
+}
+
+.p3 {
+    right: 15%;
+    top: 26%;
+    background:
+        radial-gradient(circle at 35% 30%,#7592ff,#15215d);
+}
+
+.p4 {
+    left: 12%;
+    top: 46%;
+    background:
+        radial-gradient(circle at 35% 30%,#8a5bff,#24103d);
+}
+
+.p5 {
+    right: 12%;
+    top: 52%;
+    background:
+        radial-gradient(circle at 35% 30%,#6db8ff,#093a55);
+}
+
+.p6 {
+    left: 28%;
+    bottom: 9%;
+    background:
+        radial-gradient(circle at 35% 30%,#ff9cc5,#551331);
+}
+
+.p7 {
+    right: 28%;
+    bottom: 9%;
+    background:
+        radial-gradient(circle at 35% 30%,#ffbb73,#6d2711);
+}
+
+.p8 {
+    left: 46%;
+    bottom: 3%;
+    background:
+        radial-gradient(circle at 35% 30%,#9ed8ff,#183a61);
+}
+
+.p9 {
+    left: 4%;
+    top: 20%;
+    background:
+        radial-gradient(circle at 35% 30%,#d7a6ff,#36165e);
+}
+
+.p10 {
+    right: 3%;
+    top: 12%;
+    background:
+        radial-gradient(circle at 35% 30%,#ef88bd,#53112f);
+}
+
+.spaceship {
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+
+    transition:
+        left 1s ease,
+        top 1s ease;
+
+    z-index: 20;
+}
+
+/* =========================
    LETTER
 ========================= */
 
 .letter {
     max-width: 850px;
+
     margin: auto;
+
     background:
-        linear-gradient(rgba(35, 0, 24, .92), rgba(15, 0, 12, .96));
-    border: 1px solid rgba(217, 87, 144, .35);
-    padding: clamp(25px, 6vw, 60px);
+        linear-gradient(
+            rgba(35,0,24,.92),
+            rgba(15,0,12,.96)
+        );
+
+    border:
+        1px solid rgba(217,87,144,.35);
+
+    padding:
+        clamp(25px,6vw,60px);
+
     border-radius: 25px;
-    box-shadow: 0 0 70px rgba(129, 0, 67, .2);
+
+    box-shadow:
+        0 0 70px rgba(129,0,67,.2);
 }
 
 .letter p {
@@ -589,8 +831,11 @@ button {
 
 .signature {
     margin-top: 35px;
+
     text-align: right;
+
     color: #ffafd0;
+
     font-size: 21px;
 }
 
@@ -600,34 +845,60 @@ button {
 
 .constellation {
     position: relative;
+
     height: 500px;
+
     margin-top: 25px;
+
     background:
-        radial-gradient(circle, rgba(114, 0, 63, .2), transparent 45%),
+        radial-gradient(
+            circle,
+            rgba(114,0,63,.2),
+            transparent 45%
+        ),
         #020005;
+
     border-radius: 25px;
+
     overflow: hidden;
 }
 
 .constellation-star {
     position: absolute;
+
     width: 12px;
     height: 12px;
+
     border-radius: 50%;
+
     background: white;
-    box-shadow: 0 0 15px #ff9bc6, 0 0 30px #b30062;
-    animation: constellationGlow 2s infinite ease-in-out;
+
+    box-shadow:
+        0 0 15px #ff9bc6,
+        0 0 30px #b30062;
+
+    animation:
+        constellationGlow 2s infinite ease-in-out;
 }
 
 @keyframes constellationGlow {
-    0%, 100% { opacity: .5; }
-    50% { opacity: 1; }
+    0%,100% {
+        opacity: .5;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 .constellation-line {
     position: absolute;
+
     height: 1px;
-    background: rgba(255, 160, 203, .4);
+
+    background:
+        rgba(255,160,203,.4);
+
     transform-origin: left center;
 }
 
@@ -637,23 +908,32 @@ button {
 
 .star-reveal {
     text-align: center;
+
     padding: 50px 20px;
 }
 
 .real-star {
     font-size: 120px;
+
     margin: 25px;
-    animation: realStar 3s infinite ease-in-out;
+
+    animation:
+        realStar 3s infinite ease-in-out;
 }
 
 @keyframes realStar {
-    0%, 100% {
+    0%,100% {
         transform: scale(1);
-        filter: drop-shadow(0 0 10px white);
+
+        filter:
+            drop-shadow(0 0 10px white);
     }
+
     50% {
         transform: scale(1.15);
-        filter: drop-shadow(0 0 40px #ff78b5);
+
+        filter:
+            drop-shadow(0 0 40px #ff78b5);
     }
 }
 
@@ -661,13 +941,14 @@ button {
    MOBILE
 ========================= */
 
-@media (max-width: 700px) {
+@media (max-width:700px) {
+
     .header {
         padding: 0 13px;
     }
 
     .logo {
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 2px;
     }
 
@@ -682,7 +963,7 @@ button {
     .planet {
         width: 62px;
         height: 62px;
-        font-size: 10px;
+        font-size: 16px;
     }
 
     .planet-label {
@@ -703,6 +984,7 @@ button {
 <body>
 
 <div class="space">
+
     <div class="nebula one"></div>
     <div class="nebula two"></div>
     <div class="nebula three"></div>
@@ -711,42 +993,57 @@ button {
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
 
     <div id="backgroundStars"></div>
+
 </div>
 
 <header class="header">
-    <div class="logo">LOLA'S LITTLE UNIVERSE</div>
+
+    <div class="logo">
+        LOLA'S LITTLE UNIVERSE
+    </div>
+
     <div class="star-counter">
         ⭐ <span id="starCount">0</span> / 27
     </div>
+
 </header>
+
 
 <main class="game">
 
-<!-- =========================
+<!-- ======================================================
      INTRO
-========================= -->
+====================================================== -->
 
 <section id="intro" class="screen active">
 
     <div class="intro">
+
         <div class="panel">
 
             <div class="big-heart">♡</div>
 
-            <div class="eyebrow">A birthday story for Lola</div>
+            <div class="eyebrow">
+                A birthday story for Lola
+            </div>
 
-            <h1>Lola's Little Universe</h1>
+            <h1>
+                Lola's Little Universe
+            </h1>
 
             <p>
-                Somewhere beyond the stars, there is a universe that has been
-                waiting for you.
+                Somewhere beyond the stars,
+                there is a universe that has been waiting for you.
             </p>
 
             <p>
-                But before you find it, there are places you have to visit,
-                memories you have to uncover, choices you have to make...
+                But before you find it,
+                there are places you have to visit,
+                memories you have to uncover,
+                choices you have to make...
                 and 27 little stars hidden along the way.
             </p>
 
@@ -755,27 +1052,70 @@ button {
                 Some are hiding where you least expect them.
             </p>
 
-            <button class="primary" onclick="startGame()">
+            <button
+                class="primary"
+                onclick="startGame()"
+            >
                 Begin the journey ✦
             </button>
 
         </div>
+
     </div>
 
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      PROLOGUE
-========================= -->
+====================================================== -->
 
 <section id="prologue" class="screen">
 
     <div class="panel">
 
-        <div class="eyebrow">Prologue</div>
+        <div
+            class="scene-art"
+            id="prologueArt"
+        >
 
-        <h2>The Beginning</h2>
+            <button
+                class="hidden-star"
+                style="left:12%;top:18%;"
+                onclick="collectStar('s1',this)"
+            >
+                ✦
+            </button>
+
+            <button
+                class="hidden-star"
+                style="left:78%;top:25%;"
+                onclick="collectStar('s2',this)"
+            >
+                ✦
+            </button>
+
+            <button
+                class="hidden-star"
+                style="left:45%;top:72%;"
+                onclick="collectStar('s3',this)"
+            >
+                ✦
+            </button>
+
+            <div style="z-index:2;">
+                🚀
+            </div>
+
+        </div>
+
+        <div class="eyebrow">
+            Prologue
+        </div>
+
+        <h2>
+            The Beginning
+        </h2>
 
         <p>
             Lola opens her eyes.
@@ -796,10 +1136,14 @@ button {
         </p>
 
         <div class="memory">
-            <strong>THERE IS A UNIVERSE WAITING FOR YOU.</strong>
-            <span>
-                But first, you have to find your way to it.
-            </span>
+
+            <strong>
+                THERE IS A UNIVERSE WAITING FOR YOU.
+            </strong>
+
+            But first,
+            you have to find your way to it.
+
         </div>
 
         <p>
@@ -808,15 +1152,24 @@ button {
 
         <div class="choice-container">
 
-            <button class="choice" onclick="prologueChoice('ship')">
+            <button
+                class="choice"
+                onclick="prologueChoice('ship')"
+            >
                 🚀 Take the spaceship
             </button>
 
-            <button class="choice" onclick="prologueChoice('stars')">
+            <button
+                class="choice"
+                onclick="prologueChoice('stars')"
+            >
                 ✦ Follow the stars
             </button>
 
-            <button class="choice" onclick="prologueChoice('waves')">
+            <button
+                class="choice"
+                onclick="prologueChoice('waves')"
+            >
                 🌊 Follow the sound of waves
             </button>
 
@@ -827,17 +1180,21 @@ button {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      MAP
-========================= -->
+====================================================== -->
 
 <section id="map" class="screen">
 
     <div class="panel">
 
-        <div class="eyebrow">The Galaxy</div>
+        <div class="eyebrow">
+            The Galaxy
+        </div>
 
-        <h2>Choose where to go</h2>
+        <h2>
+            Choose where to go
+        </h2>
 
         <p>
             Your spaceship waits in the centre of the galaxy.
@@ -853,62 +1210,119 @@ button {
 
             <div class="sun"></div>
 
-            <div class="spaceship" id="spaceship">🚀</div>
-
-            <div class="planet p1" onclick="visitPlanet('beginning')">
-                ✦
-                <span class="planet-label">The Beginning</span>
+            <div
+                class="spaceship"
+                id="spaceship"
+                style="left:47%;top:45%;"
+            >
+                🚀
             </div>
 
-            <div class="planet p2" onclick="visitPlanet('coffee')">
+            <div
+                class="planet p1"
+                onclick="visitPlanet('beginning')"
+            >
+                ✦
+                <span class="planet-label">
+                    The Beginning
+                </span>
+            </div>
+
+            <div
+                class="planet p2"
+                onclick="visitPlanet('coffee')"
+            >
                 ☕
-                <span class="planet-label">Black Coffee</span>
+                <span class="planet-label">
+                    Black Coffee
+                </span>
             </div>
 
-            <div class="planet p3" onclick="visitPlanet('hazel')">
+            <div
+                class="planet p3"
+                onclick="visitPlanet('hazel')"
+            >
                 👁
-                <span class="planet-label">Hazel</span>
+                <span class="planet-label">
+                    Hazel
+                </span>
             </div>
 
-            <div class="planet p4" onclick="visitPlanet('storm')">
+            <div
+                class="planet p4"
+                onclick="visitPlanet('storm')"
+            >
                 🌩
-                <span class="planet-label">The Storm</span>
+                <span class="planet-label">
+                    The Storm
+                </span>
             </div>
 
-            <div class="planet p5" onclick="visitPlanet('ocean')">
+            <div
+                class="planet p5"
+                onclick="visitPlanet('ocean')"
+            >
                 🌊
-                <span class="planet-label">The Ocean</span>
+                <span class="planet-label">
+                    The Ocean
+                </span>
             </div>
 
-            <div class="planet p6" onclick="visitPlanet('colour')">
+            <div
+                class="planet p6"
+                onclick="visitPlanet('colour')"
+            >
                 💙
-                <span class="planet-label">Two Moons</span>
+                <span class="planet-label">
+                    Two Moons
+                </span>
             </div>
 
-            <div class="planet p7" onclick="visitPlanet('gravity')">
+            <div
+                class="planet p7"
+                onclick="visitPlanet('gravity')"
+            >
                 ✦
-                <span class="planet-label">Gravity</span>
+                <span class="planet-label">
+                    Gravity
+                </span>
             </div>
 
-            <div class="planet p8" onclick="visitPlanet('future')">
+            <div
+                class="planet p8"
+                onclick="visitPlanet('future')"
+            >
                 💍
-                <span class="planet-label">The Future</span>
+                <span class="planet-label">
+                    The Future
+                </span>
             </div>
 
-            <div class="planet p9" onclick="visitPlanet('sunset')">
+            <div
+                class="planet p9"
+                onclick="visitPlanet('sunset')"
+            >
                 🌅
-                <span class="planet-label">Sunset</span>
+                <span class="planet-label">
+                    Sunset
+                </span>
             </div>
 
-            <div class="planet p10" onclick="visitPlanet('ouruniverse')">
+            <div
+                class="planet p10"
+                onclick="visitPlanet('ouruniverse')"
+            >
                 ♡
-                <span class="planet-label">Our Universe</span>
+                <span class="planet-label">
+                    Our Universe
+                </span>
             </div>
 
         </div>
 
         <p class="small">
-            Explore the planets. Look carefully. Some things are hiding.
+            Explore everything. Look carefully.
+            Some stars only appear in certain places.
         </p>
 
     </div>
@@ -916,9 +1330,9 @@ button {
 </section>
 
 
-<!-- =========================
-     STORY SCREEN
-========================= -->
+<!-- ======================================================
+     STORY
+====================================================== -->
 
 <section id="story" class="screen">
 
@@ -931,30 +1345,41 @@ button {
 </section>
 
 
-<!-- =========================
-     FINAL CONSTELLATION
-========================= -->
+<!-- ======================================================
+     CONSTELLATION
+====================================================== -->
 
 <section id="constellationScreen" class="screen">
 
     <div class="panel">
 
-        <div class="eyebrow">You found them all</div>
+        <div class="eyebrow">
+            You found them all
+        </div>
 
-        <h2>Our Constellation</h2>
+        <h2>
+            Our Constellation
+        </h2>
 
         <p>
             Twenty seven little stars.
             Twenty seven pieces of the journey.
         </p>
 
-        <div class="constellation" id="constellation"></div>
+        <div
+            class="constellation"
+            id="constellation"
+        ></div>
 
         <p style="text-align:center;">
-            And somehow, every star led back to you.
+            And somehow,
+            every star led back to you.
         </p>
 
-        <button class="primary" onclick="showFinalLetter()">
+        <button
+            class="primary"
+            onclick="showFinalLetter()"
+        >
             Find out what was waiting at the end ✦
         </button>
 
@@ -963,25 +1388,29 @@ button {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      LETTER
-========================= -->
+====================================================== -->
 
 <section id="letterScreen" class="screen">
 
     <div class="letter">
 
-        <div class="eyebrow">The Final Letter</div>
+        <div class="eyebrow">
+            The Final Letter
+        </div>
 
-        <h2>Home</h2>
+        <h2>
+            Home
+        </h2>
 
         <p>
             Lola,
         </p>
 
         <p>
-            If you've made it all the way here, then I suppose there's only
-            one thing left for me to tell you.
+            If you've made it all the way here,
+            then I suppose there's only one thing left for me to tell you.
         </p>
 
         <p>
@@ -989,14 +1418,15 @@ button {
         </p>
 
         <p>
-            I'm proud of the person you are, the things you've survived,
-            the things you've overcome, and the person you're continuing
-            to become.
+            I'm proud of the person you are,
+            the things you've survived,
+            the things you've overcome,
+            and the person you're continuing to become.
         </p>
 
         <p>
-            I'm proud of the softness you've managed to keep in a world
-            that hasn't always been soft with you.
+            I'm proud of the softness you've managed to keep
+            in a world that hasn't always been soft with you.
         </p>
 
         <p>
@@ -1023,11 +1453,11 @@ button {
 
         <p>
             I want to dance with you in the kitchen for no reason.
-            I want to sing with you until we're laughing too hard to finish
-            the song.
+            I want to sing with you until we're laughing too hard
+            to finish the song.
             I want to paint beside you.
-            I want to sit with you somewhere in the countryside and watch
-            the sunset.
+            I want to sit with you somewhere in the countryside
+            and watch the sunset.
         </p>
 
         <p>
@@ -1146,9 +1576,14 @@ button {
         </div>
 
         <div style="text-align:center;">
-            <button class="primary" onclick="showStarReveal()">
+
+            <button
+                class="primary"
+                onclick="showStarReveal()"
+            >
                 There's one more thing ✦
             </button>
+
         </div>
 
     </div>
@@ -1156,19 +1591,25 @@ button {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      STAR REVEAL
-========================= -->
+====================================================== -->
 
 <section id="starReveal" class="screen">
 
     <div class="panel star-reveal">
 
-        <div class="eyebrow">A little piece of the universe</div>
+        <div class="eyebrow">
+            A little piece of the universe
+        </div>
 
-        <h2>For Lola</h2>
+        <h2>
+            For Lola
+        </h2>
 
-        <div class="real-star">⭐</div>
+        <div class="real-star">
+            ⭐
+        </div>
 
         <p>
             You already have a star.
@@ -1195,13 +1636,19 @@ button {
             that reminds you of us.
         </p>
 
-        <h2>Happy 27th Birthday, Lola. ♡</h2>
+        <h2>
+            Happy 27th Birthday, Lola. ♡
+        </h2>
 
         <p class="small">
-            And yes... the star you found at the end is yours.
+            And yes...
+            the star you found at the end is yours.
         </p>
 
-        <button class="primary" onclick="resetGame()">
+        <button
+            class="primary"
+            onclick="resetGame()"
+        >
             Play again
         </button>
 
@@ -1215,12 +1662,10 @@ button {
 <script>
 
 /* ==========================================================
-   LOLA'S LITTLE UNIVERSE
-   VERSION 2
-   EXACTLY 27 UNIQUE COLLECTIBLE STARS
+   GAME SAVE
 ========================================================== */
 
-const SAVE_KEY = "lolaLittleUniverse_v2";
+const SAVE_KEY = "lolaLittleUniverse_v3";
 
 let state = {
     stars: [],
@@ -1229,44 +1674,157 @@ let state = {
     completed: false
 };
 
+
+/* ==========================================================
+   LOAD / SAVE
+========================================================== */
+
 function loadGame() {
 
     try {
-        const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem(SAVE_KEY)
+            );
 
         if (saved) {
+
             state = {
-                stars: Array.isArray(saved.stars) ? saved.stars : [],
-                visited: Array.isArray(saved.visited) ? saved.visited : [],
-                path: Array.isArray(saved.path) ? saved.path : [],
-                completed: !!saved.completed
+                stars:
+                    Array.isArray(saved.stars)
+                        ? saved.stars
+                        : [],
+
+                visited:
+                    Array.isArray(saved.visited)
+                        ? saved.visited
+                        : [],
+
+                path:
+                    Array.isArray(saved.path)
+                        ? saved.path
+                        : [],
+
+                completed:
+                    !!saved.completed
             };
         }
-    } catch (e) {
-        console.log("Starting a fresh game.");
+
+    } catch(e) {
+
+        console.log(
+            "Starting a fresh universe."
+        );
     }
 
     updateStarCounter();
+    updateVisitedPlanets();
 }
+
 
 function saveGame() {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(state)
+    );
 }
 
+
+/* ==========================================================
+   STAR COUNTER
+========================================================== */
+
 function updateStarCounter() {
-    document.getElementById("starCount").textContent = state.stars.length;
+
+    document.getElementById(
+        "starCount"
+    ).textContent =
+        state.stars.length;
 }
+
+
+/* ==========================================================
+   VISITED PLANETS
+========================================================== */
+
+function updateVisitedPlanets() {
+
+    const planets =
+        document.querySelectorAll(
+            ".planet"
+        );
+
+    planets.forEach(
+        planet => {
+            planet.classList.remove(
+                "visited"
+            );
+        }
+    );
+
+    const map = {
+        beginning: ".p1",
+        coffee: ".p2",
+        hazel: ".p3",
+        storm: ".p4",
+        ocean: ".p5",
+        colour: ".p6",
+        gravity: ".p7",
+        future: ".p8",
+        sunset: ".p9",
+        ouruniverse: ".p10"
+    };
+
+    state.visited.forEach(
+        name => {
+
+            const selector =
+                map[name];
+
+            if (selector) {
+
+                const planet =
+                    document.querySelector(
+                        selector
+                    );
+
+                if (planet) {
+                    planet.classList.add(
+                        "visited"
+                    );
+                }
+            }
+        }
+    );
+}
+
+
+/* ==========================================================
+   SCREEN
+========================================================== */
 
 function showScreen(id) {
 
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
+    document
+        .querySelectorAll(".screen")
+        .forEach(
+            screen => {
+                screen.classList.remove(
+                    "active"
+                );
+            }
+        );
 
-    const target = document.getElementById(id);
+    const target =
+        document.getElementById(id);
 
     if (target) {
-        target.classList.add("active");
+
+        target.classList.add(
+            "active"
+        );
     }
 
     window.scrollTo({
@@ -1275,57 +1833,121 @@ function showScreen(id) {
     });
 }
 
+
+/* ==========================================================
+   START
+========================================================== */
+
 function startGame() {
+
     state.path = [];
+
     saveGame();
-    showScreen("prologue");
+
+    showScreen(
+        "prologue"
+    );
 }
+
+
+/* ==========================================================
+   PROLOGUE
+========================================================== */
 
 function prologueChoice(choice) {
 
     state.path.push(choice);
+
     saveGame();
 
     if (choice === "ship") {
 
         story(
             "The Spaceship",
-            "The spaceship hums quietly as Lola steps inside. The moment she touches the controls, one tiny star appears on the dashboard.",
+            `
+            <p>
+                The spaceship hums quietly as Lola steps inside.
+            </p>
+
+            <p>
+                The moment she touches the controls,
+                the stars outside begin moving.
+            </p>
+
+            <p>
+                A tiny message appears:
+            </p>
+
+            <div class="memory">
+                <strong>
+                    SOMEWHERE OUT THERE,
+                    SOMEONE IS WAITING.
+                </strong>
+            </div>
+            `,
             "🚀",
             [
                 ["Fly towards the nearest planet", "map"],
                 ["Follow the brightest star", "beginning"]
             ],
-            ["s1"]
+            []
         );
 
     } else if (choice === "stars") {
 
         story(
-            "The Stars",
-            "Lola follows the stars. One by one, they begin forming a path through the darkness. At the end of it sits a tiny spaceship, waiting for her.",
+            "Following the Stars",
+            `
+            <p>
+                Lola follows the stars.
+            </p>
+
+            <p>
+                One by one, they form a path through the darkness.
+            </p>
+
+            <p>
+                At the end of it sits a tiny spaceship,
+                waiting for her.
+            </p>
+
+            <p>
+                Somehow, it feels like it already knows her.
+            </p>
+            `,
             "✦",
             [
                 ["Take the spaceship", "map"],
-                ["Keep following the stars", "beginning"]
+                ["Follow the path", "beginning"]
             ],
-            ["s2"]
+            []
         );
 
     } else {
 
         story(
-            "The Waves",
-            "Lola follows the sound of waves through the darkness. Eventually she reaches a tiny blue planet where the ocean stretches endlessly beneath a sky full of stars.",
+            "Following the Waves",
+            `
+            <p>
+                Lola follows the sound of waves through the darkness.
+            </p>
+
+            <p>
+                Eventually she reaches a tiny blue planet
+                where the ocean stretches endlessly beneath
+                a sky full of stars.
+            </p>
+            `,
             "🌊",
             [
                 ["Step onto the beach", "ocean"],
                 ["Return to the spaceship", "map"]
             ],
-            ["s3"]
+            []
         );
     }
 }
+
 
 /* ==========================================================
    MAP
@@ -1333,51 +1955,90 @@ function prologueChoice(choice) {
 
 function visitPlanet(planet) {
 
-    if (!state.visited.includes(planet)) {
-        state.visited.push(planet);
+    if (
+        !state.visited.includes(
+            planet
+        )
+    ) {
+
+        state.visited.push(
+            planet
+        );
+
         saveGame();
     }
+
+    updateVisitedPlanets();
+
+    moveSpaceship(planet);
 
     const content = {
 
         beginning: {
-            title: "Before You",
-            icon: "✦",
+
+            title:
+                "Before You",
+
+            icon:
+                "✦",
+
             text: `
                 <p>
-                    Before there was an us, there was simply you.
+                    Before there was an us,
+                    there was simply you.
                 </p>
 
                 <p>
-                    Somewhere in the universe, a girl with hazel eyes,
-                    a love for black coffee, and a dream of seeing the ocean
-                    was living a life that had no idea it was about to become
-                    part of someone else's universe.
+                    Somewhere in the universe,
+                    a girl with hazel eyes,
+                    a love for black coffee,
+                    and a dream of seeing the ocean
+                    was living a life that had no idea
+                    it was about to become part of someone else's universe.
                 </p>
 
                 <p>
                     Three doors appear.
                 </p>
             `,
+
             choices: [
-                ["☕ Follow the smell of coffee", "coffee"],
-                ["🔭 Look through the observatory", "hazel"],
-                ["🌊 Follow the ocean", "ocean"]
+                [
+                    "☕ Follow the smell of coffee",
+                    "coffee"
+                ],
+                [
+                    "🔭 Look through the observatory",
+                    "hazel"
+                ],
+                [
+                    "🌊 Follow the ocean",
+                    "ocean"
+                ]
             ],
-            stars: ["s4"]
+
+            stars: [
+                "s4"
+            ]
         },
 
+
         coffee: {
-            title: "The Black Coffee Planet",
-            icon: "☕",
+
+            title:
+                "The Black Coffee Planet",
+
+            icon:
+                "☕",
+
             text: `
                 <p>
                     The entire planet smells like freshly brewed coffee.
                 </p>
 
                 <p>
-                    At the centre sits a tiny café beneath a sky filled
-                    with burgundy stars.
+                    At the centre sits a tiny café
+                    beneath a sky filled with burgundy stars.
                 </p>
 
                 <p>
@@ -1385,29 +2046,54 @@ function visitPlanet(planet) {
                 </p>
 
                 <div class="memory">
-                    <strong>BLACK COFFEE.</strong>
-                    The first clue is always hidden in the little things.
+                    <strong>
+                        BLACK COFFEE.
+                    </strong>
+
+                    The first clue is always hidden
+                    in the little things.
                 </div>
 
                 <p>
                     Lola smiles.
                 </p>
             `,
+
             choices: [
-                ["☕ Sit down with the coffee", "coffee2"],
-                ["✦ Search the café", "coffee3"],
-                ["🚀 Return to the galaxy", "map"]
+                [
+                    "☕ Sit down with the coffee",
+                    "coffee2"
+                ],
+                [
+                    "✦ Search the café",
+                    "coffee3"
+                ],
+                [
+                    "🚀 Return to the galaxy",
+                    "map"
+                ]
             ],
-            stars: ["s5", "s6"]
+
+            stars: [
+                "s5",
+                "s6"
+            ]
         },
 
+
         hazel: {
-            title: "The Hazel Nebula",
-            icon: "👁",
+
+            title:
+                "The Hazel Nebula",
+
+            icon:
+                "👁",
+
             text: `
                 <p>
-                    The observatory opens into a nebula filled with colours
-                    somewhere between green, gold and brown.
+                    The observatory opens into a nebula
+                    filled with colours somewhere between
+                    green, gold and brown.
                 </p>
 
                 <p>
@@ -1419,21 +2105,41 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    When Lola looks through it, she sees a pair of eyes
-                    looking back at her.
+                    When Lola looks through it,
+                    she sees a pair of eyes looking back at her.
                 </p>
             `,
+
             choices: [
-                ["👁 Look closer", "hazel2"],
-                ["✦ Follow the star", "hazel3"],
-                ["🚀 Return to the galaxy", "map"]
+                [
+                    "👁 Look closer",
+                    "hazel2"
+                ],
+                [
+                    "✦ Follow the star",
+                    "hazel3"
+                ],
+                [
+                    "🚀 Return to the galaxy",
+                    "map"
+                ]
             ],
-            stars: ["s7", "s8"]
+
+            stars: [
+                "s7",
+                "s8"
+            ]
         },
 
+
         storm: {
-            title: "The Storm",
-            icon: "🌩",
+
+            title:
+                "The Storm",
+
+            icon:
+                "🌩",
+
             text: `
                 <p>
                     Dark clouds gather around the planet.
@@ -1448,26 +2154,53 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    Somewhere through the storm, a familiar voice says:
+                    Somewhere through the storm,
+                    a familiar voice says:
                 </p>
 
                 <div class="memory">
-                    <strong>“I'm here.”</strong>
-                    <span>You don't have to face the storm alone.</span>
+                    <strong>
+                        “I'm here.”
+                    </strong>
+
+                    You don't have to face the storm alone.
                 </div>
             `,
+
             choices: [
-                ["🌩 Face the storm", "stormFace"],
-                ["🚀 Fly through it", "stormFly"],
-                ["♡ Follow the voice", "stormVoice"],
-                ["🌙 Wait until it passes", "stormWait"]
+                [
+                    "🌩 Face the storm",
+                    "stormFace"
+                ],
+                [
+                    "🚀 Fly through it",
+                    "stormFly"
+                ],
+                [
+                    "♡ Follow the voice",
+                    "stormVoice"
+                ],
+                [
+                    "🌙 Wait until it passes",
+                    "stormWait"
+                ]
             ],
-            stars: ["s9", "s10"]
+
+            stars: [
+                "s9",
+                "s10"
+            ]
         },
 
+
         ocean: {
-            title: "The Ocean",
-            icon: "🌊",
+
+            title:
+                "The Ocean",
+
+            icon:
+                "🌊",
+
             text: `
                 <p>
                     The spaceship lands beside an endless ocean.
@@ -1482,7 +2215,8 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    And beneath the water, something moves.
+                    And beneath the water,
+                    something moves.
                 </p>
 
                 <p>
@@ -1490,21 +2224,46 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    For a moment, the whole universe becomes quiet.
+                    For a moment,
+                    the whole universe becomes quiet.
                 </p>
             `,
+
             choices: [
-                ["🌊 Walk into the water", "oceanWalk"],
-                ["🐟 Follow the stingray", "stingray"],
-                ["🌅 Sit and watch the waves", "oceanSit"],
-                ["🚀 Return to the galaxy", "map"]
+                [
+                    "🌊 Walk into the water",
+                    "oceanWalk"
+                ],
+                [
+                    "🐟 Follow the stingray",
+                    "stingray"
+                ],
+                [
+                    "🌅 Sit and watch the waves",
+                    "oceanSit"
+                ],
+                [
+                    "🚀 Return to the galaxy",
+                    "map"
+                ]
             ],
-            stars: ["s11", "s12", "s13"]
+
+            stars: [
+                "s11",
+                "s12",
+                "s13"
+            ]
         },
 
+
         colour: {
-            title: "Two Moons",
-            icon: "💙",
+
+            title:
+                "Two Moons",
+
+            icon:
+                "💙",
+
             text: `
                 <p>
                     Two moons hang above the planet.
@@ -1516,7 +2275,8 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    Together, they illuminate everything beneath them.
+                    Together,
+                    they illuminate everything beneath them.
                 </p>
 
                 <p>
@@ -1524,24 +2284,48 @@ function visitPlanet(planet) {
                 </p>
 
                 <div class="memory">
-                    <strong>TWO DIFFERENT COLOURS.</strong>
+                    <strong>
+                        TWO DIFFERENT COLOURS.
+                    </strong>
+
                     Somehow they still look right beside each other.
                 </div>
             `,
+
             choices: [
-                ["💙 Touch the blue moon", "blueMoon"],
-                ["🍷 Touch the burgundy moon", "burgundyMoon"],
-                ["♡ Stand between them", "betweenMoons"]
+                [
+                    "💙 Touch the blue moon",
+                    "blueMoon"
+                ],
+                [
+                    "🍷 Touch the burgundy moon",
+                    "burgundyMoon"
+                ],
+                [
+                    "♡ Stand between them",
+                    "betweenMoons"
+                ]
             ],
-            stars: ["s14", "s15"]
+
+            stars: [
+                "s14",
+                "s15"
+            ]
         },
 
+
         gravity: {
-            title: "Gravity",
-            icon: "✦",
+
+            title:
+                "Gravity",
+
+            icon:
+                "✦",
+
             text: `
                 <p>
-                    On this planet, gravity works differently.
+                    On this planet,
+                    gravity works differently.
                 </p>
 
                 <p>
@@ -1557,24 +2341,45 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    Apparently the universe has decided that height
-                    differences are funny.
+                    Apparently the universe has decided
+                    that height differences are funny.
                 </p>
             `,
+
             choices: [
-                ["😂 Laugh and take the hand", "gravityLaugh"],
-                ["🫶 Let yourself fall", "gravityFall"],
-                ["🚀 Float away dramatically", "gravityAway"]
+                [
+                    "😂 Laugh and take the hand",
+                    "gravityLaugh"
+                ],
+                [
+                    "🫶 Let yourself fall",
+                    "gravityFall"
+                ],
+                [
+                    "🚀 Float away dramatically",
+                    "gravityAway"
+                ]
             ],
-            stars: ["s16", "s17"]
+
+            stars: [
+                "s16",
+                "s17"
+            ]
         },
 
+
         sunset: {
-            title: "The Sunset Planet",
-            icon: "🌅",
+
+            title:
+                "The Sunset Planet",
+
+            icon:
+                "🌅",
+
             text: `
                 <p>
-                    The sky turns gold, pink and burgundy.
+                    The sky turns gold,
+                    pink and burgundy.
                 </p>
 
                 <p>
@@ -1588,25 +2393,48 @@ function visitPlanet(planet) {
                 </p>
 
                 <p>
-                    Just a sunset and someone beside you.
+                    Just a sunset
+                    and someone beside you.
                 </p>
             `,
+
             choices: [
-                ["🎨 Paint the sunset", "painting"],
-                ["🎵 Sing together", "singing"],
-                ["💃 Dance beneath it", "dancing"],
-                ["🌅 Sit quietly and watch", "sunsetQuiet"]
+                [
+                    "🎨 Paint the sunset",
+                    "painting"
+                ],
+                [
+                    "🎵 Sing together",
+                    "singing"
+                ],
+                [
+                    "💃 Dance beneath it",
+                    "dancing"
+                ],
+                [
+                    "🌅 Sit quietly and watch",
+                    "sunsetQuiet"
+                ]
             ],
-            stars: ["s18"]
+
+            stars: [
+                "s18"
+            ]
         },
 
+
         future: {
-            title: "The Future",
-            icon: "💍",
+
+            title:
+                "The Future",
+
+            icon:
+                "💍",
+
             text: `
                 <p>
-                    The spaceship enters a completely different part
-                    of the galaxy.
+                    The spaceship enters a completely different
+                    part of the galaxy.
                 </p>
 
                 <p>
@@ -1627,18 +2455,40 @@ function visitPlanet(planet) {
                     two wedding rings sit beside each other.
                 </p>
             `,
+
             choices: [
-                ["💍 Walk towards the wedding", "wedding"],
-                ["🌳 Go to the tree house", "treehouse"],
-                ["🌾 Explore the countryside", "countryside"],
-                ["🎨 Enter the future studio", "studio"]
+                [
+                    "💍 Walk towards the wedding",
+                    "wedding"
+                ],
+                [
+                    "🌳 Go to the tree house",
+                    "treehouse"
+                ],
+                [
+                    "🌾 Explore the countryside",
+                    "countryside"
+                ],
+                [
+                    "🎨 Enter the future studio",
+                    "studio"
+                ]
             ],
-            stars: ["s25"]
+
+            stars: [
+                "s25"
+            ]
         },
 
+
         ouruniverse: {
-            title: "Our Universe",
-            icon: "♡",
+
+            title:
+                "Our Universe",
+
+            icon:
+                "♡",
+
             text: `
                 <p>
                     Every planet begins disappearing.
@@ -1660,7 +2510,9 @@ function visitPlanet(planet) {
                     At its centre is a single word.
                 </p>
 
-                <h2 style="text-align:center;">HOME.</h2>
+                <h2 style="text-align:center;">
+                    HOME.
+                </h2>
 
                 <p>
                     But something is still missing.
@@ -1670,29 +2522,23 @@ function visitPlanet(planet) {
                     The stars.
                 </p>
             `,
+
             choices: [
-                ["⭐ Gather the stars", "constellationCheck"]
+                [
+                    "⭐ Gather the stars",
+                    "constellationCheck"
+                ]
             ],
+
             stars: []
         }
+
     };
 
-    const data = content[planet];
+    const data =
+        content[planet];
 
     if (!data) return;
-
-    if (planet === "ouruniverse") {
-
-        story(
-            data.title,
-            data.text,
-            data.icon,
-            data.choices,
-            []
-        );
-
-        return;
-    }
 
     story(
         data.title,
@@ -1703,68 +2549,160 @@ function visitPlanet(planet) {
     );
 }
 
+
+/* ==========================================================
+   SPACESHIP
+========================================================== */
+
+function moveSpaceship(planet) {
+
+    const positions = {
+
+        beginning: ["20%","16%"],
+        coffee: ["48%","10%"],
+        hazel: ["82%","26%"],
+        storm: ["12%","46%"],
+        ocean: ["82%","52%"],
+        colour: ["28%","82%"],
+        gravity: ["68%","82%"],
+        future: ["46%","88%"],
+        sunset: ["4%","20%"],
+        ouruniverse: ["87%","12%"]
+
+    };
+
+    const pos =
+        positions[planet];
+
+    if (!pos) return;
+
+    const ship =
+        document.getElementById(
+            "spaceship"
+        );
+
+    ship.style.left =
+        pos[0];
+
+    ship.style.top =
+        pos[1];
+}
+
+
 /* ==========================================================
    STORY ENGINE
 ========================================================== */
 
-function story(title, text, icon, choices, stars = []) {
+function story(
+    title,
+    text,
+    icon,
+    choices,
+    stars = []
+) {
 
     let starsHTML = "";
 
-    stars.forEach((id, index) => {
+    const positions = [
 
-        if (!state.stars.includes(id)) {
+        ["10%","16%"],
+        ["78%","21%"],
+        ["58%","75%"],
+        ["25%","67%"],
+        ["89%","57%"]
 
-            const positions = [
-                ["12%", "15%"],
-                ["80%", "22%"],
-                ["67%", "78%"],
-                ["25%", "70%"],
-                ["90%", "55%"]
-            ];
+    ];
 
-            const pos = positions[index % positions.length];
+    stars.forEach(
+        (id,index) => {
 
-            starsHTML += `
-                <button
-                    class="hidden-star"
-                    style="left:${pos[0]};top:${pos[1]};"
-                    onclick="collectStar('${id}', this)"
-                    title="A hidden star"
-                >✦</button>
-            `;
+            if (
+                !state.stars.includes(
+                    id
+                )
+            ) {
+
+                const pos =
+                    positions[
+                        index %
+                        positions.length
+                    ];
+
+                starsHTML += `
+
+                    <button
+                        class="hidden-star"
+                        style="
+                            left:${pos[0]};
+                            top:${pos[1]};
+                        "
+                        onclick="
+                            collectStar(
+                                '${id}',
+                                this
+                            )
+                        "
+                        title="A hidden star"
+                    >
+                        ✦
+                    </button>
+
+                `;
+            }
         }
-    });
+    );
 
-    let choicesHTML = choices.map(choice => {
 
-        const label = choice[0];
-        const destination = choice[1];
+    const choicesHTML =
+        choices
+            .map(
+                choice => {
 
-        return `
-            <button
-                class="choice"
-                onclick="storyChoice('${destination}')"
-            >
-                ${label}
-            </button>
-        `;
+                    return `
 
-    }).join("");
+                        <button
+                            class="choice"
+                            onclick="
+                                storyChoice(
+                                    '${choice[1]}'
+                                )
+                            "
+                        >
+                            ${choice[0]}
+                        </button>
 
-    document.getElementById("storyContent").innerHTML = `
+                    `;
+                }
+            )
+            .join("");
+
+
+    document.getElementById(
+        "storyContent"
+    ).innerHTML = `
 
         <div class="scene-art">
-            <div style="position:relative;z-index:2;">
+
+            <div
+                style="
+                    position:relative;
+                    z-index:2;
+                "
+            >
                 ${icon}
             </div>
 
             ${starsHTML}
+
         </div>
 
-        <div class="eyebrow">A place between the stars</div>
+        <div class="eyebrow">
+            A place between the stars
+        </div>
 
-        <h2>${title}</h2>
+        <h2>
+            ${title}
+        </h2>
 
         ${text}
 
@@ -1772,65 +2710,118 @@ function story(title, text, icon, choices, stars = []) {
             ${choicesHTML}
         </div>
 
-        <div style="margin-top:25px;text-align:center;">
+        <div
+            style="
+                margin-top:25px;
+                text-align:center;
+            "
+        >
+
             <button
                 class="primary"
-                onclick="showScreen('map')"
+                onclick="
+                    showScreen('map')
+                "
             >
                 🚀 Return to galaxy
             </button>
+
         </div>
+
     `;
 
-    showScreen("story");
+    showScreen(
+        "story"
+    );
 }
 
+
 /* ==========================================================
-   COLLECT STARS
+   COLLECT STAR
 ========================================================== */
 
-function collectStar(id, element) {
+function collectStar(
+    id,
+    element
+) {
 
-    if (state.stars.includes(id)) return;
+    if (
+        state.stars.includes(id)
+    ) {
+        return;
+    }
 
     state.stars.push(id);
 
-    element.classList.add("collected");
+    element.classList.add(
+        "collected"
+    );
 
     updateStarCounter();
+
     saveGame();
 
-    showFoundStar(id);
+    showFoundStar();
 }
 
-function showFoundStar(id) {
 
-    const popup = document.createElement("div");
+function showFoundStar() {
 
-    popup.className = "star-found";
+    const popup =
+        document.createElement(
+            "div"
+        );
+
+    popup.className =
+        "star-found";
 
     popup.innerHTML = `
-        <div style="font-size:35px;">⭐</div>
-        <strong>Star found!</strong>
-        <div style="margin-top:6px;color:#d9c4ce;">
+
+        <div
+            style="
+                font-size:35px;
+            "
+        >
+            ⭐
+        </div>
+
+        <strong>
+            Star found!
+        </strong>
+
+        <div
+            style="
+                margin-top:6px;
+                color:#d9c4ce;
+            "
+        >
             ${state.stars.length} / 27
         </div>
+
     `;
 
-    document.body.appendChild(popup);
+    document.body.appendChild(
+        popup
+    );
 
-    setTimeout(() => {
-        popup.remove();
-    }, 1500);
+    setTimeout(
+        () => {
+            popup.remove();
+        },
+        1500
+    );
 }
 
+
 /* ==========================================================
-   STORY ROUTING
+   ROUTING
 ========================================================== */
 
-function storyChoice(destination) {
+function storyChoice(
+    destination
+) {
 
-    switch (destination) {
+    switch(destination) {
 
         case "map":
             showScreen("map");
@@ -1982,6 +2973,7 @@ function storyChoice(destination) {
     }
 }
 
+
 /* ==========================================================
    COFFEE
 ========================================================== */
@@ -2000,8 +2992,8 @@ function coffeeSecond() {
         </p>
 
         <p>
-            The strange thing is that the universe suddenly feels
-            a little less lonely.
+            The strange thing is that the universe suddenly
+            feels a little less lonely.
         </p>
 
         <p>
@@ -2009,17 +3001,27 @@ function coffeeSecond() {
         </p>
 
         <div class="memory">
-            <strong>Some people feel like home before you've even met them.</strong>
+            <strong>
+                Some people feel like home
+                before you've even met them.
+            </strong>
         </div>
         `,
         "☕",
         [
-            ["✦ Keep the note", "coffee3"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "✦ Keep the note",
+                "coffee3"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         ["s5"]
     );
 }
+
 
 function coffeeSearch() {
 
@@ -2027,7 +3029,8 @@ function coffeeSearch() {
         "Something Hidden",
         `
         <p>
-            Lola searches beneath the tables, behind the counter,
+            Lola searches beneath the tables,
+            behind the counter,
             and finally underneath the coffee cup.
         </p>
 
@@ -2046,17 +3049,27 @@ function coffeeSearch() {
         </p>
 
         <div class="memory">
-            <strong>“She writes because sometimes love is too big to simply say.”</strong>
+            <strong>
+                “She writes because sometimes
+                love is too big to simply say.”
+            </strong>
         </div>
         `,
         "✍️",
         [
-            ["✦ Keep reading", "hazel"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "✦ Keep reading",
+                "hazel"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         ["s6"]
     );
 }
+
 
 /* ==========================================================
    HAZEL
@@ -2078,18 +3091,26 @@ function hazelClose() {
         </p>
 
         <p>
-            For some reason, Lola feels like she has been searching
+            For some reason,
+            Lola feels like she has been searching
             for those eyes her entire life.
         </p>
         `,
         "👁",
         [
-            ["✦ Follow the light", "hazel3"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "✦ Follow the light",
+                "hazel3"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         ["s7"]
     );
 }
+
 
 function hazelFollow() {
 
@@ -2113,22 +3134,32 @@ function hazelFollow() {
         </p>
 
         <div class="memory">
-            <strong>“I like cats, sunsets, and my girlfriend Lola.”</strong>
+            <strong>
+                “I like cats, sunsets,
+                and my girlfriend Lola.”
+            </strong>
         </div>
 
         <p>
-            Lola realises that someone has been writing a universe
-            around her for a very long time.
+            Lola realises that someone has been
+            writing a universe around her.
         </p>
         `,
         "♡",
         [
-            ["♡ Keep going", "storm"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "♡ Keep going",
+                "storm"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         ["s8"]
     );
 }
+
 
 /* ==========================================================
    STORM
@@ -2156,17 +3187,26 @@ function stormFace() {
         </p>
 
         <div class="memory">
-            <strong>You are stronger than the storm.</strong>
+            <strong>
+                You are stronger than the storm.
+            </strong>
         </div>
         `,
         "🌩",
         [
-            ["✦ Follow the light", "map"],
-            ["♡ Listen to the voice", "stormVoice"]
+            [
+                "✦ Follow the light",
+                "map"
+            ],
+            [
+                "♡ Listen to the voice",
+                "stormVoice"
+            ]
         ],
         ["s9"]
     );
 }
+
 
 function stormFly() {
 
@@ -2186,7 +3226,9 @@ function stormFly() {
         </p>
 
         <div class="memory">
-            <strong>“I'm here. Count with me.”</strong>
+            <strong>
+                “I'm here. Count with me.”
+            </strong>
         </div>
 
         <p>
@@ -2197,12 +3239,19 @@ function stormFly() {
         `,
         "🚀",
         [
-            ["♡ Keep listening", "stormVoice"],
-            ["✦ Follow the stars", "map"]
+            [
+                "♡ Keep listening",
+                "stormVoice"
+            ],
+            [
+                "✦ Follow the stars",
+                "map"
+            ]
         ],
         ["s10"]
     );
 }
+
 
 function stormVoice() {
 
@@ -2218,11 +3267,13 @@ function stormVoice() {
         </p>
 
         <p>
-            But somehow it doesn't feel quite as frightening anymore.
+            But somehow it doesn't feel
+            quite as frightening anymore.
         </p>
 
         <p>
-            Because sometimes you don't need someone to stop the storm.
+            Because sometimes you don't need
+            someone to stop the storm.
         </p>
 
         <p>
@@ -2231,12 +3282,19 @@ function stormVoice() {
         `,
         "♡",
         [
-            ["🌌 Continue", "map"],
-            ["🌊 Find the ocean", "ocean"]
+            [
+                "🌌 Continue",
+                "map"
+            ],
+            [
+                "🌊 Find the ocean",
+                "ocean"
+            ]
         ],
-        []
+        ["s22"]
     );
 }
+
 
 function stormWait() {
 
@@ -2256,17 +3314,25 @@ function stormWait() {
         </p>
 
         <p>
-            And there, behind them, is a path of stars.
+            And there, behind them,
+            is a path of stars.
         </p>
         `,
         "✦",
         [
-            ["✦ Follow the stars", "map"],
-            ["🌊 Follow the waves", "ocean"]
+            [
+                "✦ Follow the stars",
+                "map"
+            ],
+            [
+                "🌊 Follow the waves",
+                "ocean"
+            ]
         ],
         []
     );
 }
+
 
 /* ==========================================================
    OCEAN
@@ -2291,17 +3357,25 @@ function oceanWalk() {
         </p>
 
         <p>
-            She finally understands why some dreams are worth waiting for.
+            She finally understands why some dreams
+            are worth waiting for.
         </p>
         `,
         "🌊",
         [
-            ["🐟 Follow the stingray", "stingray"],
-            ["🌅 Sit beside the water", "oceanSit"]
+            [
+                "🐟 Follow the stingray",
+                "stingray"
+            ],
+            [
+                "🌅 Sit beside the water",
+                "oceanSit"
+            ]
         ],
         ["s11"]
     );
 }
+
 
 function stingray() {
 
@@ -2317,7 +3391,8 @@ function stingray() {
         </p>
 
         <p>
-            It leads her to a tiny glowing star beneath the surface.
+            It leads her to a tiny glowing star
+            beneath the surface.
         </p>
 
         <p>
@@ -2325,17 +3400,26 @@ function stingray() {
         </p>
 
         <div class="memory">
-            <strong>Some things are worth diving for.</strong>
+            <strong>
+                Some things are worth diving for.
+            </strong>
         </div>
         `,
         "🐟",
         [
-            ["🌊 Return to shore", "map"],
-            ["✦ Keep exploring", "oceanSit"]
+            [
+                "🌊 Return to shore",
+                "map"
+            ],
+            [
+                "✦ Keep exploring",
+                "oceanSit"
+            ]
         ],
         ["s12"]
     );
 }
+
 
 function oceanSit() {
 
@@ -2351,7 +3435,8 @@ function oceanSit() {
         </p>
 
         <p>
-            Somewhere far away, someone is imagining this exact moment.
+            Somewhere far away,
+            someone is imagining this exact moment.
         </p>
 
         <p>
@@ -2364,12 +3449,19 @@ function oceanSit() {
         `,
         "🌊",
         [
-            ["🌅 Watch the sunset", "sunset"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "🌅 Watch the sunset",
+                "sunset"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         ["s13"]
     );
 }
+
 
 /* ==========================================================
    TWO MOONS
@@ -2396,12 +3488,19 @@ function blueMoon() {
         `,
         "💙",
         [
-            ["🍷 Find the other moon", "burgundyMoon"],
-            ["♡ Stay here a little longer", "betweenMoons"]
+            [
+                "🍷 Find the other moon",
+                "burgundyMoon"
+            ],
+            [
+                "♡ Stay here a little longer",
+                "betweenMoons"
+            ]
         ],
         ["s14"]
     );
 }
+
 
 function burgundyMoon() {
 
@@ -2413,7 +3512,8 @@ function burgundyMoon() {
         </p>
 
         <p>
-            Somehow, the two colours belong together.
+            Somehow,
+            the two colours belong together.
         </p>
 
         <p>
@@ -2423,12 +3523,19 @@ function burgundyMoon() {
         `,
         "🍷",
         [
-            ["💙 Return to the blue moon", "blueMoon"],
-            ["♡ Stand between them", "betweenMoons"]
+            [
+                "💙 Return to the blue moon",
+                "blueMoon"
+            ],
+            [
+                "♡ Stand between them",
+                "betweenMoons"
+            ]
         ],
         ["s15"]
     );
 }
+
 
 function betweenMoons() {
 
@@ -2450,18 +3557,26 @@ function betweenMoons() {
         </p>
 
         <p>
-            Maybe it was always about finding someone whose differences
-            somehow make the world feel more complete.
+            Maybe it was always about finding someone
+            whose differences somehow make the world
+            feel more complete.
         </p>
         `,
         "♡",
         [
-            ["✦ Continue", "gravity"],
-            ["🚀 Return to the galaxy", "map"]
+            [
+                "✦ Continue",
+                "map"
+            ],
+            [
+                "🚀 Return to the galaxy",
+                "map"
+            ]
         ],
         []
     );
 }
+
 
 /* ==========================================================
    GRAVITY
@@ -2477,8 +3592,10 @@ function gravityLaugh() {
         </p>
 
         <p>
-            Apparently someone being 5'10 and someone being around 5'1
-            is enough for the universe to create its own gravitational joke.
+            Apparently someone being 5'10
+            and someone being around 5'1
+            is enough for the universe
+            to create its own gravitational joke.
         </p>
 
         <p>
@@ -2487,12 +3604,19 @@ function gravityLaugh() {
         `,
         "😂",
         [
-            ["🫶 Take the hand", "gravityFall"],
-            ["🚀 Float dramatically away", "gravityAway"]
+            [
+                "🫶 Take the hand",
+                "gravityFall"
+            ],
+            [
+                "🚀 Float dramatically away",
+                "gravityAway"
+            ]
         ],
         ["s16"]
     );
 }
+
 
 function gravityFall() {
 
@@ -2509,17 +3633,25 @@ function gravityFall() {
         </p>
 
         <p>
-            For once, gravity feels like something gentle.
+            For once,
+            gravity feels like something gentle.
         </p>
         `,
         "🫶",
         [
-            ["♡ Stay there", "sunset"],
-            ["😂 Laugh about it", "gravityLaugh"]
+            [
+                "♡ Stay there",
+                "sunset"
+            ],
+            [
+                "😂 Laugh about it",
+                "gravityLaugh"
+            ]
         ],
         ["s17"]
     );
 }
+
 
 function gravityAway() {
 
@@ -2531,11 +3663,14 @@ function gravityAway() {
         </p>
 
         <p>
-            Somewhere below her, someone yells:
+            Somewhere below her,
+            someone yells:
         </p>
 
         <div class="memory">
-            <strong>“COME BACK HERE.”</strong>
+            <strong>
+                “COME BACK HERE.”
+            </strong>
         </div>
 
         <p>
@@ -2544,12 +3679,19 @@ function gravityAway() {
         `,
         "🚀",
         [
-            ["😂 Go back", "gravityLaugh"],
-            ["🌅 Fly towards the sunset", "sunset"]
+            [
+                "😂 Go back",
+                "gravityLaugh"
+            ],
+            [
+                "🌅 Fly towards the sunset",
+                "sunset"
+            ]
         ],
         []
     );
 }
+
 
 /* ==========================================================
    SUNSET
@@ -2570,21 +3712,30 @@ function painting() {
 
         <p>
             Two people sit beside each other,
-            getting paint everywhere except where it was supposed to go.
+            getting paint everywhere except
+            where it was supposed to go.
         </p>
 
         <p>
-            Somehow, the painting turns out beautiful anyway.
+            Somehow,
+            the painting turns out beautiful anyway.
         </p>
         `,
         "🎨",
         [
-            ["🎵 Put on music", "singing"],
-            ["💃 Dance instead", "dancing"]
+            [
+                "🎵 Put on music",
+                "singing"
+            ],
+            [
+                "💃 Dance instead",
+                "dancing"
+            ]
         ],
         ["s19"]
     );
 }
+
 
 function singing() {
 
@@ -2604,7 +3755,8 @@ function singing() {
         </p>
 
         <p>
-            Eventually they're laughing too much to finish the song.
+            Eventually they're laughing too much
+            to finish the song.
         </p>
 
         <p>
@@ -2613,12 +3765,19 @@ function singing() {
         `,
         "🎵",
         [
-            ["💃 Dance anyway", "dancing"],
-            ["🎨 Go back to painting", "painting"]
+            [
+                "💃 Dance anyway",
+                "dancing"
+            ],
+            [
+                "🎨 Go back to painting",
+                "painting"
+            ]
         ],
         ["s20"]
     );
 }
+
 
 function dancing() {
 
@@ -2641,12 +3800,19 @@ function dancing() {
         `,
         "💃",
         [
-            ["🌾 Keep dancing into the countryside", "countryside"],
-            ["🌅 Sit down together", "sunsetQuiet"]
+            [
+                "🌾 Keep dancing into the countryside",
+                "countryside"
+            ],
+            [
+                "🌅 Sit down together",
+                "sunsetQuiet"
+            ]
         ],
         ["s21"]
     );
 }
+
 
 function sunsetQuiet() {
 
@@ -2672,12 +3838,19 @@ function sunsetQuiet() {
         `,
         "♡",
         [
-            ["🌌 Continue", "map"],
-            ["💍 Look towards the future", "future"]
+            [
+                "🌌 Continue",
+                "map"
+            ],
+            [
+                "💍 Look towards the future",
+                "future"
+            ]
         ],
         []
     );
 }
+
 
 /* ==========================================================
    FUTURE
@@ -2689,7 +3862,8 @@ function wedding() {
         "The Wedding",
         `
         <p>
-            The countryside is glowing beneath a warm afternoon sky.
+            The countryside is glowing
+            beneath a warm afternoon sky.
         </p>
 
         <p>
@@ -2705,7 +3879,9 @@ function wedding() {
             one word echoes through the universe:
         </p>
 
-        <h2 style="text-align:center;">WIFE.</h2>
+        <h2 style="text-align:center;">
+            WIFE.
+        </h2>
 
         <p>
             Not a dream anymore.
@@ -2714,13 +3890,23 @@ function wedding() {
         `,
         "💍",
         [
-            ["💍 Say “I do”", "weddingVows"],
-            ["♡ Look at her and laugh", "weddingLaugh"],
-            ["🌸 Take in the moment", "weddingQuiet"]
+            [
+                "💍 Say “I do”",
+                "weddingVows"
+            ],
+            [
+                "♡ Look at her and laugh",
+                "weddingLaugh"
+            ],
+            [
+                "🌸 Take in the moment",
+                "weddingQuiet"
+            ]
         ],
         ["s26"]
     );
 }
+
 
 function weddingVows() {
 
@@ -2732,8 +3918,8 @@ function weddingVows() {
         </p>
 
         <p>
-            And suddenly every little future they've ever imagined
-            feels a little closer.
+            And suddenly every little future
+            they've ever imagined feels a little closer.
         </p>
 
         <p>
@@ -2751,12 +3937,19 @@ function weddingVows() {
         `,
         "💍",
         [
-            ["🌳 Go see the tree house", "treehouse"],
-            ["🌾 Walk through the countryside", "countryside"]
+            [
+                "🌳 Go see the tree house",
+                "treehouse"
+            ],
+            [
+                "🌾 Walk through the countryside",
+                "countryside"
+            ]
         ],
         []
     );
 }
+
 
 function weddingLaugh() {
 
@@ -2769,7 +3962,8 @@ function weddingLaugh() {
         </p>
 
         <p>
-            And the person standing opposite her laughs too.
+            And the person standing opposite her
+            laughs too.
         </p>
 
         <p>
@@ -2779,12 +3973,19 @@ function weddingLaugh() {
         `,
         "♡",
         [
-            ["💍 Say yes", "weddingVows"],
-            ["🌳 Run towards the tree house", "treehouse"]
+            [
+                "💍 Say yes",
+                "weddingVows"
+            ],
+            [
+                "🌳 Run towards the tree house",
+                "treehouse"
+            ]
         ],
         []
     );
 }
+
 
 function weddingQuiet() {
 
@@ -2800,22 +4001,29 @@ function weddingQuiet() {
         </p>
 
         <p>
-            And realises this is the kind of happiness she always hoped
-            existed somewhere.
+            And realises this is the kind of happiness
+            she always hoped existed somewhere.
         </p>
         `,
         "🌸",
         [
-            ["💍 Say yes", "weddingVows"],
-            ["🌾 Walk outside", "countryside"]
+            [
+                "💍 Say yes",
+                "weddingVows"
+            ],
+            [
+                "🌾 Walk outside",
+                "countryside"
+            ]
         ],
         []
     );
 }
 
-/* =========================
+
+/* ==========================================================
    TREE HOUSE
-========================= */
+========================================================== */
 
 function treehouse() {
 
@@ -2823,7 +4031,8 @@ function treehouse() {
         "The Tree House",
         `
         <p>
-            Behind the little countryside house stands an enormous tree.
+            Behind the little countryside house
+            stands an enormous tree.
         </p>
 
         <p>
@@ -2839,18 +4048,29 @@ function treehouse() {
         </p>
 
         <p>
-            This is the place where all the quiet evenings happen.
+            This is the place where all
+            the quiet evenings happen.
         </p>
         `,
         "🌳",
         [
-            ["🌌 Look at the stars", "treeStars"],
-            ["🎨 Paint together", "treePaint"],
-            ["☕ Bring coffee upstairs", "treeCoffee"]
+            [
+                "🌌 Look at the stars",
+                "treeStars"
+            ],
+            [
+                "🎨 Paint together",
+                "treePaint"
+            ],
+            [
+                "☕ Bring coffee upstairs",
+                "treeCoffee"
+            ]
         ],
         ["s27"]
     );
 }
+
 
 function treeStars() {
 
@@ -2858,7 +4078,8 @@ function treeStars() {
         "Under the Stars",
         `
         <p>
-            Lola lies beneath the little roof of the tree house.
+            Lola lies beneath the little roof
+            of the tree house.
         </p>
 
         <p>
@@ -2874,17 +4095,25 @@ function treeStars() {
         </p>
 
         <p>
-            They can simply grow old beneath the same sky.
+            They can simply grow old
+            beneath the same sky.
         </p>
         `,
         "🌌",
         [
-            ["🌾 Go back to the house", "countryside"],
-            ["💍 Think about the future", "future"]
+            [
+                "🌾 Go back to the house",
+                "countryside"
+            ],
+            [
+                "💍 Think about the future",
+                "future"
+            ]
         ],
-        []
+        ["s23"]
     );
 }
+
 
 function treePaint() {
 
@@ -2909,12 +4138,19 @@ function treePaint() {
         `,
         "🎨",
         [
-            ["☕ Make coffee", "treeCoffee"],
-            ["🌾 Go outside", "countryside"]
+            [
+                "☕ Make coffee",
+                "treeCoffee"
+            ],
+            [
+                "🌾 Go outside",
+                "countryside"
+            ]
         ],
         []
     );
 }
+
 
 function treeCoffee() {
 
@@ -2934,21 +4170,29 @@ function treeCoffee() {
         </p>
 
         <p>
-            And the quiet realisation that this is home.
+            And the quiet realisation
+            that this is home.
         </p>
         `,
         "☕",
         [
-            ["🌾 Walk through the fields", "countryside"],
-            ["🌌 Stay here all morning", "treeStars"]
+            [
+                "🌾 Walk through the fields",
+                "countryside"
+            ],
+            [
+                "🌌 Stay here all morning",
+                "treeStars"
+            ]
         ],
         []
     );
 }
 
-/* =========================
+
+/* ==========================================================
    COUNTRYSIDE
-========================= */
+========================================================== */
 
 function countryside() {
 
@@ -2973,13 +4217,23 @@ function countryside() {
         `,
         "🌾",
         [
-            ["🌅 Watch the sunset", "countrySunset"],
-            ["🌳 Visit the tree house", "treehouse"],
-            ["🏠 Go inside your home", "marriedLife"]
+            [
+                "🌅 Watch the sunset",
+                "countrySunset"
+            ],
+            [
+                "🌳 Visit the tree house",
+                "treehouse"
+            ],
+            [
+                "🏠 Go inside your home",
+                "marriedLife"
+            ]
         ],
         ["s24"]
     );
 }
+
 
 function countrySunset() {
 
@@ -3001,12 +4255,19 @@ function countrySunset() {
         `,
         "🌅",
         [
-            ["🏠 Go home", "marriedLife"],
-            ["🌳 Go to the tree house", "treehouse"]
+            [
+                "🏠 Go home",
+                "marriedLife"
+            ],
+            [
+                "🌳 Go to the tree house",
+                "treehouse"
+            ]
         ],
         []
     );
 }
+
 
 function marriedLife() {
 
@@ -3030,11 +4291,13 @@ function marriedLife() {
         </p>
 
         <p>
-            Somewhere downstairs, music starts playing.
+            Somewhere downstairs,
+            music starts playing.
         </p>
 
         <p>
-            Someone begins dancing while cooking breakfast.
+            Someone begins dancing
+            while cooking breakfast.
         </p>
 
         <p>
@@ -3056,14 +4319,27 @@ function marriedLife() {
         `,
         "🏠",
         [
-            ["💃 Dance in the kitchen", "marriedDance"],
-            ["🎨 Paint together", "marriedPaint"],
-            ["🎵 Sing together", "marriedSing"],
-            ["☕ Do absolutely nothing", "marriedNothing"]
+            [
+                "💃 Dance in the kitchen",
+                "marriedDance"
+            ],
+            [
+                "🎨 Paint together",
+                "marriedPaint"
+            ],
+            [
+                "🎵 Sing together",
+                "marriedSing"
+            ],
+            [
+                "☕ Do absolutely nothing",
+                "marriedNothing"
+            ]
         ],
         []
     );
 }
+
 
 function marriedDance() {
 
@@ -3085,12 +4361,19 @@ function marriedDance() {
         `,
         "💃",
         [
-            ["☕ Eventually make breakfast", "marriedLife"],
-            ["♡ Keep dancing", "marriedLife"]
+            [
+                "☕ Eventually make breakfast",
+                "marriedLife"
+            ],
+            [
+                "♡ Keep dancing",
+                "marriedLife"
+            ]
         ],
         []
     );
 }
+
 
 function marriedPaint() {
 
@@ -3111,17 +4394,25 @@ function marriedPaint() {
         </p>
 
         <p>
-            All of them belong to a life they built together.
+            All of them belong to a life
+            they built together.
         </p>
         `,
         "🎨",
         [
-            ["♡ Look around the room", "studio"],
-            ["🏠 Go back home", "marriedLife"]
+            [
+                "♡ Look around the room",
+                "studio"
+            ],
+            [
+                "🏠 Go back home",
+                "marriedLife"
+            ]
         ],
         []
     );
 }
+
 
 function marriedSing() {
 
@@ -3146,12 +4437,19 @@ function marriedSing() {
         `,
         "🎵",
         [
-            ["💃 Dance too", "marriedDance"],
-            ["☕ Make coffee", "marriedLife"]
+            [
+                "💃 Dance too",
+                "marriedDance"
+            ],
+            [
+                "☕ Make coffee",
+                "marriedLife"
+            ]
         ],
         []
     );
 }
+
 
 function marriedNothing() {
 
@@ -3173,22 +4471,29 @@ function marriedNothing() {
         </p>
 
         <p>
-            Sometimes a happy life is simply having someone
-            you want to do nothing with.
+            Sometimes a happy life is simply
+            having someone you want to do nothing with.
         </p>
         `,
         "♡",
         [
-            ["🌌 Look outside at the stars", "future"],
-            ["🏠 Stay home", "marriedLife"]
+            [
+                "🌌 Look outside at the stars",
+                "future"
+            ],
+            [
+                "🏠 Stay home",
+                "marriedLife"
+            ]
         ],
         []
     );
 }
 
-/* =========================
+
+/* ==========================================================
    FUTURE STUDIO
-========================= */
+========================================================== */
 
 function studio() {
 
@@ -3215,18 +4520,31 @@ function studio() {
         </p>
 
         <div class="memory">
-            <strong>THIS ONE IS FOR EVERYTHING WE HAVEN'T DONE YET.</strong>
+            <strong>
+                THIS ONE IS FOR EVERYTHING
+                WE HAVEN'T DONE YET.
+            </strong>
         </div>
         `,
         "🎨",
         [
-            ["🎨 Start painting", "studioPaint"],
-            ["♡ Leave it blank for now", "studioBlank"],
-            ["🏠 Go home", "marriedLife"]
+            [
+                "🎨 Start painting",
+                "studioPaint"
+            ],
+            [
+                "♡ Leave it blank for now",
+                "studioBlank"
+            ],
+            [
+                "🏠 Go home",
+                "marriedLife"
+            ]
         ],
         []
     );
 }
+
 
 function studioPaint() {
 
@@ -3261,12 +4579,19 @@ function studioPaint() {
         `,
         "🎨",
         [
-            ["♡ Keep the painting unfinished", "studioBlank"],
-            ["🌌 Return to the galaxy", "map"]
+            [
+                "♡ Keep the painting unfinished",
+                "studioBlank"
+            ],
+            [
+                "🌌 Return to the galaxy",
+                "map"
+            ]
         ],
         []
     );
 }
+
 
 function studioBlank() {
 
@@ -3291,22 +4616,31 @@ function studioBlank() {
         `,
         "♡",
         [
-            ["🌌 Return to the galaxy", "map"],
-            ["💍 Look towards the future", "future"]
+            [
+                "🌌 Return to the galaxy",
+                "map"
+            ],
+            [
+                "💍 Look towards the future",
+                "future"
+            ]
         ],
         []
     );
 }
 
+
 /* ==========================================================
-   CONSTELLATION
+   FINAL CONSTELLATION
 ========================================================== */
 
 function constellationCheck() {
 
     updateStarCounter();
 
-    if (state.stars.length < 27) {
+    if (
+        state.stars.length < 27
+    ) {
 
         story(
             "Not Yet",
@@ -3320,25 +4654,34 @@ function constellationCheck() {
             </p>
 
             <p>
-                You have found <strong>${state.stars.length}</strong>
+                You have found
+                <strong>
+                    ${state.stars.length}
+                </strong>
                 out of 27 stars.
             </p>
 
             <p>
-                There are still stars hiding somewhere in the galaxy.
+                There are still stars hiding somewhere
+                in the galaxy.
             </p>
 
             <div class="memory">
-                <strong>Look carefully.</strong>
-                <span>
-                    Try revisiting planets. Some stars only appear
-                    in certain parts of the story.
-                </span>
+                <strong>
+                    Look carefully.
+                </strong>
+
+                Try revisiting planets.
+                Some stars only appear in certain
+                parts of the story.
             </div>
             `,
             "⭐",
             [
-                ["🚀 Return to the galaxy", "map"]
+                [
+                    "🚀 Return to the galaxy",
+                    "map"
+                ]
             ],
             []
         );
@@ -3347,104 +4690,174 @@ function constellationCheck() {
     }
 
     state.completed = true;
+
     saveGame();
 
     createConstellation();
-    showScreen("constellationScreen");
+
+    showScreen(
+        "constellationScreen"
+    );
 }
+
+
+/* ==========================================================
+   CONSTELLATION
+========================================================== */
 
 function createConstellation() {
 
-    const box = document.getElementById("constellation");
+    const box =
+        document.getElementById(
+            "constellation"
+        );
 
     box.innerHTML = "";
 
     const positions = [
-        [8, 25],
-        [16, 40],
-        [25, 18],
-        [34, 32],
-        [43, 12],
-        [51, 28],
-        [59, 16],
-        [68, 36],
-        [78, 21],
-        [88, 33],
-        [13, 60],
-        [22, 74],
-        [32, 57],
-        [42, 70],
-        [52, 52],
-        [61, 72],
-        [70, 56],
-        [80, 70],
-        [90, 55],
-        [18, 88],
-        [31, 84],
-        [44, 91],
-        [56, 84],
-        [68, 91],
-        [79, 82],
-        [90, 91],
-        [50, 43]
+
+        [8,25],
+        [16,40],
+        [25,18],
+        [34,32],
+        [43,12],
+        [51,28],
+        [59,16],
+        [68,36],
+        [78,21],
+        [88,33],
+        [13,60],
+        [22,74],
+        [32,57],
+        [42,70],
+        [52,52],
+        [61,72],
+        [70,56],
+        [80,70],
+        [90,55],
+        [18,88],
+        [31,84],
+        [44,91],
+        [56,84],
+        [68,91],
+        [79,82],
+        [90,91],
+        [50,43]
+
     ];
 
-    positions.forEach((position, index) => {
+    positions.forEach(
+        (position,index) => {
 
-        const star = document.createElement("div");
+            const star =
+                document.createElement(
+                    "div"
+                );
 
-        star.className = "constellation-star";
+            star.className =
+                "constellation-star";
 
-        star.style.left = position[0] + "%";
-        star.style.top = position[1] + "%";
+            star.style.left =
+                position[0] + "%";
 
-        star.title = "Star " + (index + 1);
+            star.style.top =
+                position[1] + "%";
 
-        box.appendChild(star);
-    });
+            star.title =
+                "Star " +
+                (index + 1);
 
-    /* draw constellation lines */
+            box.appendChild(
+                star
+            );
+        }
+    );
 
-    for (let i = 0; i < positions.length - 1; i++) {
 
-        const a = positions[i];
-        const b = positions[i + 1];
+    for (
+        let i = 0;
+        i < positions.length - 1;
+        i++
+    ) {
+
+        const a =
+            positions[i];
+
+        const b =
+            positions[i + 1];
 
         const x1 = a[0];
         const y1 = a[1];
+
         const x2 = b[0];
         const y2 = b[1];
 
-        const dx = x2 - x1;
-        const dy = y2 - y1;
+        const dx =
+            x2 - x1;
 
-        const length = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        const dy =
+            y2 - y1;
 
-        const line = document.createElement("div");
+        const length =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
 
-        line.className = "constellation-line";
+        const angle =
+            Math.atan2(
+                dy,
+                dx
+            ) *
+            180 /
+            Math.PI;
 
-        line.style.left = x1 + "%";
-        line.style.top = y1 + "%";
-        line.style.width = length + "%";
-        line.style.transform = `rotate(${angle}deg)`;
+        const line =
+            document.createElement(
+                "div"
+            );
 
-        box.appendChild(line);
+        line.className =
+            "constellation-line";
+
+        line.style.left =
+            x1 + "%";
+
+        line.style.top =
+            y1 + "%";
+
+        line.style.width =
+            length + "%";
+
+        line.style.transform =
+            `rotate(${angle}deg)`;
+
+        box.appendChild(
+            line
+        );
     }
 }
 
+
 /* ==========================================================
-   FINAL LETTER
+   FINAL LETTER / REVEAL
 ========================================================== */
 
 function showFinalLetter() {
-    showScreen("letterScreen");
+
+    showScreen(
+        "letterScreen"
+    );
 }
 
+
 function showStarReveal() {
-    showScreen("starReveal");
+
+    showScreen(
+        "starReveal"
+    );
 }
+
 
 /* ==========================================================
    RESET
@@ -3452,24 +4865,40 @@ function showStarReveal() {
 
 function resetGame() {
 
-    const confirmReset = confirm(
-        "Start the entire universe again? Your 27 collected stars will be reset."
+    const confirmed =
+        confirm(
+            "Start the entire universe again? Your 27 collected stars will be reset."
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(
+        SAVE_KEY
     );
 
-    if (!confirmReset) return;
-
-    localStorage.removeItem(SAVE_KEY);
-
     state = {
+
         stars: [],
+
         visited: [],
+
         path: [],
+
         completed: false
+
     };
 
     updateStarCounter();
-    showScreen("intro");
+
+    updateVisitedPlanets();
+
+    showScreen(
+        "intro"
+    );
 }
+
 
 /* ==========================================================
    BACKGROUND STARS
@@ -3477,32 +4906,58 @@ function resetGame() {
 
 function createBackgroundStars() {
 
-    const container = document.getElementById("backgroundStars");
+    const container =
+        document.getElementById(
+            "backgroundStars"
+        );
 
-    for (let i = 0; i < 170; i++) {
+    for (
+        let i = 0;
+        i < 180;
+        i++
+    ) {
 
-        const star = document.createElement("div");
+        const star =
+            document.createElement(
+                "div"
+            );
 
-        star.className = "bg-star";
+        star.className =
+            "bg-star";
 
-        star.style.left = Math.random() * 100 + "%";
-        star.style.top = Math.random() * 100 + "%";
+        star.style.left =
+            Math.random() *
+            100 +
+            "%";
+
+        star.style.top =
+            Math.random() *
+            100 +
+            "%";
 
         star.style.animationDelay =
-            (Math.random() * 4) + "s";
+            Math.random() *
+            4 +
+            "s";
 
         star.style.opacity =
-            (0.2 + Math.random() * .7);
+            .2 +
+            Math.random() *
+            .7;
 
-        container.appendChild(star);
+        container.appendChild(
+            star
+        );
     }
 }
 
+
 /* ==========================================================
-   START
+   INITIALISE
 ========================================================== */
 
 createBackgroundStars();
+
 loadGame();
 
 </script>
