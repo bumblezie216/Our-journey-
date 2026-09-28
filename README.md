@@ -2,27 +2,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Lola's Little Universe</title>
 
 <style>
-/* =========================================================
-   LOLA'S LITTLE UNIVERSE
-   Interactive birthday adventure
-   ========================================================= */
-
 * {
     box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     min-height: 100%;
     font-family: Georgia, "Times New Roman", serif;
-    background: #030205;
+    background: #020005;
     color: #fff;
     overflow-x: hidden;
 }
@@ -31,408 +24,385 @@ body {
     min-height: 100vh;
 }
 
-/* ---------------------------------------------------------
+/* =========================
    GALAXY BACKGROUND
-   --------------------------------------------------------- */
+========================= */
 
-#space {
+.space {
     position: fixed;
     inset: 0;
-    z-index: 0;
     overflow: hidden;
+    pointer-events: none;
     background:
-        radial-gradient(circle at 20% 20%, rgba(105, 0, 40, .22), transparent 28%),
-        radial-gradient(circle at 80% 70%, rgba(80, 0, 35, .20), transparent 30%),
-        radial-gradient(circle at 50% 50%, rgba(120, 0, 55, .10), transparent 45%),
-        #020204;
+        radial-gradient(circle at 50% 45%, rgba(91, 0, 55, .22), transparent 32%),
+        radial-gradient(circle at 15% 20%, rgba(120, 0, 70, .18), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(65, 0, 80, .15), transparent 30%),
+        #020005;
+    z-index: -5;
 }
 
 .nebula {
     position: absolute;
-    width: 55vw;
-    height: 55vw;
+    width: 70vw;
+    height: 70vw;
+    max-width: 900px;
+    max-height: 900px;
     border-radius: 50%;
-    filter: blur(70px);
-    opacity: .18;
-    pointer-events: none;
+    filter: blur(80px);
+    opacity: .3;
 }
 
 .nebula.one {
-    background: #75002d;
-    left: -20vw;
-    top: 10vh;
+    background: #450027;
+    top: -25%;
+    left: -20%;
 }
 
 .nebula.two {
-    background: #42001d;
-    right: -20vw;
-    bottom: 0;
+    background: #25003d;
+    bottom: -30%;
+    right: -20%;
 }
 
-.star-bg {
+.nebula.three {
+    background: #700033;
+    top: 35%;
+    left: 40%;
+    opacity: .12;
+}
+
+/* stars in background */
+
+.bg-star {
     position: absolute;
     width: 2px;
     height: 2px;
-    border-radius: 50%;
     background: white;
-    opacity: .75;
+    border-radius: 50%;
+    opacity: .7;
     animation: twinkle 3s infinite ease-in-out;
 }
 
 @keyframes twinkle {
-    0%, 100% { opacity: .25; transform: scale(.8); }
+    0%, 100% { opacity: .2; transform: scale(.7); }
     50% { opacity: 1; transform: scale(1.5); }
 }
 
-/* ---------------------------------------------------------
-   SHOOTING STARS
-   --------------------------------------------------------- */
+/* shooting stars */
 
 .shooting-star {
     position: absolute;
     width: 120px;
     height: 2px;
-    background: linear-gradient(
-        90deg,
-        rgba(255,255,255,0),
-        rgba(255,255,255,.95)
-    );
+    background: linear-gradient(90deg, transparent, white);
     transform: rotate(-35deg);
     opacity: 0;
-    pointer-events: none;
-    animation: shoot 4s linear infinite;
+    animation: shoot 7s linear infinite;
 }
 
-.shooting-star::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: -2px;
-    width: 6px;
-    height: 6px;
-    background: white;
-    border-radius: 50%;
-    box-shadow: 0 0 10px white, 0 0 20px #b0004d;
+.shooting-star:nth-child(1) {
+    top: 10%;
+    left: 80%;
+    animation-delay: 1s;
+}
+
+.shooting-star:nth-child(2) {
+    top: 30%;
+    left: 60%;
+    animation-delay: 4s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 65%;
+    left: 90%;
+    animation-delay: 7s;
 }
 
 .shooting-star:nth-child(4) {
-    animation-delay: 1.5s;
-    left: 20%;
-    top: 5%;
-}
-
-.shooting-star:nth-child(5) {
-    animation-delay: 3s;
-    left: 65%;
-    top: 15%;
-}
-
-.shooting-star:nth-child(6) {
-    animation-delay: .5s;
-    left: 80%;
-    top: 45%;
-}
-
-.shooting-star:nth-child(7) {
-    animation-delay: 2.2s;
-    left: 40%;
-    top: 60%;
+    top: 75%;
+    left: 30%;
+    animation-delay: 10s;
 }
 
 @keyframes shoot {
     0% {
+        transform: translate(0, 0) rotate(-35deg);
         opacity: 0;
-        transform: translate(0,0) rotate(-35deg);
     }
-
-    10% {
+    8% {
         opacity: 1;
     }
-
-    35% {
+    18% {
+        transform: translate(-260px, 180px) rotate(-35deg);
         opacity: 0;
-        transform: translate(-420px,420px) rotate(-35deg);
     }
-
     100% {
         opacity: 0;
     }
 }
 
-/* ---------------------------------------------------------
-   GAME UI
-   --------------------------------------------------------- */
+/* =========================
+   HEADER
+========================= */
 
-#game {
-    position: relative;
-    z-index: 2;
-    min-height: 100vh;
-}
-
-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    height: 65px;
-    z-index: 20;
-
+    width: 100%;
+    height: 70px;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 0 18px;
-
-    background: rgba(3,0,3,.82);
-    border-bottom: 1px solid rgba(170,0,70,.45);
+    padding: 0 22px;
+    background: rgba(2, 0, 5, .75);
     backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(155, 0, 80, .35);
 }
 
 .logo {
+    font-size: 17px;
+    letter-spacing: 3px;
+    color: #f5c5dc;
+}
+
+.star-counter {
+    color: #ffd7e9;
     font-size: 15px;
-    letter-spacing: 2px;
-    color: #ffb3cf;
 }
 
-.progress {
-    font-size: 13px;
-    color: #e7c3d0;
-}
-
-.progress span {
-    color: #ff6fa7;
+.star-counter span {
+    color: #ff8fc3;
     font-weight: bold;
 }
 
-#screen {
+/* =========================
+   GAME WRAPPER
+========================= */
+
+.game {
     min-height: 100vh;
-    padding: 95px 18px 50px;
+    padding: 100px 20px 60px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
 }
 
-.panel {
-    width: min(900px, 100%);
-    background:
-        linear-gradient(
-            145deg,
-            rgba(60,0,28,.82),
-            rgba(8,4,9,.91)
-        );
-
-    border: 1px solid rgba(180,0,75,.48);
-    box-shadow:
-        0 0 50px rgba(100,0,45,.25),
-        inset 0 0 40px rgba(100,0,45,.08);
-
-    border-radius: 24px;
-    padding: 30px 22px;
-    animation: appear .7s ease;
+.screen {
+    width: 100%;
+    max-width: 1100px;
+    display: none;
+    animation: fadeIn .7s ease;
 }
 
-@keyframes appear {
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(18px) scale(.98);
+        transform: translateY(15px);
     }
-
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
 }
 
-h1,
-h2,
-h3 {
-    text-align: center;
+/* =========================
+   PANELS
+========================= */
+
+.panel {
+    background: rgba(12, 0, 14, .84);
+    border: 1px solid rgba(193, 34, 110, .4);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow:
+        0 0 50px rgba(113, 0, 61, .15),
+        inset 0 0 30px rgba(255, 255, 255, .015);
 }
 
 h1 {
-    font-size: clamp(34px, 8vw, 68px);
-    margin: 10px 0;
-    color: #fff0f6;
-    text-shadow: 0 0 25px rgba(220,0,90,.55);
+    font-size: clamp(34px, 7vw, 72px);
+    line-height: 1;
+    margin: 0 0 20px;
+    color: #ffe5f0;
 }
 
 h2 {
-    font-size: clamp(25px, 5vw, 42px);
-    color: #ffd4e4;
+    font-size: clamp(28px, 5vw, 45px);
+    margin: 0 0 15px;
+    color: #ffd6e7;
 }
 
 h3 {
-    color: #ff83b2;
+    color: #ffb4d3;
 }
 
-.subtitle {
-    text-align: center;
-    color: #d9b7c5;
+p {
+    font-size: 18px;
     line-height: 1.8;
-    font-size: 17px;
-    max-width: 680px;
-    margin: 18px auto;
+    color: #eadce4;
 }
 
-.quote {
-    text-align: center;
-    color: #ffb6d0;
-    font-style: italic;
-    font-size: 20px;
-    line-height: 1.7;
-    margin: 30px auto;
-    max-width: 650px;
+.small {
+    font-size: 14px;
+    color: #ad9da7;
 }
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #e66c9f;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 
 button {
-    display: block;
-    width: min(620px, 100%);
-    margin: 12px auto;
-
-    padding: 15px 20px;
-
-    border-radius: 15px;
-    border: 1px solid rgba(255,110,165,.45);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(110,0,48,.85),
-            rgba(45,0,22,.9)
-        );
-
-    color: white;
     font-family: inherit;
-    font-size: 16px;
+}
 
+.choice-container {
+    display: grid;
+    gap: 13px;
+    margin-top: 25px;
+}
+
+.choice {
+    border: 1px solid rgba(225, 74, 145, .45);
+    background: rgba(74, 0, 42, .32);
+    color: #fff;
+    padding: 17px 20px;
+    border-radius: 14px;
     cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
+    text-align: left;
+    font-size: 16px;
+    transition: .25s;
 }
 
-button:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 8px 25px rgba(160,0,75,.3),
-        0 0 20px rgba(200,0,90,.15);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(145,0,62,.9),
-            rgba(65,0,30,.95)
-        );
+.choice:hover {
+    transform: translateX(7px);
+    background: rgba(116, 0, 65, .48);
+    border-color: #ec75a9;
+    box-shadow: 0 0 25px rgba(190, 25, 100, .18);
 }
 
-button:active {
-    transform: scale(.97);
+.primary {
+    border: 0;
+    background: linear-gradient(135deg, #7e164c, #bd3976);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    box-shadow: 0 0 25px rgba(185, 43, 112, .22);
 }
 
-.small-button {
-    width: auto;
-    display: inline-block;
-    margin: 8px;
-    padding: 11px 17px;
+.primary:hover {
+    transform: scale(1.04);
 }
 
-/* ---------------------------------------------------------
-   GALAXY MAP
-   --------------------------------------------------------- */
+/* =========================
+   INTRO
+========================= */
 
-.map {
-    position: relative;
-    width: 100%;
-    min-height: 620px;
-    overflow: hidden;
-    border-radius: 22px;
-
-    background:
-        radial-gradient(circle at 50% 50%, rgba(140,0,65,.16), transparent 28%),
-        radial-gradient(circle at 30% 70%, rgba(80,0,40,.12), transparent 25%),
-        #030205;
-
-    border: 1px solid rgba(170,0,70,.35);
-}
-
-.map-title {
-    position: absolute;
-    z-index: 5;
-    top: 20px;
-    left: 0;
-    right: 0;
+.intro {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
-.map-title h2 {
-    margin: 0;
+.intro .panel {
+    max-width: 850px;
 }
 
-.map-title p {
-    color: #bda2ad;
-    font-size: 13px;
+.big-heart {
+    font-size: 55px;
+    animation: heartbeat 2s infinite;
 }
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+
+/* =========================
+   GALAXY MAP
+========================= */
+
+.galaxy-map {
+    position: relative;
+    height: 650px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(210, 48, 119, .35);
+    background:
+        radial-gradient(circle at 50% 50%, rgba(128, 0, 68, .22), transparent 20%),
+        radial-gradient(circle at 50% 50%, transparent 12%, rgba(112, 0, 67, .12) 13%, transparent 14%),
+        radial-gradient(circle at 50% 50%, transparent 25%, rgba(154, 0, 77, .09) 26%, transparent 27%),
+        #030006;
+}
+
+.orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(220, 98, 156, .14);
+    border-radius: 50%;
+}
+
+.orbit.one { width: 180px; height: 180px; }
+.orbit.two { width: 310px; height: 310px; }
+.orbit.three { width: 450px; height: 450px; }
+.orbit.four { width: 590px; height: 590px; }
 
 .sun {
     position: absolute;
     left: 50%;
     top: 50%;
+    width: 75px;
+    height: 75px;
     transform: translate(-50%, -50%);
-
-    width: 95px;
-    height: 95px;
     border-radius: 50%;
-
-    background:
-        radial-gradient(circle at 35% 30%, #fff1c9, #d29b32 45%, #8d4315);
-
-    box-shadow:
-        0 0 25px #d58c2e,
-        0 0 70px rgba(180,90,20,.45);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 12px;
-    color: #210d00;
-    font-weight: bold;
+    background: radial-gradient(circle, #ffd9ec, #9b1d5b 50%, #250014);
+    box-shadow: 0 0 45px rgba(213, 55, 125, .55);
 }
 
 .planet {
     position: absolute;
-
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
-
+    border: 2px solid rgba(255, 205, 229, .35);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    cursor: pointer;
-
-    border: 2px solid rgba(255,255,255,.2);
-
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     text-align: center;
-
-    box-shadow:
-        0 0 18px rgba(170,0,70,.35);
-
-    transition:
-        transform .25s ease,
-        filter .25s ease,
-        box-shadow .25s ease;
+    padding: 8px;
+    transition: .3s;
+    box-shadow: 0 0 25px rgba(177, 32, 100, .3);
 }
 
 .planet:hover {
     transform: scale(1.15);
-    filter: brightness(1.25);
-    box-shadow:
-        0 0 25px rgba(255,70,140,.55),
-        0 0 50px rgba(160,0,75,.3);
+    box-shadow: 0 0 40px rgba(240, 98, 158, .6);
+}
+
+.planet.visited {
+    border-color: #f38db8;
 }
 
 .planet.locked {
@@ -441,525 +411,289 @@ button:active {
     cursor: not-allowed;
 }
 
-.planet.done {
-    box-shadow:
-        0 0 22px rgba(255,120,170,.7),
-        0 0 50px rgba(180,0,80,.35);
+.planet small {
+    display: block;
 }
 
-.p1 {
-    width: 68px;
-    height: 68px;
-    left: 8%;
-    top: 18%;
-    background: radial-gradient(circle at 35% 30%, #8a552c, #32170e);
-}
+.p1 { left: 20%; top: 16%; background: radial-gradient(circle at 35% 30%, #c18bff, #4e145f); }
+.p2 { left: 48%; top: 10%; background: radial-gradient(circle at 35% 30%, #b87a46, #29120a); }
+.p3 { right: 15%; top: 26%; background: radial-gradient(circle at 35% 30%, #7592ff, #15215d); }
+.p4 { left: 12%; top: 46%; background: radial-gradient(circle at 35% 30%, #8a5bff, #24103d); }
+.p5 { right: 12%; top: 52%; background: radial-gradient(circle at 35% 30%, #6db8ff, #093a55); }
+.p6 { left: 28%; bottom: 9%; background: radial-gradient(circle at 35% 30%, #ff9cc5, #551331); }
+.p7 { right: 28%; bottom: 9%; background: radial-gradient(circle at 35% 30%, #ffbb73, #6d2711); }
+.p8 { left: 46%; bottom: 3%; background: radial-gradient(circle at 35% 30%, #9ed8ff, #183a61); }
+.p9 { left: 4%; top: 20%; background: radial-gradient(circle at 35% 30%, #d7a6ff, #36165e); }
+.p10 { right: 3%; top: 12%; background: radial-gradient(circle at 35% 30%, #ef88bd, #53112f); }
 
-.p2 {
-    width: 78px;
-    height: 78px;
-    left: 22%;
-    top: 63%;
-    background: radial-gradient(circle at 35% 30%, #563c91, #17102d);
-}
-
-.p3 {
-    width: 74px;
-    height: 74px;
-    left: 35%;
-    top: 17%;
-    background: radial-gradient(circle at 35% 30%, #315d89, #0b1728);
-}
-
-.p4 {
-    width: 88px;
-    height: 88px;
-    right: 27%;
-    top: 65%;
-    background: radial-gradient(circle at 35% 30%, #a71e52, #360617);
-}
-
-.p5 {
-    width: 72px;
-    height: 72px;
-    right: 8%;
-    top: 20%;
-    background: radial-gradient(circle at 35% 30%, #5b7d9a, #14202c);
-}
-
-.p6 {
-    width: 84px;
-    height: 84px;
-    right: 12%;
-    top: 62%;
-    background: radial-gradient(circle at 35% 30%, #c9b09a, #5c3928);
-}
-
-.p7 {
-    width: 64px;
-    height: 64px;
-    left: 48%;
-    top: 8%;
-    background: radial-gradient(circle at 35% 30%, #7c4f96, #28102f);
-}
-
-.p8 {
-    width: 80px;
-    height: 80px;
-    left: 7%;
-    top: 80%;
-    background: radial-gradient(circle at 35% 30%, #4c9168, #112c1b);
-}
-
-.p9 {
-    width: 78px;
-    height: 78px;
-    right: 45%;
-    top: 82%;
-    background: radial-gradient(circle at 35% 30%, #b789bd, #3b183f);
-}
-
-.p10 {
-    width: 85px;
-    height: 85px;
-    right: 3%;
-    top: 42%;
-    background: radial-gradient(circle at 35% 30%, #b07d4e, #392010);
-}
-
-/* ---------------------------------------------------------
-   SPACESHIP
-   --------------------------------------------------------- */
-
-.ship {
+.planet-label {
     position: absolute;
-    z-index: 4;
-
-    width: 46px;
-    height: 28px;
-
-    background: linear-gradient(135deg, #fff, #c8c8d4);
-    border-radius: 50% 60% 60% 30%;
-
-    box-shadow:
-        0 0 10px white,
-        0 0 25px rgba(255,255,255,.5);
-
-    transition:
-        left 1s ease,
-        top 1s ease;
+    bottom: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: #d9c4ce;
+    font-size: 12px;
 }
 
-.ship::before {
-    content: "";
+.spaceship {
     position: absolute;
-    width: 14px;
-    height: 14px;
-    left: 15px;
-    top: 6px;
-    border-radius: 50%;
-    background: #8d0d43;
-}
-
-.ship::after {
-    content: "";
-    position: absolute;
-    right: -18px;
-    top: 10px;
-    width: 20px;
-    height: 7px;
-    background: linear-gradient(90deg, #ff7eae, transparent);
-    border-radius: 50%;
-}
-
-/* ---------------------------------------------------------
-   HIDDEN STARS
-   --------------------------------------------------------- */
-
-.hidden-star {
-    position: absolute;
-    z-index: 10;
-
-    width: 22px;
-    height: 22px;
-
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 27px;
+    transition: all 1s ease;
+    z-index: 20;
+}
 
-    color: #fff;
-    font-size: 17px;
+/* =========================
+   STORY PLANET
+========================= */
 
+.story-card {
+    position: relative;
+    min-height: 500px;
+}
+
+.scene-art {
+    min-height: 210px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-size: 80px;
+    background:
+        radial-gradient(circle at center, rgba(161, 28, 95, .25), transparent 45%),
+        #060008;
+    border: 1px solid rgba(220, 80, 144, .2);
+}
+
+/* =========================
+   HIDDEN COLLECTIBLE STARS
+========================= */
+
+.hidden-star {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    color: #fff5fb;
+    font-size: 19px;
+    line-height: 25px;
     cursor: pointer;
-
-    animation:
-        hiddenTwinkle 1.8s infinite ease-in-out;
-
-    filter:
-        drop-shadow(0 0 5px white)
-        drop-shadow(0 0 10px #ff3d87);
+    z-index: 50;
+    text-shadow:
+        0 0 5px white,
+        0 0 12px #ff72ad,
+        0 0 22px #b40060;
+    animation: starPulse 1.8s infinite ease-in-out;
 }
 
 .hidden-star:hover {
-    transform: scale(1.4);
+    transform: scale(1.5);
 }
 
-@keyframes hiddenTwinkle {
-    0%, 100% {
-        opacity: .35;
-        transform: scale(.85);
-    }
+.hidden-star.collected {
+    display: none;
+}
 
+@keyframes starPulse {
+    0%, 100% {
+        opacity: .45;
+        transform: scale(.8);
+    }
     50% {
         opacity: 1;
         transform: scale(1.15);
     }
 }
 
-.star-collected {
-    animation: collectStar .7s ease forwards;
+.star-found {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background: rgba(24, 0, 18, .96);
+    border: 1px solid #d95b96;
+    padding: 20px 28px;
+    border-radius: 18px;
+    box-shadow: 0 0 50px rgba(218, 62, 133, .45);
+    text-align: center;
+    animation: found .35s ease;
 }
 
-@keyframes collectStar {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(2);
-        opacity: 1;
-    }
-
-    100% {
-        transform: scale(0);
+@keyframes found {
+    from {
         opacity: 0;
+        transform: translate(-50%, -50%) scale(.7);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
-/* ---------------------------------------------------------
-   STORY SCENES
-   --------------------------------------------------------- */
+/* =========================
+   MEMORY CARDS
+========================= */
 
-.scene {
-    position: relative;
-    min-height: 430px;
-    overflow: hidden;
-    border-radius: 20px;
-    padding: 25px;
-
-    background:
-        radial-gradient(circle at 50% 30%, rgba(160,0,75,.18), transparent 35%),
-        #050306;
-
-    border: 1px solid rgba(160,0,70,.3);
-}
-
-.scene p {
-    color: #dfc8d1;
-    line-height: 1.8;
-    font-size: 17px;
+.memory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
 }
 
 .memory {
-    text-align: center;
-    padding: 25px;
-    margin: 20px 0;
-
-    border-left: 2px solid #a6004a;
-
-    background: rgba(100,0,45,.10);
-    color: #ffc9dc;
-    font-style: italic;
-    line-height: 1.8;
+    padding: 22px;
+    border-radius: 18px;
+    background: rgba(81, 0, 46, .2);
+    border: 1px solid rgba(210, 77, 139, .25);
+    min-height: 130px;
 }
 
-/* ---------------------------------------------------------
-   OCEAN
-   --------------------------------------------------------- */
-
-.ocean {
-    position: relative;
-    height: 430px;
-    overflow: hidden;
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #07030a 0%,
-            #180719 35%,
-            #21092a 60%,
-            #050b18 100%
-        );
+.memory strong {
+    display: block;
+    color: #ffafd0;
+    margin-bottom: 8px;
 }
 
-.moon {
-    position: absolute;
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    right: 12%;
-    top: 10%;
-
-    background: #fff5fa;
-    box-shadow: 0 0 35px rgba(255,255,255,.55);
-}
-
-.wave {
-    position: absolute;
-    left: -10%;
-    bottom: -40px;
-    width: 120%;
-    height: 160px;
-
-    background:
-        radial-gradient(
-            ellipse at 50% 0%,
-            #3b0e46,
-            #0a1025 70%
-        );
-
-    border-radius: 50% 50% 0 0;
-}
-
-.stingray {
-    position: absolute;
-    font-size: 45px;
-    animation: swim 9s linear infinite;
-}
-
-@keyframes swim {
-    from {
-        left: -100px;
-        transform: translateY(0) rotate(-5deg);
-    }
-
-    50% {
-        transform: translateY(-30px) rotate(5deg);
-    }
-
-    to {
-        left: calc(100% + 100px);
-        transform: translateY(10px) rotate(-4deg);
-    }
-}
-
-/* ---------------------------------------------------------
-   WEDDING
-   --------------------------------------------------------- */
-
-.wedding {
-    position: relative;
-    min-height: 430px;
-    overflow: hidden;
-    border-radius: 20px;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(255,180,210,.16),
-            transparent 25%
-        ),
-        linear-gradient(
-            180deg,
-            #1d0714,
-            #050306
-        );
-}
-
-.petals {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-}
-
-.petal {
-    position: absolute;
-    top: -30px;
-    width: 10px;
-    height: 15px;
-    border-radius: 70% 30% 70% 30%;
-    background: #d67a9a;
-    opacity: .7;
-    animation: fall 7s linear infinite;
-}
-
-@keyframes fall {
-    to {
-        transform:
-            translateY(500px)
-            rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* ---------------------------------------------------------
-   COUNTRYSIDE
-   --------------------------------------------------------- */
-
-.countryside {
-    position: relative;
-    min-height: 430px;
-    overflow: hidden;
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            #160711 0%,
-            #3c1726 48%,
-            #193c27 49%,
-            #07190e 100%
-        );
-}
-
-.sunset {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    top: 60px;
-    left: 15%;
-    background: #ffb08c;
-    box-shadow: 0 0 50px #ff8a7b;
-}
-
-.house {
-    position: absolute;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 100px;
-    background: #513026;
-    border: 2px solid #8e5d4b;
-}
-
-.house::before {
-    content: "";
-    position: absolute;
-    top: -65px;
-    left: -20px;
-    border-left: 95px solid transparent;
-    border-right: 95px solid transparent;
-    border-bottom: 70px solid #2a0c19;
-}
-
-.tree {
-    position: absolute;
-    bottom: 80px;
-    right: 10%;
-    font-size: 100px;
-}
-
-/* ---------------------------------------------------------
-   FINAL LETTER
-   --------------------------------------------------------- */
+/* =========================
+   LETTER
+========================= */
 
 .letter {
-    max-height: 65vh;
-    overflow-y: auto;
-
-    padding: 25px;
-
-    background: rgba(255,255,255,.025);
-    border: 1px solid rgba(255,100,160,.18);
-    border-radius: 18px;
-
-    line-height: 1.9;
-    color: #ead5dd;
-    font-size: 17px;
+    max-width: 850px;
+    margin: auto;
+    background:
+        linear-gradient(rgba(35, 0, 24, .92), rgba(15, 0, 12, .96));
+    border: 1px solid rgba(217, 87, 144, .35);
+    padding: clamp(25px, 6vw, 60px);
+    border-radius: 25px;
+    box-shadow: 0 0 70px rgba(129, 0, 67, .2);
 }
 
 .letter p {
-    margin: 0 0 20px;
+    font-size: 18px;
+    line-height: 2;
 }
 
 .signature {
+    margin-top: 35px;
     text-align: right;
-    color: #ff8db8;
-    font-size: 22px;
-    font-style: italic;
+    color: #ffafd0;
+    font-size: 21px;
 }
 
-/* ---------------------------------------------------------
+/* =========================
    CONSTELLATION
-   --------------------------------------------------------- */
+========================= */
 
 .constellation {
     position: relative;
-    width: 100%;
-    max-width: 650px;
-    height: 430px;
-    margin: auto;
-
+    height: 500px;
+    margin-top: 25px;
     background:
-        radial-gradient(circle, rgba(160,0,70,.14), transparent 50%),
-        #020204;
-
-    border-radius: 20px;
-    border: 1px solid rgba(180,0,75,.35);
+        radial-gradient(circle, rgba(114, 0, 63, .2), transparent 45%),
+        #020005;
+    border-radius: 25px;
+    overflow: hidden;
 }
 
 .constellation-star {
     position: absolute;
-    width: 7px;
-    height: 7px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: white;
+    box-shadow: 0 0 15px #ff9bc6, 0 0 30px #b30062;
+    animation: constellationGlow 2s infinite ease-in-out;
+}
 
-    box-shadow:
-        0 0 8px white,
-        0 0 18px #ff4d91;
+@keyframes constellationGlow {
+    0%, 100% { opacity: .5; }
+    50% { opacity: 1; }
 }
 
 .constellation-line {
     position: absolute;
     height: 1px;
-    background: rgba(255,160,195,.4);
+    background: rgba(255, 160, 203, .4);
     transform-origin: left center;
 }
 
-/* ---------------------------------------------------------
-   RESPONSIVE
-   --------------------------------------------------------- */
+/* =========================
+   STAR REVEAL
+========================= */
 
-@media (max-width: 650px) {
+.star-reveal {
+    text-align: center;
+    padding: 50px 20px;
+}
 
-    header {
-        height: 58px;
+.real-star {
+    font-size: 120px;
+    margin: 25px;
+    animation: realStar 3s infinite ease-in-out;
+}
+
+@keyframes realStar {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px white);
+    }
+    50% {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 40px #ff78b5);
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .header {
+        padding: 0 13px;
     }
 
     .logo {
         font-size: 12px;
-    }
-
-    .progress {
-        font-size: 11px;
-    }
-
-    #screen {
-        padding: 80px 10px 30px;
+        letter-spacing: 2px;
     }
 
     .panel {
-        padding: 22px 14px;
-        border-radius: 18px;
+        padding: 24px 18px;
     }
 
-    .map {
-        min-height: 600px;
+    .galaxy-map {
+        height: 570px;
     }
 
     .planet {
-        transform: scale(.85);
+        width: 62px;
+        height: 62px;
+        font-size: 10px;
     }
 
-    .planet:hover {
-        transform: scale(.95);
+    .planet-label {
+        font-size: 9px;
     }
 
-    .letter {
+    .scene-art {
+        min-height: 180px;
+    }
+
+    p {
         font-size: 16px;
     }
 }
@@ -968,2405 +702,2808 @@ button:active {
 
 <body>
 
-<div id="space">
+<div class="space">
     <div class="nebula one"></div>
     <div class="nebula two"></div>
+    <div class="nebula three"></div>
 
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
+
+    <div id="backgroundStars"></div>
 </div>
 
-<div id="game">
-
-<header>
-    <div class="logo">LOLA'S LITTLE UNIVERSE ✦</div>
-
-    <div class="progress">
-        Stars:
-        <span id="starCount">0</span>/27
+<header class="header">
+    <div class="logo">LOLA'S LITTLE UNIVERSE</div>
+    <div class="star-counter">
+        ⭐ <span id="starCount">0</span> / 27
     </div>
 </header>
 
-<main id="screen"></main>
+<main class="game">
 
-</div>
+<!-- =========================
+     INTRO
+========================= -->
 
-<script>
+<section id="intro" class="screen active">
 
-/* =========================================================
-   GAME STATE
-   ========================================================= */
-
-const state = {
-
-    stars: JSON.parse(localStorage.getItem("lolaStars") || "[]"),
-
-    unlocked: JSON.parse(
-        localStorage.getItem("lolaPlanets") ||
-        JSON.stringify([
-            "beginning",
-            "coffee",
-            "observatory"
-        ])
-    ),
-
-    completed: JSON.parse(
-        localStorage.getItem("lolaCompleted") || "[]"
-    ),
-
-    choices: {},
-
-    currentPlanet: null
-};
-
-const screen = document.getElementById("screen");
-const starCount = document.getElementById("starCount");
-
-function saveGame() {
-
-    localStorage.setItem(
-        "lolaStars",
-        JSON.stringify(state.stars)
-    );
-
-    localStorage.setItem(
-        "lolaPlanets",
-        JSON.stringify(state.unlocked)
-    );
-
-    localStorage.setItem(
-        "lolaCompleted",
-        JSON.stringify(state.completed)
-    );
-}
-
-function updateHUD() {
-
-    starCount.textContent = state.stars.length;
-}
-
-function hasStar(id) {
-
-    return state.stars.includes(id);
-}
-
-function collectStar(id, element) {
-
-    if (hasStar(id)) return;
-
-    state.stars.push(id);
-
-    saveGame();
-    updateHUD();
-
-    if (element) {
-
-        element.classList.add("star-collected");
-
-        setTimeout(() => {
-            element.remove();
-        }, 700);
-    }
-}
-
-function unlock(id) {
-
-    if (!state.unlocked.includes(id)) {
-
-        state.unlocked.push(id);
-        saveGame();
-    }
-}
-
-function complete(id) {
-
-    if (!state.completed.includes(id)) {
-
-        state.completed.push(id);
-        saveGame();
-    }
-}
-
-function isComplete(id) {
-
-    return state.completed.includes(id);
-}
-
-updateHUD();
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function panel(html) {
-
-    screen.innerHTML = `
+    <div class="intro">
         <div class="panel">
-            ${html}
+
+            <div class="big-heart">♡</div>
+
+            <div class="eyebrow">A birthday story for Lola</div>
+
+            <h1>Lola's Little Universe</h1>
+
+            <p>
+                Somewhere beyond the stars, there is a universe that has been
+                waiting for you.
+            </p>
+
+            <p>
+                But before you find it, there are places you have to visit,
+                memories you have to uncover, choices you have to make...
+                and 27 little stars hidden along the way.
+            </p>
+
+            <p class="small">
+                Some stars are easy to find.<br>
+                Some are hiding where you least expect them.
+            </p>
+
+            <button class="primary" onclick="startGame()">
+                Begin the journey ✦
+            </button>
+
         </div>
-    `;
-}
+    </div>
 
-function button(text, action, disabled = false) {
-
-    return `
-        <button
-            ${disabled ? "disabled" : ""}
-            onclick="${action}"
-        >
-            ${text}
-        </button>
-    `;
-}
-
-function star(id, x, y) {
-
-    if (hasStar(id)) return "";
-
-    return `
-        <div
-            class="hidden-star"
-            style="left:${x}%;top:${y}%"
-            onclick="collectStar('${id}', this)"
-            title="A hidden star"
-        >
-            ✦
-        </div>
-    `;
-}
-
-function transition(fn) {
-
-    screen.style.opacity = "0";
-
-    setTimeout(() => {
-
-        fn();
-
-        screen.style.opacity = "1";
-
-    }, 250);
-}
+</section>
 
 
-/* =========================================================
-   INTRO
-   ========================================================= */
+<!-- =========================
+     PROLOGUE
+========================= -->
 
-function startGame() {
+<section id="prologue" class="screen">
 
-    panel(`
-        <h1>Lola's Little Universe</h1>
+    <div class="panel">
 
-        <p class="subtitle">
-            Somewhere between the stars, the ocean and all
-            the little pieces of a life that haven't happened yet,
-            there is a universe waiting for you.
+        <div class="eyebrow">Prologue</div>
+
+        <h2>The Beginning</h2>
+
+        <p>
+            Lola opens her eyes.
         </p>
 
-        <div class="quote">
-            "There are billions of stars in the sky.<br>
-            Somehow, I still found you."
-        </div>
-
-        ${button(
-            "✦ Begin the adventure",
-            "transition(prologue)"
-        )}
-
-        ${button(
-            "↩ Continue my journey",
-            "transition(galaxyMap)"
-        )}
-
-        <p style="
-            text-align:center;
-            color:#98727f;
-            font-size:13px;
-            margin-top:25px;
-        ">
-            Your collected stars are saved automatically.
-        </p>
-    `);
-}
-
-
-/* =========================================================
-   PROLOGUE
-   ========================================================= */
-
-function prologue() {
-
-    panel(`
-        <h2>Prologue — The Beginning</h2>
-
-        <div class="scene">
-
-            ${star("s1", 12, 18)}
-
-            <p>
-                Lola opens her eyes.
-            </p>
-
-            <p>
-                There is no ceiling above her.
-                No walls.
-                No floor she recognises.
-            </p>
-
-            <p>
-                Only an enormous black sky filled with stars.
-            </p>
-
-            <p>
-                A tiny spaceship rests beside her.
-                Its little window glows burgundy.
-            </p>
-
-            <div class="memory">
-                On the screen inside it, three words are waiting:
-                <br><br>
-                <strong>Find your universe.</strong>
-            </div>
-
-            <p>
-                Three paths appear in the distance.
-            </p>
-
-        </div>
-
-        ${button(
-            "🚀 Take the spaceship",
-            "transition(openingShip)"
-        )}
-
-        ${button(
-            "✨ Follow the stars",
-            "transition(openingStars)"
-        )}
-
-        ${button(
-            "🌊 Follow the sound of waves",
-            "transition(openingOcean)"
-        )}
-    `);
-}
-
-function openingShip() {
-
-    unlock("storm");
-
-    panel(`
-        <h2>The Little Spaceship</h2>
-
-        <div class="scene">
-
-            ${star("s2", 80, 17)}
-
-            <p>
-                Lola climbs into the spaceship.
-            </p>
-
-            <p>
-                It feels strangely familiar, even though
-                she has never seen it before.
-            </p>
-
-            <p>
-                On the dashboard is a tiny handwritten note.
-            </p>
-
-            <div class="memory">
-                "If you ever get lost,
-                follow the person who makes the universe
-                feel a little less frightening."
-            </div>
-
-        </div>
-
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-function openingStars() {
-
-    unlock("hazel");
-
-    panel(`
-        <h2>Follow the Stars</h2>
-
-        <div class="scene">
-
-            ${star("s3", 68, 22)}
-
-            <p>
-                Lola follows the brightest stars.
-            </p>
-
-            <p>
-                The farther she walks, the more the stars
-                begin to resemble tiny memories.
-            </p>
-
-            <div class="memory">
-                A voice.<br>
-                A laugh.<br>
-                Someone talking about the future.<br>
-                Someone who writes when feelings become
-                too big for ordinary words.
-            </div>
-
-            <p>
-                Somewhere ahead, there is a girl she hasn't met
-                in this strange little universe yet.
-            </p>
-
-        </div>
-
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-function openingOcean() {
-
-    unlock("ocean");
-
-    panel(`
-        <h2>The Sound of the Ocean</h2>
-
-        <div class="ocean">
-
-            ${star("s4", 23, 25)}
-
-            <div class="moon"></div>
-
-            <div class="wave"></div>
-
-            <div class="stingray"
-                 style="top:58%;animation-delay:-2s">
-                🐟
-            </div>
-
-            <div class="stingray"
-                 style="top:72%;animation-delay:-6s;font-size:30px">
-                🐟
-            </div>
-
-        </div>
-
-        <p class="quote">
-            "She wants to see the ocean someday."
+        <p>
+            There is no ceiling above her.
+            No floor beneath her.
+            Only an endless black sky filled with stars.
         </p>
 
-        ${button(
-            "Enter the galaxy",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   GALAXY MAP
-   ========================================================= */
-
-function galaxyMap() {
-
-    const planets = [
-
-        ["beginning", "Beginning", "p1"],
-        ["coffee", "Coffee", "p2"],
-        ["observatory", "Stars", "p3"],
-        ["storm", "Storm", "p4"],
-        ["hazel", "Hazel", "p5"],
-        ["colour", "Colours", "p6"],
-        ["gravity", "Gravity", "p7"],
-        ["ocean", "Ocean", "p8"],
-        ["sunset", "Sunset", "p9"],
-        ["future", "Future", "p10"]
-    ];
-
-    let planetHTML = "";
-
-    planets.forEach(([id, name, cls]) => {
-
-        const locked = !state.unlocked.includes(id);
-        const done = isComplete(id);
-
-        planetHTML += `
-            <div
-                class="planet ${cls}
-                ${locked ? "locked" : ""}
-                ${done ? "done" : ""}"
-                onclick="${
-                    locked
-                    ? `lockedMessage('${name}')`
-                    : `travel('${id}')`
-                }"
-            >
-                ${done ? "✓ " : ""}${name}
-            </div>
-        `;
-    });
-
-    let shipPosition = {
-        left: "47%",
-        top: "49%"
-    };
-
-    if (state.currentPlanet === "coffee")
-        shipPosition = {left:"23%",top:"66%"};
-
-    if (state.currentPlanet === "ocean")
-        shipPosition = {left:"8%",top:"82%"};
-
-    if (state.currentPlanet === "future")
-        shipPosition = {left:"5%",top:"44%"};
-
-    panel(`
-
-        <h2>🌌 The Galaxy</h2>
-
-        <p class="subtitle">
-            Your spaceship is waiting.
-            Choose a planet to explore.
+        <p>
+            Floating in front of her is a tiny spaceship.
         </p>
 
-        <div class="map">
-
-            <div class="map-title">
-                <p>
-                    Explore the planets. Find the hidden stars.
-                </p>
-            </div>
-
-            <div class="sun">OUR<br>UNIVERSE</div>
-
-            <div
-                class="ship"
-                style="
-                    left:${shipPosition.left};
-                    top:${shipPosition.top};
-                "
-            ></div>
-
-            ${planetHTML}
-
-        </div>
-
-        <p class="subtitle">
-            ✦ ${state.stars.length}/27 stars found
+        <p>
+            A message appears across its window:
         </p>
 
-        ${
-            state.stars.length >= 27
-            ? button(
-                "🌌 Enter Our Universe",
-                "transition(universeChapter)"
-            )
-            : ""
-        }
-
-    `);
-}
-
-function lockedMessage(name) {
-
-    alert(
-        `${name} is still hidden.\n\n`
-        + `Explore the other planets first.`
-    );
-}
-
-function travel(id) {
-
-    state.currentPlanet = id;
-
-    transition(() => {
-
-        switch(id) {
-
-            case "beginning":
-                beginningPlanet();
-                break;
-
-            case "coffee":
-                coffeePlanet();
-                break;
-
-            case "observatory":
-                observatoryPlanet();
-                break;
-
-            case "storm":
-                stormPlanet();
-                break;
-
-            case "hazel":
-                hazelPlanet();
-                break;
-
-            case "colour":
-                colourPlanet();
-                break;
-
-            case "gravity":
-                gravityPlanet();
-                break;
-
-            case "ocean":
-                oceanPlanet();
-                break;
-
-            case "sunset":
-                sunsetPlanet();
-                break;
-
-            case "future":
-                futurePlanet();
-                break;
-
-            default:
-                galaxyMap();
-        }
-
-    });
-}
-
-
-/* =========================================================
-   PLANET 1 — BEGINNING
-   ========================================================= */
-
-function beginningPlanet() {
-
-    panel(`
-        <h2>Planet I — The Beginning</h2>
-
-        <div class="scene">
-
-            ${star("s5", 18, 70)}
-
-            <p>
-                The first planet is quiet.
-            </p>
-
-            <p>
-                There are no grand monuments here.
-                No impossible cities.
-                No great mysteries.
-            </p>
-
-            <p>
-                Just the beginning.
-            </p>
-
-            <div class="memory">
-                Every love story begins somewhere.
-                Sometimes it begins with a conversation.
-                Sometimes a laugh.
-                Sometimes with two people
-                who don't realise yet how important
-                they are going to become to each other.
-            </div>
-
-        </div>
-
-        ${button(
-            "Leave the planet",
-            "unlock('coffee'); transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 2 — COFFEE
-   ========================================================= */
-
-function coffeePlanet() {
-
-    panel(`
-        <h2>Planet II — Black Coffee</h2>
-
-        <div class="scene">
-
-            ${star("s6", 77, 20)}
-            ${star("s7", 34, 77)}
-
-            <p>
-                Lola lands somewhere that smells like coffee.
-            </p>
-
-            <p>
-                There is one tiny café floating in the middle
-                of the galaxy.
-            </p>
-
-            <div class="memory">
-                Black coffee.
-                No sugar.
-                Somehow exactly right.
-            </div>
-
-            <p>
-                A cup sits on the table with a message beneath it:
-            </p>
-
-            <div class="quote">
-                "Someone out there knows your favourite things."
-            </div>
-
-        </div>
-
-        ${button(
-            "☕ Sit and drink the coffee",
-            "coffeeChoice('coffee')"
-        )}
-
-        ${button(
-            "🔭 Look through the window",
-            "coffeeChoice('window')"
-        )}
-
-        ${button(
-            "🚀 Return to the galaxy",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-function coffeeChoice(choice) {
-
-    state.choices.coffee = choice;
-
-    let text = choice === "coffee"
-        ? `
-            You sit quietly with the coffee.
-            <br><br>
-            It tastes like comfort.
-            Like one of those ordinary moments
-            you would want to share with someone you love.
-        `
-        : `
-            You look through the window.
-            <br><br>
-            Far away, a tiny blue planet shines.
-            You don't know it yet, but you'll eventually
-            find something important there.
-        `;
-
-    unlock("observatory");
-
-    panel(`
-        <h2>The Little Things</h2>
-
         <div class="memory">
-            ${text}
+            <strong>THERE IS A UNIVERSE WAITING FOR YOU.</strong>
+            <span>
+                But first, you have to find your way to it.
+            </span>
         </div>
 
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 3 — OBSERVATORY
-   ========================================================= */
-
-function observatoryPlanet() {
-
-    panel(`
-        <h2>Planet III — The Observatory</h2>
-
-        <div class="scene">
-
-            ${star("s8", 25, 22)}
-            ${star("s9", 74, 68)}
-
-            <p>
-                The next planet is covered in observatories.
-            </p>
-
-            <p>
-                Every telescope points towards the same
-                distant galaxy.
-            </p>
-
-            <p>
-                When Lola looks through one,
-                she sees fragments of a story.
-            </p>
-
-            <div class="memory">
-                She likes sunsets.<br>
-                She writes poetry.<br>
-                She talks about a tree house.<br>
-                She wants a life in the countryside.<br>
-                And somewhere in all of it,
-                she keeps saying one name.
-            </div>
-
-            <p class="quote">
-                Lola.
-            </p>
-
-        </div>
-
-        ${button(
-            "Look closer",
-            "transition(girlBehindStars)"
-        )}
-
-        ${button(
-            "Return to the galaxy",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-function girlBehindStars() {
-
-    unlock("storm");
-    unlock("hazel");
-
-    panel(`
-        <h2>The Girl Behind the Stars</h2>
-
-        <div class="scene">
-
-            ${star("s10", 54, 18)}
-
-            <p>
-                The telescope focuses.
-            </p>
-
-            <p>
-                For the first time, Lola sees her.
-            </p>
-
-            <div class="memory">
-                Brown eyes.<br>
-                Brown hair.<br>
-                Two tattoo sleeves.<br>
-                A love for sunsets.<br>
-                A ridiculous amount of poetry.
-            </div>
-
-            <p>
-                The girl smiles at something on her screen.
-            </p>
-
-            <p>
-                And Lola somehow knows:
-            </p>
-
-            <div class="quote">
-                "This is Bree."
-            </div>
-
-        </div>
-
-        ${button(
-            "Find out what happens next",
-            "transition(stormPlanet)"
-        )}
-
-        ${button(
-            "Return to the galaxy",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 4 — STORM
-   ========================================================= */
-
-function stormPlanet() {
-
-    panel(`
-        <h2>Planet IV — The Storm</h2>
-
-        <div class="scene">
-
-            ${star("s11", 83, 17)}
-            ${star("s12", 21, 58)}
-
-            <p>
-                Suddenly, thunder cracks across the sky.
-            </p>
-
-            <p>
-                The spaceship shakes.
-            </p>
-
-            <p>
-                The stars disappear behind dark clouds.
-            </p>
-
-            <div class="memory">
-                Someone is frightened by storms.
-                She covers her face.
-                She counts to ten.
-                And somewhere far away,
-                another girl stays on the phone with her.
-            </div>
-
-        </div>
-
-        ${button(
-            "❤️ Stay with her",
-            "stormChoice('stay')"
-        )}
-
-        ${button(
-            "⚡ Fly through the storm",
-            "stormChoice('fly')"
-        )}
-
-        ${button(
-            "✨ Follow the little light",
-            "stormChoice('light')"
-        )}
-    `);
-}
-
-function stormChoice(choice) {
-
-    state.choices.storm = choice;
-
-    let outcome = {
-
-        stay: `
-            You don't try to make the storm disappear.
-            You simply stay.
-            <br><br>
-            Sometimes love isn't fixing the thunder.
-            Sometimes it's making sure someone doesn't
-            have to face it alone.
-        `,
-
-        fly: `
-            You grip the controls and fly forward.
-            <br><br>
-            The storm roars around you,
-            but eventually the clouds break.
-            <br><br>
-            On the other side is a sky full of stars.
-        `,
-
-        light: `
-            You follow a tiny burgundy light.
-            <br><br>
-            It leads you safely through the storm.
-            <br><br>
-            Beneath it is a message:
-            <br><br>
-            <strong>
-            "You don't have to be brave all by yourself."
-            </strong>
-        `
-    }[choice];
-
-    unlock("hazel");
-    unlock("gravity");
-
-    panel(`
-        <h2>After the Storm</h2>
-
-        <div class="memory">
-            ${outcome}
-        </div>
-
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 5 — HAZEL EYES
-   ========================================================= */
-
-function hazelPlanet() {
-
-    panel(`
-        <h2>Planet V — Hazel</h2>
-
-        <div class="scene">
-
-            ${star("s13", 15, 20)}
-            ${star("s14", 80, 74)}
-
-            <p>
-                The planet changes colour every time
-                Lola looks around.
-            </p>
-
-            <p>
-                Gold.
-                Green.
-                Brown.
-                Amber.
-            </p>
-
-            <p>
-                The colours move like sunlight through trees.
-            </p>
-
-            <div class="quote">
-                Hazel eyes.
-            </div>
-
-            <p>
-                A tiny note appears:
-            </p>
-
-            <div class="memory">
-                "Some people have eyes.
-                Some people have little galaxies in them."
-            </div>
-
-        </div>
-
-        ${button(
-            "Keep exploring",
-            "unlock('colour'); transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 6 — COLOURS
-   ========================================================= */
-
-function colourPlanet() {
-
-    panel(`
-        <h2>Planet VI — Two Colours</h2>
-
-        <div class="scene">
-
-            ${star("s15", 72, 20)}
-            ${star("s16", 28, 72)}
-
-            <p>
-                Two moons appear above the planet.
-            </p>
-
-            <div class="quote">
-                Baby blue.<br>
-                Burgundy.
-            </div>
-
-            <p>
-                One belongs to Lola.
-                One belongs to Bree.
-            </p>
-
-            <p>
-                They orbit each other without ever
-                needing to become the same colour.
-            </p>
-
-            <div class="memory">
-                Different colours.
-                Different worlds.
-                Somehow still part of the same sky.
-            </div>
-
-        </div>
-
-        ${button(
-            "Continue",
-            "unlock('gravity'); transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 7 — GRAVITY
-   ========================================================= */
-
-function gravityPlanet() {
-
-    panel(`
-        <h2>Planet VII — Gravity</h2>
-
-        <div class="scene">
-
-            ${star("s17", 18, 18)}
-            ${star("s18", 83, 77)}
-
-            <p>
-                Gravity behaves strangely here.
-            </p>
-
-            <p>
-                Everything floats.
-            </p>
-
-            <p>
-                Including two people who clearly
-                have a very different opinion
-                about how tall they are.
-            </p>
-
-            <div class="memory">
-                5'10.<br>
-                5'1-ish.<br><br>
-                One extremely short girlfriend.
-                One extremely tall girlfriend.
-                One universe.
-            </div>
-
-            <p class="quote">
-                "At least you'll always have someone
-                to reach the top shelf."
-            </p>
-
-        </div>
-
-        ${button(
-            "Continue",
-            "unlock('ocean'); transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 8 — OCEAN
-   ========================================================= */
-
-function oceanPlanet() {
-
-    panel(`
-        <h2>Planet VIII — The Ocean</h2>
-
-        <div class="ocean">
-
-            ${star("s19", 18, 30)}
-            ${star("s20", 67, 52)}
-            ${star("s21", 87, 75)}
-
-            <div class="moon"></div>
-
-            <div class="wave"></div>
-
-            <div class="stingray"
-                 style="top:55%;animation-delay:-1s">
-                🐟
-            </div>
-
-            <div class="stingray"
-                 style="top:68%;animation-delay:-5s;font-size:34px">
-                🐟
-            </div>
-
-            <div class="stingray"
-                 style="top:45%;animation-delay:-8s;font-size:27px">
-                🐟
-            </div>
-
-        </div>
-
-        <p class="quote">
-            "One day, I want to see the ocean with you."
+        <p>
+            Three paths appear in front of her.
         </p>
 
-        ${button(
-            "🌊 Step into the water",
-            "transition(oceanMemory)"
-        )}
+        <div class="choice-container">
 
-        ${button(
-            "🐟 Follow the stingrays",
-            "transition(stingrayMemory)"
-        )}
-    `);
-}
+            <button class="choice" onclick="prologueChoice('ship')">
+                🚀 Take the spaceship
+            </button>
 
-function oceanMemory() {
+            <button class="choice" onclick="prologueChoice('stars')">
+                ✦ Follow the stars
+            </button>
 
-    unlock("sunset");
-
-    panel(`
-        <h2>The Ocean You Haven't Seen Yet</h2>
-
-        <div class="memory">
-
-            I imagine standing beside you
-            while you see the ocean for the first time.
-
-            <br><br>
-
-            I imagine looking at your face
-            instead of the waves.
-
-            <br><br>
-
-            Because somehow,
-            I think watching you experience
-            something you've dreamed about
-            would become one of my favourite memories too.
+            <button class="choice" onclick="prologueChoice('waves')">
+                🌊 Follow the sound of waves
+            </button>
 
         </div>
 
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
+    </div>
 
-function stingrayMemory() {
+</section>
 
-    unlock("sunset");
 
-    panel(`
-        <h2>The Stingrays</h2>
+<!-- =========================
+     MAP
+========================= -->
 
-        <div class="scene">
+<section id="map" class="screen">
 
-            ${star("s22", 50, 20)}
+    <div class="panel">
 
-            <div class="stingray"
-                 style="top:50%;animation-duration:6s">
-                🐟
+        <div class="eyebrow">The Galaxy</div>
+
+        <h2>Choose where to go</h2>
+
+        <p>
+            Your spaceship waits in the centre of the galaxy.
+            Every planet holds another part of the story.
+        </p>
+
+        <div class="galaxy-map">
+
+            <div class="orbit one"></div>
+            <div class="orbit two"></div>
+            <div class="orbit three"></div>
+            <div class="orbit four"></div>
+
+            <div class="sun"></div>
+
+            <div class="spaceship" id="spaceship">🚀</div>
+
+            <div class="planet p1" onclick="visitPlanet('beginning')">
+                ✦
+                <span class="planet-label">The Beginning</span>
             </div>
 
-            <p>
-                A stingray swims past the spaceship.
-            </p>
-
-            <p>
-                Then another.
-            </p>
-
-            <p>
-                Then another.
-            </p>
-
-            <div class="quote">
-                Apparently the universe decided
-                stingrays belong in your love story.
+            <div class="planet p2" onclick="visitPlanet('coffee')">
+                ☕
+                <span class="planet-label">Black Coffee</span>
             </div>
 
-            <p>
-                One of them pauses.
-            </p>
-
-            <p>
-                It has a tiny star above its head.
-            </p>
-
-        </div>
-
-        ${button(
-            "Follow the stingray",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 9 — SUNSET
-   ========================================================= */
-
-function sunsetPlanet() {
-
-    panel(`
-        <h2>Planet IX — Sunset</h2>
-
-        <div class="scene">
-
-            ${star("s23", 20, 23)}
-            ${star("s24", 78, 72)}
-
-            <p>
-                The entire planet is covered in sunset.
-            </p>
-
-            <p>
-                Burgundy skies.
-                Pink clouds.
-                Golden light.
-            </p>
-
-            <div class="memory">
-                This is where you realise
-                that you don't only want the huge moments.
+            <div class="planet p3" onclick="visitPlanet('hazel')">
+                👁
+                <span class="planet-label">Hazel</span>
             </div>
 
-            <p>
-                You want the little ones.
-            </p>
-
-            <p>
-                Dancing in the kitchen.
-                Singing badly.
-                Painting beside each other.
-                Sitting somewhere quiet.
-                Talking until midnight.
-            </p>
-
-        </div>
-
-        ${button(
-            "💃 Dance",
-            "sunsetChoice('dance')"
-        )}
-
-        ${button(
-            "🎨 Paint",
-            "sunsetChoice('paint')"
-        )}
-
-        ${button(
-            "🎵 Sing",
-            "sunsetChoice('sing')"
-        )}
-
-        ${button(
-            "🌳 Dream about the future",
-            "sunsetChoice('future')"
-        )}
-    `);
-}
-
-function sunsetChoice(choice) {
-
-    state.choices.sunset = choice;
-
-    const stories = {
-
-        dance: `
-            You put on music.
-            <br><br>
-            Neither of you knows the right steps.
-            <br><br>
-            You dance anyway.
-        `,
-
-        paint: `
-            Two canvases appear.
-            <br><br>
-            Neither painting looks anything like
-            what you planned.
-            <br><br>
-            You both laugh.
-        `,
-
-        sing: `
-            You sing together.
-            <br><br>
-            One of you forgets the words.
-            The other makes up completely new ones.
-            <br><br>
-            Somehow it becomes your favourite song.
-        `,
-
-        future: `
-            You sit beneath the sunset
-            and talk about the life you want.
-            <br><br>
-            A countryside house.
-            A tree house.
-            A quiet life.
-            <br><br>
-            And each other.
-        `
-    };
-
-    unlock("future");
-
-    panel(`
-        <h2>A Little Piece of Us</h2>
-
-        <div class="memory">
-            ${stories[choice]}
-        </div>
-
-        ${button(
-            "Continue",
-            "transition(galaxyMap)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   PLANET 10 — FUTURE
-   ========================================================= */
-
-function futurePlanet() {
-
-    panel(`
-        <h2>Planet X — The Future</h2>
-
-        <div class="scene">
-
-            ${star("s25", 15, 25)}
-            ${star("s26", 80, 20)}
-            ${star("s27", 74, 77)}
-
-            <p>
-                The final planet doesn't show the future
-                as one single moment.
-            </p>
-
-            <p>
-                Instead, it shows possibilities.
-            </p>
-
-            <div class="memory">
-                A wedding.<br>
-                A little house in the countryside.<br>
-                A tree house.<br>
-                Paintings on the walls.<br>
-                Music in the kitchen.<br>
-                Two people growing older together.
+            <div class="planet p4" onclick="visitPlanet('storm')">
+                🌩
+                <span class="planet-label">The Storm</span>
             </div>
 
-            <p>
-                Lola sees a garden.
-            </p>
-
-            <p>
-                Someone is waiting there.
-            </p>
-
-        </div>
-
-        ${button(
-            "💍 Walk towards the wedding",
-            "transition(weddingScene)"
-        )}
-
-        ${button(
-            "🌳 Find the tree house",
-            "transition(treehouseScene)"
-        )}
-
-        ${button(
-            "🏡 Explore the countryside",
-            "transition(countrysideScene)"
-        )}
-
-        ${button(
-            "🎨 See the life you've built",
-            "transition(marriedLifeScene)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   WEDDING
-   ========================================================= */
-
-function weddingScene() {
-
-    panel(`
-        <h2>💍 The Wedding</h2>
-
-        <div class="wedding">
-
-            ${star("s25", 20, 20)}
-
-            <div class="petals">
-                <div class="petal" style="left:10%;animation-delay:0s"></div>
-                <div class="petal" style="left:25%;animation-delay:2s"></div>
-                <div class="petal" style="left:50%;animation-delay:1s"></div>
-                <div class="petal" style="left:70%;animation-delay:3s"></div>
-                <div class="petal" style="left:85%;animation-delay:1.5s"></div>
+            <div class="planet p5" onclick="visitPlanet('ocean')">
+                🌊
+                <span class="planet-label">The Ocean</span>
             </div>
 
-            <div style="
-                position:absolute;
-                inset:0;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                flex-direction:column;
-                text-align:center;
-                padding:20px;
-            ">
+            <div class="planet p6" onclick="visitPlanet('colour')">
+                💙
+                <span class="planet-label">Two Moons</span>
+            </div>
 
-                <div style="font-size:70px">💐</div>
+            <div class="planet p7" onclick="visitPlanet('gravity')">
+                ✦
+                <span class="planet-label">Gravity</span>
+            </div>
 
-                <h2 style="margin:10px">
-                    One day.
-                </h2>
+            <div class="planet p8" onclick="visitPlanet('future')">
+                💍
+                <span class="planet-label">The Future</span>
+            </div>
 
-                <p>
-                    Lola stands beneath a sky full of stars.
-                </p>
+            <div class="planet p9" onclick="visitPlanet('sunset')">
+                🌅
+                <span class="planet-label">Sunset</span>
+            </div>
 
-                <p>
-                    And the person waiting for her
-                    reaches out her hand.
-                </p>
-
+            <div class="planet p10" onclick="visitPlanet('ouruniverse')">
+                ♡
+                <span class="planet-label">Our Universe</span>
             </div>
 
         </div>
 
-        ${button(
-            "Take her hand",
-            "weddingChoice('hand')"
-        )}
+        <p class="small">
+            Explore the planets. Look carefully. Some things are hiding.
+        </p>
 
-        ${button(
-            "Look at her and laugh",
-            "weddingChoice('laugh')"
-        )}
+    </div>
 
-        ${button(
-            "Tell her you love her",
-            "weddingChoice('love')"
-        )}
-    `);
-}
+</section>
 
-function weddingChoice(choice) {
 
-    state.choices.wedding = choice;
+<!-- =========================
+     STORY SCREEN
+========================= -->
 
-    const endings = {
+<section id="story" class="screen">
 
-        hand: `
-            You take her hand.
-            <br><br>
-            Everything else disappears.
-            <br><br>
-            There is only the person beside you
-            and the life waiting ahead.
-        `,
+    <div class="panel story-card">
 
-        laugh: `
-            You look at her.
-            <br><br>
-            And both of you start laughing.
-            <br><br>
-            Not because anything went wrong.
-            <br><br>
-            Because somehow,
-            after everything,
-            you're actually here.
-        `,
+        <div id="storyContent"></div>
 
-        love: `
-            You tell her you love her.
-            <br><br>
-            The words feel familiar,
-            but somehow they're still not enough.
-            <br><br>
-            So you say them again.
-        `
-    };
+    </div>
 
-    unlock("future");
+</section>
 
-    panel(`
-        <h2>And Then...</h2>
 
-        <div class="memory">
-            ${endings[choice]}
-        </div>
+<!-- =========================
+     FINAL CONSTELLATION
+========================= -->
 
-        ${button(
-            "Continue into the future",
-            "transition(countrysideScene)"
-        )}
-    `);
-}
+<section id="constellationScreen" class="screen">
 
+    <div class="panel">
 
-/* =========================================================
-   TREE HOUSE
-   ========================================================= */
+        <div class="eyebrow">You found them all</div>
 
-function treehouseScene() {
+        <h2>Our Constellation</h2>
 
-    panel(`
-        <h2>🌳 The Tree House</h2>
-
-        <div class="countryside">
-
-            ${star("s26", 80, 18)}
-
-            <div class="sunset"></div>
-
-            <div class="house"></div>
-
-            <div class="tree">
-                🌳
-            </div>
-
-        </div>
-
-        <div class="memory">
-
-            There is a little tree house
-            somewhere beyond the fields.
-
-            <br><br>
-
-            It isn't perfect.
-
-            <br><br>
-
-            That's what makes it yours.
-
-            <br><br>
-
-            A place to sit.
-            A place to talk.
-            A place to watch the stars.
-
-        </div>
-
-        ${button(
-            "Climb inside",
-            "treehouseInside()"
-        )}
-    `);
-}
-
-function treehouseInside() {
-
-    panel(`
-        <h2>Our Little Place</h2>
-
-        <div class="memory">
-
-            You sit beside each other
-            beneath a blanket.
-
-            <br><br>
-
-            You talk about everything
-            and absolutely nothing.
-
-            <br><br>
-
-            Eventually,
-            the conversation becomes quiet.
-
-            <br><br>
-
-            You look outside.
-
-            <br><br>
-
-            The stars are everywhere.
-
-        </div>
-
-        ${button(
-            "Continue",
-            "transition(countrysideScene)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   COUNTRYSIDE
-   ========================================================= */
-
-function countrysideScene() {
-
-    panel(`
-        <h2>🏡 The Countryside</h2>
-
-        <div class="countryside">
-
-            ${star("s27", 18, 18)}
-
-            <div class="sunset"></div>
-
-            <div class="house"></div>
-
-            <div class="tree">
-                🌳
-            </div>
-
-        </div>
-
-        <div class="memory">
-
-            A little house surrounded by green fields.
-
-            <br><br>
-
-            No huge city.
-            No rushing around.
-
-            <br><br>
-
-            Just home.
-
-            <br><br>
-
-            You wake up together.
-            You drink coffee.
-            You argue about who gets the blanket.
-            You cook.
-            You paint.
-            You sing.
-            You dance.
-
-            <br><br>
-
-            And sometimes,
-            you do absolutely nothing.
-
-        </div>
-
-        ${button(
-            "🌅 Watch the sunset together",
-            "futureChoice('sunset')"
-        )}
-
-        ${button(
-            "☕ Have a quiet morning",
-            "futureChoice('morning')"
-        )}
-
-        ${button(
-            "❤️ Stay together forever",
-            "futureChoice('forever')"
-        )}
-    `);
-}
-
-function marriedLifeScene() {
-
-    panel(`
-        <h2>❤️ Married Life</h2>
-
-        <div class="scene">
-
-            <p>
-                Years have passed.
-            </p>
-
-            <p>
-                The house still smells like coffee.
-            </p>
-
-            <p>
-                There are paintings on the walls.
-            </p>
-
-            <p>
-                Music still plays in the kitchen.
-            </p>
-
-            <p>
-                The tree house is still standing.
-            </p>
-
-            <div class="memory">
-                You grew older together.
-                <br><br>
-                Not because every day was perfect.
-                <br><br>
-                But because you kept choosing
-                to build a life together.
-            </div>
-
-        </div>
-
-        ${button(
-            "Keep dreaming",
-            "transition(countrysideScene)"
-        )}
-    `);
-}
-
-
-/* =========================================================
-   FUTURE CHOICE
-   ========================================================= */
-
-function futureChoice(choice) {
-
-    state.choices.future = choice;
-    complete("future");
-
-    let text = {
-
-        sunset: `
-            You stand outside together
-            and watch the sky turn pink.
-            <br><br>
-            Lola rests her head against you.
-            <br><br>
-            Neither of you says anything.
-            <br><br>
-            You don't need to.
-        `,
-
-        morning: `
-            Morning comes slowly.
-            <br><br>
-            There is coffee.
-            Messy hair.
-            Bare feet.
-            <br><br>
-            And the quiet happiness
-            of waking up beside the person you love.
-        `,
-
-        forever: `
-            You look at her.
-            <br><br>
-            You know exactly what you want.
-            <br><br>
-            To marry her.
-            <br>
-            To build a home with her.
-            <br>
-            To grow old with her.
-            <br>
-            To be happy together.
-        `
-    }[choice];
-
-    panel(`
-        <h2>The Life We Imagine</h2>
-
-        <div class="memory">
-            ${text}
-        </div>
-
-        ${button(
-            "🌌 Return to the galaxy",
-            "transition(galaxyMap)"
-        )}
-
-        ${
-            state.stars.length >= 27
-            ? button(
-                "✨ Enter Our Universe",
-                "transition(universeChapter)"
-            )
-            : ""
-        }
-    `);
-}
-
-
-/* =========================================================
-   OUR UNIVERSE
-   ========================================================= */
-
-function universeChapter() {
-
-    if (state.stars.length < 27) {
-
-        panel(`
-            <h2>Not Yet...</h2>
-
-            <div class="memory">
-                There are still hidden stars somewhere
-                in the galaxy.
-                <br><br>
-                You have found ${state.stars.length}/27.
-                <br><br>
-                Keep exploring.
-            </div>
-
-            ${button(
-                "Return to the galaxy",
-                "transition(galaxyMap)"
-            )}
-        `);
-
-        return;
-    }
-
-    complete("universe");
-
-    panel(`
-        <h2>🌌 Our Universe</h2>
-
-        <p class="subtitle">
-            You found all 27 stars.
+        <p>
+            Twenty seven little stars.
+            Twenty seven pieces of the journey.
         </p>
 
         <div class="constellation" id="constellation"></div>
 
-        <div class="memory">
+        <p style="text-align:center;">
+            And somehow, every star led back to you.
+        </p>
 
-            The planets begin to disappear.
+        <button class="primary" onclick="showFinalLetter()">
+            Find out what was waiting at the end ✦
+        </button>
 
-            <br><br>
+    </div>
 
-            The ocean.
-            The storms.
-            The sunsets.
-            The coffee.
-            The countryside.
-            The wedding.
+</section>
 
-            <br><br>
 
-            They all become one sky.
+<!-- =========================
+     LETTER
+========================= -->
 
-            <br><br>
+<section id="letterScreen" class="screen">
 
-            Because every little place
-            was always leading here.
+    <div class="letter">
 
+        <div class="eyebrow">The Final Letter</div>
+
+        <h2>Home</h2>
+
+        <p>
+            Lola,
+        </p>
+
+        <p>
+            If you've made it all the way here, then I suppose there's only
+            one thing left for me to tell you.
+        </p>
+
+        <p>
+            I am so incredibly proud of you.
+        </p>
+
+        <p>
+            I'm proud of the person you are, the things you've survived,
+            the things you've overcome, and the person you're continuing
+            to become.
+        </p>
+
+        <p>
+            I'm proud of the softness you've managed to keep in a world
+            that hasn't always been soft with you.
+        </p>
+
+        <p>
+            You never have to become someone else to deserve love.
+            You are already enough.
+        </p>
+
+        <p>
+            You are my favourite person.
+            Not just one of my favourite people.
+            <strong>My favourite.</strong>
+        </p>
+
+        <p>
+            You are such a beautiful part of my life.
+            You are everything to me and somehow...
+            still so much more.
+        </p>
+
+        <p>
+            I don't just want the huge moments with you.
+            I want the ordinary ones.
+        </p>
+
+        <p>
+            I want to dance with you in the kitchen for no reason.
+            I want to sing with you until we're laughing too hard to finish
+            the song.
+            I want to paint beside you.
+            I want to sit with you somewhere in the countryside and watch
+            the sunset.
+        </p>
+
+        <p>
+            I want the tree house we've talked about.
+            I want green fields and open skies.
+            Dark nights filled with stars.
+            Slow mornings.
+            Coffee.
+            Messy hair.
+            Bare feet.
+            Your hand finding mine without either of us thinking about it.
+        </p>
+
+        <p>
+            I want to marry you.
+        </p>
+
+        <p>
+            I want the little house in the countryside.
+            I want the tree house.
+            I want slow mornings beside you.
+            I want to wake up and know that somehow,
+            after everything,
+            I get to spend another day with you.
+        </p>
+
+        <p>
+            I want to grow older with you.
+            I want to be happy with you.
+            I want to build a life that feels like ours.
+        </p>
+
+        <p>
+            And I want to see the ocean with you.
+            I want to watch your face when you finally experience
+            something you've dreamed about.
+        </p>
+
+        <p>
+            I want the photographs we haven't taken yet.
+            The songs we haven't sung.
+            The paintings we haven't made.
+            The places we haven't found.
+            The stories we haven't written.
+        </p>
+
+        <p>
+            If I could ask the universe for anything,
+            I'd ask for a life where I get to keep finding you in it.
+        </p>
+
+        <p>
+            Because you're my favourite place to return to.
+            My favourite voice.
+            My favourite person to talk to.
+            The thought I want at the end of the day.
+            The future I want to imagine.
+            And my favourite part of today.
+        </p>
+
+        <p>
+            I love you on the easy days.
+            I love you on the difficult ones.
+            I love you on the days when you feel beautiful
+            and on the days when you can't see what I see in you.
+        </p>
+
+        <p>
+            Here's to 27.
+        </p>
+
+        <p>
+            To the countryside.
+            To the tree house.
+            To paintings.
+            To songs.
+            To dancing.
+            To the ocean.
+            To stars.
+            To stingrays.
+            To quiet mornings.
+            To ridiculous nights.
+            And to the future we keep imagining.
+        </p>
+
+        <p>
+            You and me.
+            Still talking.
+            Still laughing.
+            Still dreaming.
+            Still finding new reasons to love each other.
+        </p>
+
+        <p>
+            Happy 27th birthday, my love.
+        </p>
+
+        <p>
+            You are my favourite person.
+            You are everything.
+            And somehow,
+            you are still so much more.
+        </p>
+
+        <p>
+            If there are a million galaxies above us,
+            I hope you know that I'd still look for you.
+        </p>
+
+        <p>
+            I'd always find my way home to you.
+        </p>
+
+        <div class="signature">
+            — Bree
         </div>
 
-        ${button(
-            "Read the final letter",
-            "transition(finalLetter)"
-        )}
-    `);
+        <div style="text-align:center;">
+            <button class="primary" onclick="showStarReveal()">
+                There's one more thing ✦
+            </button>
+        </div>
 
-    createConstellation();
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STAR REVEAL
+========================= -->
+
+<section id="starReveal" class="screen">
+
+    <div class="panel star-reveal">
+
+        <div class="eyebrow">A little piece of the universe</div>
+
+        <h2>For Lola</h2>
+
+        <div class="real-star">⭐</div>
+
+        <p>
+            You already have a star.
+        </p>
+
+        <p>
+            But I wanted you to have something else too.
+        </p>
+
+        <p>
+            A little universe made entirely for you.
+        </p>
+
+        <p>
+            Every planet.
+            Every choice.
+            Every hidden star.
+            Every word.
+        </p>
+
+        <p>
+            Because if I could give you the entire universe,
+            I still think I'd choose to give you a little piece of it
+            that reminds you of us.
+        </p>
+
+        <h2>Happy 27th Birthday, Lola. ♡</h2>
+
+        <p class="small">
+            And yes... the star you found at the end is yours.
+        </p>
+
+        <button class="primary" onclick="resetGame()">
+            Play again
+        </button>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+/* ==========================================================
+   LOLA'S LITTLE UNIVERSE
+   VERSION 2
+   EXACTLY 27 UNIQUE COLLECTIBLE STARS
+========================================================== */
+
+const SAVE_KEY = "lolaLittleUniverse_v2";
+
+let state = {
+    stars: [],
+    visited: [],
+    path: [],
+    completed: false
+};
+
+function loadGame() {
+
+    try {
+        const saved = JSON.parse(localStorage.getItem(SAVE_KEY));
+
+        if (saved) {
+            state = {
+                stars: Array.isArray(saved.stars) ? saved.stars : [],
+                visited: Array.isArray(saved.visited) ? saved.visited : [],
+                path: Array.isArray(saved.path) ? saved.path : [],
+                completed: !!saved.completed
+            };
+        }
+    } catch (e) {
+        console.log("Starting a fresh game.");
+    }
+
+    updateStarCounter();
 }
 
+function saveGame() {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+}
 
-/* =========================================================
+function updateStarCounter() {
+    document.getElementById("starCount").textContent = state.stars.length;
+}
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    const target = document.getElementById(id);
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function startGame() {
+    state.path = [];
+    saveGame();
+    showScreen("prologue");
+}
+
+function prologueChoice(choice) {
+
+    state.path.push(choice);
+    saveGame();
+
+    if (choice === "ship") {
+
+        story(
+            "The Spaceship",
+            "The spaceship hums quietly as Lola steps inside. The moment she touches the controls, one tiny star appears on the dashboard.",
+            "🚀",
+            [
+                ["Fly towards the nearest planet", "map"],
+                ["Follow the brightest star", "beginning"]
+            ],
+            ["s1"]
+        );
+
+    } else if (choice === "stars") {
+
+        story(
+            "The Stars",
+            "Lola follows the stars. One by one, they begin forming a path through the darkness. At the end of it sits a tiny spaceship, waiting for her.",
+            "✦",
+            [
+                ["Take the spaceship", "map"],
+                ["Keep following the stars", "beginning"]
+            ],
+            ["s2"]
+        );
+
+    } else {
+
+        story(
+            "The Waves",
+            "Lola follows the sound of waves through the darkness. Eventually she reaches a tiny blue planet where the ocean stretches endlessly beneath a sky full of stars.",
+            "🌊",
+            [
+                ["Step onto the beach", "ocean"],
+                ["Return to the spaceship", "map"]
+            ],
+            ["s3"]
+        );
+    }
+}
+
+/* ==========================================================
+   MAP
+========================================================== */
+
+function visitPlanet(planet) {
+
+    if (!state.visited.includes(planet)) {
+        state.visited.push(planet);
+        saveGame();
+    }
+
+    const content = {
+
+        beginning: {
+            title: "Before You",
+            icon: "✦",
+            text: `
+                <p>
+                    Before there was an us, there was simply you.
+                </p>
+
+                <p>
+                    Somewhere in the universe, a girl with hazel eyes,
+                    a love for black coffee, and a dream of seeing the ocean
+                    was living a life that had no idea it was about to become
+                    part of someone else's universe.
+                </p>
+
+                <p>
+                    Three doors appear.
+                </p>
+            `,
+            choices: [
+                ["☕ Follow the smell of coffee", "coffee"],
+                ["🔭 Look through the observatory", "hazel"],
+                ["🌊 Follow the ocean", "ocean"]
+            ],
+            stars: ["s4"]
+        },
+
+        coffee: {
+            title: "The Black Coffee Planet",
+            icon: "☕",
+            text: `
+                <p>
+                    The entire planet smells like freshly brewed coffee.
+                </p>
+
+                <p>
+                    At the centre sits a tiny café beneath a sky filled
+                    with burgundy stars.
+                </p>
+
+                <p>
+                    Someone has left a note on the table:
+                </p>
+
+                <div class="memory">
+                    <strong>BLACK COFFEE.</strong>
+                    The first clue is always hidden in the little things.
+                </div>
+
+                <p>
+                    Lola smiles.
+                </p>
+            `,
+            choices: [
+                ["☕ Sit down with the coffee", "coffee2"],
+                ["✦ Search the café", "coffee3"],
+                ["🚀 Return to the galaxy", "map"]
+            ],
+            stars: ["s5", "s6"]
+        },
+
+        hazel: {
+            title: "The Hazel Nebula",
+            icon: "👁",
+            text: `
+                <p>
+                    The observatory opens into a nebula filled with colours
+                    somewhere between green, gold and brown.
+                </p>
+
+                <p>
+                    Hazel.
+                </p>
+
+                <p>
+                    A telescope points towards one particular star.
+                </p>
+
+                <p>
+                    When Lola looks through it, she sees a pair of eyes
+                    looking back at her.
+                </p>
+            `,
+            choices: [
+                ["👁 Look closer", "hazel2"],
+                ["✦ Follow the star", "hazel3"],
+                ["🚀 Return to the galaxy", "map"]
+            ],
+            stars: ["s7", "s8"]
+        },
+
+        storm: {
+            title: "The Storm",
+            icon: "🌩",
+            text: `
+                <p>
+                    Dark clouds gather around the planet.
+                </p>
+
+                <p>
+                    Thunder cracks across the sky.
+                </p>
+
+                <p>
+                    Lola instinctively covers her face.
+                </p>
+
+                <p>
+                    Somewhere through the storm, a familiar voice says:
+                </p>
+
+                <div class="memory">
+                    <strong>“I'm here.”</strong>
+                    <span>You don't have to face the storm alone.</span>
+                </div>
+            `,
+            choices: [
+                ["🌩 Face the storm", "stormFace"],
+                ["🚀 Fly through it", "stormFly"],
+                ["♡ Follow the voice", "stormVoice"],
+                ["🌙 Wait until it passes", "stormWait"]
+            ],
+            stars: ["s9", "s10"]
+        },
+
+        ocean: {
+            title: "The Ocean",
+            icon: "🌊",
+            text: `
+                <p>
+                    The spaceship lands beside an endless ocean.
+                </p>
+
+                <p>
+                    Lola steps onto the sand.
+                </p>
+
+                <p>
+                    The waves roll gently towards her.
+                </p>
+
+                <p>
+                    And beneath the water, something moves.
+                </p>
+
+                <p>
+                    A stingray glides through the blue.
+                </p>
+
+                <p>
+                    For a moment, the whole universe becomes quiet.
+                </p>
+            `,
+            choices: [
+                ["🌊 Walk into the water", "oceanWalk"],
+                ["🐟 Follow the stingray", "stingray"],
+                ["🌅 Sit and watch the waves", "oceanSit"],
+                ["🚀 Return to the galaxy", "map"]
+            ],
+            stars: ["s11", "s12", "s13"]
+        },
+
+        colour: {
+            title: "Two Moons",
+            icon: "💙",
+            text: `
+                <p>
+                    Two moons hang above the planet.
+                </p>
+
+                <p>
+                    One is soft baby blue.
+                    The other is deep burgundy.
+                </p>
+
+                <p>
+                    Together, they illuminate everything beneath them.
+                </p>
+
+                <p>
+                    A message appears:
+                </p>
+
+                <div class="memory">
+                    <strong>TWO DIFFERENT COLOURS.</strong>
+                    Somehow they still look right beside each other.
+                </div>
+            `,
+            choices: [
+                ["💙 Touch the blue moon", "blueMoon"],
+                ["🍷 Touch the burgundy moon", "burgundyMoon"],
+                ["♡ Stand between them", "betweenMoons"]
+            ],
+            stars: ["s14", "s15"]
+        },
+
+        gravity: {
+            title: "Gravity",
+            icon: "✦",
+            text: `
+                <p>
+                    On this planet, gravity works differently.
+                </p>
+
+                <p>
+                    Lola floats several feet above the ground.
+                </p>
+
+                <p>
+                    A hand reaches up towards her.
+                </p>
+
+                <p>
+                    “Come here, short girl.”
+                </p>
+
+                <p>
+                    Apparently the universe has decided that height
+                    differences are funny.
+                </p>
+            `,
+            choices: [
+                ["😂 Laugh and take the hand", "gravityLaugh"],
+                ["🫶 Let yourself fall", "gravityFall"],
+                ["🚀 Float away dramatically", "gravityAway"]
+            ],
+            stars: ["s16", "s17"]
+        },
+
+        sunset: {
+            title: "The Sunset Planet",
+            icon: "🌅",
+            text: `
+                <p>
+                    The sky turns gold, pink and burgundy.
+                </p>
+
+                <p>
+                    It feels strangely familiar.
+                </p>
+
+                <p>
+                    There are no clocks here.
+                    No deadlines.
+                    Nothing that needs fixing.
+                </p>
+
+                <p>
+                    Just a sunset and someone beside you.
+                </p>
+            `,
+            choices: [
+                ["🎨 Paint the sunset", "painting"],
+                ["🎵 Sing together", "singing"],
+                ["💃 Dance beneath it", "dancing"],
+                ["🌅 Sit quietly and watch", "sunsetQuiet"]
+            ],
+            stars: ["s18"]
+        },
+
+        future: {
+            title: "The Future",
+            icon: "💍",
+            text: `
+                <p>
+                    The spaceship enters a completely different part
+                    of the galaxy.
+                </p>
+
+                <p>
+                    The stars disappear.
+                </p>
+
+                <p>
+                    In their place is a little countryside house,
+                    surrounded by green fields.
+                </p>
+
+                <p>
+                    There is a tree house in the distance.
+                </p>
+
+                <p>
+                    And somewhere inside the house,
+                    two wedding rings sit beside each other.
+                </p>
+            `,
+            choices: [
+                ["💍 Walk towards the wedding", "wedding"],
+                ["🌳 Go to the tree house", "treehouse"],
+                ["🌾 Explore the countryside", "countryside"],
+                ["🎨 Enter the future studio", "studio"]
+            ],
+            stars: ["s25"]
+        },
+
+        ouruniverse: {
+            title: "Our Universe",
+            icon: "♡",
+            text: `
+                <p>
+                    Every planet begins disappearing.
+                </p>
+
+                <p>
+                    The coffee.
+                    The storms.
+                    The ocean.
+                    The sunsets.
+                    The countryside.
+                </p>
+
+                <p>
+                    Everything folds into one enormous galaxy.
+                </p>
+
+                <p>
+                    At its centre is a single word.
+                </p>
+
+                <h2 style="text-align:center;">HOME.</h2>
+
+                <p>
+                    But something is still missing.
+                </p>
+
+                <p>
+                    The stars.
+                </p>
+            `,
+            choices: [
+                ["⭐ Gather the stars", "constellationCheck"]
+            ],
+            stars: []
+        }
+    };
+
+    const data = content[planet];
+
+    if (!data) return;
+
+    if (planet === "ouruniverse") {
+
+        story(
+            data.title,
+            data.text,
+            data.icon,
+            data.choices,
+            []
+        );
+
+        return;
+    }
+
+    story(
+        data.title,
+        data.text,
+        data.icon,
+        data.choices,
+        data.stars
+    );
+}
+
+/* ==========================================================
+   STORY ENGINE
+========================================================== */
+
+function story(title, text, icon, choices, stars = []) {
+
+    let starsHTML = "";
+
+    stars.forEach((id, index) => {
+
+        if (!state.stars.includes(id)) {
+
+            const positions = [
+                ["12%", "15%"],
+                ["80%", "22%"],
+                ["67%", "78%"],
+                ["25%", "70%"],
+                ["90%", "55%"]
+            ];
+
+            const pos = positions[index % positions.length];
+
+            starsHTML += `
+                <button
+                    class="hidden-star"
+                    style="left:${pos[0]};top:${pos[1]};"
+                    onclick="collectStar('${id}', this)"
+                    title="A hidden star"
+                >✦</button>
+            `;
+        }
+    });
+
+    let choicesHTML = choices.map(choice => {
+
+        const label = choice[0];
+        const destination = choice[1];
+
+        return `
+            <button
+                class="choice"
+                onclick="storyChoice('${destination}')"
+            >
+                ${label}
+            </button>
+        `;
+
+    }).join("");
+
+    document.getElementById("storyContent").innerHTML = `
+
+        <div class="scene-art">
+            <div style="position:relative;z-index:2;">
+                ${icon}
+            </div>
+
+            ${starsHTML}
+        </div>
+
+        <div class="eyebrow">A place between the stars</div>
+
+        <h2>${title}</h2>
+
+        ${text}
+
+        <div class="choice-container">
+            ${choicesHTML}
+        </div>
+
+        <div style="margin-top:25px;text-align:center;">
+            <button
+                class="primary"
+                onclick="showScreen('map')"
+            >
+                🚀 Return to galaxy
+            </button>
+        </div>
+    `;
+
+    showScreen("story");
+}
+
+/* ==========================================================
+   COLLECT STARS
+========================================================== */
+
+function collectStar(id, element) {
+
+    if (state.stars.includes(id)) return;
+
+    state.stars.push(id);
+
+    element.classList.add("collected");
+
+    updateStarCounter();
+    saveGame();
+
+    showFoundStar(id);
+}
+
+function showFoundStar(id) {
+
+    const popup = document.createElement("div");
+
+    popup.className = "star-found";
+
+    popup.innerHTML = `
+        <div style="font-size:35px;">⭐</div>
+        <strong>Star found!</strong>
+        <div style="margin-top:6px;color:#d9c4ce;">
+            ${state.stars.length} / 27
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.remove();
+    }, 1500);
+}
+
+/* ==========================================================
+   STORY ROUTING
+========================================================== */
+
+function storyChoice(destination) {
+
+    switch (destination) {
+
+        case "map":
+            showScreen("map");
+            break;
+
+        case "beginning":
+            visitPlanet("beginning");
+            break;
+
+        case "coffee":
+            visitPlanet("coffee");
+            break;
+
+        case "hazel":
+            visitPlanet("hazel");
+            break;
+
+        case "storm":
+            visitPlanet("storm");
+            break;
+
+        case "ocean":
+            visitPlanet("ocean");
+            break;
+
+        case "colour":
+            visitPlanet("colour");
+            break;
+
+        case "gravity":
+            visitPlanet("gravity");
+            break;
+
+        case "sunset":
+            visitPlanet("sunset");
+            break;
+
+        case "future":
+            visitPlanet("future");
+            break;
+
+        case "ouruniverse":
+            visitPlanet("ouruniverse");
+            break;
+
+        case "coffee2":
+            coffeeSecond();
+            break;
+
+        case "coffee3":
+            coffeeSearch();
+            break;
+
+        case "hazel2":
+            hazelClose();
+            break;
+
+        case "hazel3":
+            hazelFollow();
+            break;
+
+        case "stormFace":
+            stormFace();
+            break;
+
+        case "stormFly":
+            stormFly();
+            break;
+
+        case "stormVoice":
+            stormVoice();
+            break;
+
+        case "stormWait":
+            stormWait();
+            break;
+
+        case "oceanWalk":
+            oceanWalk();
+            break;
+
+        case "stingray":
+            stingray();
+            break;
+
+        case "oceanSit":
+            oceanSit();
+            break;
+
+        case "blueMoon":
+            blueMoon();
+            break;
+
+        case "burgundyMoon":
+            burgundyMoon();
+            break;
+
+        case "betweenMoons":
+            betweenMoons();
+            break;
+
+        case "gravityLaugh":
+            gravityLaugh();
+            break;
+
+        case "gravityFall":
+            gravityFall();
+            break;
+
+        case "gravityAway":
+            gravityAway();
+            break;
+
+        case "painting":
+            painting();
+            break;
+
+        case "singing":
+            singing();
+            break;
+
+        case "dancing":
+            dancing();
+            break;
+
+        case "sunsetQuiet":
+            sunsetQuiet();
+            break;
+
+        case "wedding":
+            wedding();
+            break;
+
+        case "treehouse":
+            treehouse();
+            break;
+
+        case "countryside":
+            countryside();
+            break;
+
+        case "studio":
+            studio();
+            break;
+
+        case "constellationCheck":
+            constellationCheck();
+            break;
+    }
+}
+
+/* ==========================================================
+   COFFEE
+========================================================== */
+
+function coffeeSecond() {
+
+    story(
+        "The Coffee",
+        `
+        <p>
+            Lola takes a sip.
+        </p>
+
+        <p>
+            Black coffee.
+        </p>
+
+        <p>
+            The strange thing is that the universe suddenly feels
+            a little less lonely.
+        </p>
+
+        <p>
+            On the table is another note:
+        </p>
+
+        <div class="memory">
+            <strong>Some people feel like home before you've even met them.</strong>
+        </div>
+        `,
+        "☕",
+        [
+            ["✦ Keep the note", "coffee3"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        ["s5"]
+    );
+}
+
+function coffeeSearch() {
+
+    story(
+        "Something Hidden",
+        `
+        <p>
+            Lola searches beneath the tables, behind the counter,
+            and finally underneath the coffee cup.
+        </p>
+
+        <p>
+            There is a tiny drawing of a girl.
+        </p>
+
+        <p>
+            Brown hair.
+            Brown eyes.
+            A ridiculous number of words written around her.
+        </p>
+
+        <p>
+            One sentence is circled:
+        </p>
+
+        <div class="memory">
+            <strong>“She writes because sometimes love is too big to simply say.”</strong>
+        </div>
+        `,
+        "✍️",
+        [
+            ["✦ Keep reading", "hazel"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        ["s6"]
+    );
+}
+
+/* ==========================================================
+   HAZEL
+========================================================== */
+
+function hazelClose() {
+
+    story(
+        "Hazel",
+        `
+        <p>
+            Lola looks closer.
+        </p>
+
+        <p>
+            The eyes are hazel.
+            Warm.
+            Familiar.
+        </p>
+
+        <p>
+            For some reason, Lola feels like she has been searching
+            for those eyes her entire life.
+        </p>
+        `,
+        "👁",
+        [
+            ["✦ Follow the light", "hazel3"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        ["s7"]
+    );
+}
+
+function hazelFollow() {
+
+    story(
+        "The Girl Behind the Stars",
+        `
+        <p>
+            Lola follows the star.
+        </p>
+
+        <p>
+            It leads her to a small room filled with poems.
+        </p>
+
+        <p>
+            Every wall has another sentence written across it.
+        </p>
+
+        <p>
+            One keeps appearing:
+        </p>
+
+        <div class="memory">
+            <strong>“I like cats, sunsets, and my girlfriend Lola.”</strong>
+        </div>
+
+        <p>
+            Lola realises that someone has been writing a universe
+            around her for a very long time.
+        </p>
+        `,
+        "♡",
+        [
+            ["♡ Keep going", "storm"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        ["s8"]
+    );
+}
+
+/* ==========================================================
+   STORM
+========================================================== */
+
+function stormFace() {
+
+    story(
+        "Facing the Storm",
+        `
+        <p>
+            Lola takes a breath.
+        </p>
+
+        <p>
+            Thunder shakes the planet.
+        </p>
+
+        <p>
+            But she keeps walking.
+        </p>
+
+        <p>
+            Another little light appears ahead.
+        </p>
+
+        <div class="memory">
+            <strong>You are stronger than the storm.</strong>
+        </div>
+        `,
+        "🌩",
+        [
+            ["✦ Follow the light", "map"],
+            ["♡ Listen to the voice", "stormVoice"]
+        ],
+        ["s9"]
+    );
+}
+
+function stormFly() {
+
+    story(
+        "Through the Storm",
+        `
+        <p>
+            Lola grips the spaceship controls.
+        </p>
+
+        <p>
+            Lightning flashes around her.
+        </p>
+
+        <p>
+            Then a voice comes through the radio.
+        </p>
+
+        <div class="memory">
+            <strong>“I'm here. Count with me.”</strong>
+        </div>
+
+        <p>
+            One.
+            Two.
+            Three...
+        </p>
+        `,
+        "🚀",
+        [
+            ["♡ Keep listening", "stormVoice"],
+            ["✦ Follow the stars", "map"]
+        ],
+        ["s10"]
+    );
+}
+
+function stormVoice() {
+
+    story(
+        "I'm Here",
+        `
+        <p>
+            Lola follows the voice.
+        </p>
+
+        <p>
+            The storm doesn't disappear.
+        </p>
+
+        <p>
+            But somehow it doesn't feel quite as frightening anymore.
+        </p>
+
+        <p>
+            Because sometimes you don't need someone to stop the storm.
+        </p>
+
+        <p>
+            Sometimes you just need someone who stays.
+        </p>
+        `,
+        "♡",
+        [
+            ["🌌 Continue", "map"],
+            ["🌊 Find the ocean", "ocean"]
+        ],
+        []
+    );
+}
+
+function stormWait() {
+
+    story(
+        "After the Storm",
+        `
+        <p>
+            Lola waits.
+        </p>
+
+        <p>
+            Eventually the thunder becomes quieter.
+        </p>
+
+        <p>
+            The clouds part.
+        </p>
+
+        <p>
+            And there, behind them, is a path of stars.
+        </p>
+        `,
+        "✦",
+        [
+            ["✦ Follow the stars", "map"],
+            ["🌊 Follow the waves", "ocean"]
+        ],
+        []
+    );
+}
+
+/* ==========================================================
+   OCEAN
+========================================================== */
+
+function oceanWalk() {
+
+    story(
+        "The Water",
+        `
+        <p>
+            Lola walks into the ocean.
+        </p>
+
+        <p>
+            The water reaches her ankles,
+            then her knees.
+        </p>
+
+        <p>
+            The entire ocean glows beneath her.
+        </p>
+
+        <p>
+            She finally understands why some dreams are worth waiting for.
+        </p>
+        `,
+        "🌊",
+        [
+            ["🐟 Follow the stingray", "stingray"],
+            ["🌅 Sit beside the water", "oceanSit"]
+        ],
+        ["s11"]
+    );
+}
+
+function stingray() {
+
+    story(
+        "The Stingray",
+        `
+        <p>
+            A stingray glides beneath the water.
+        </p>
+
+        <p>
+            Lola follows it.
+        </p>
+
+        <p>
+            It leads her to a tiny glowing star beneath the surface.
+        </p>
+
+        <p>
+            She reaches down and catches it.
+        </p>
+
+        <div class="memory">
+            <strong>Some things are worth diving for.</strong>
+        </div>
+        `,
+        "🐟",
+        [
+            ["🌊 Return to shore", "map"],
+            ["✦ Keep exploring", "oceanSit"]
+        ],
+        ["s12"]
+    );
+}
+
+function oceanSit() {
+
+    story(
+        "The Dream",
+        `
+        <p>
+            Lola sits beside the ocean.
+        </p>
+
+        <p>
+            The waves are quiet.
+        </p>
+
+        <p>
+            Somewhere far away, someone is imagining this exact moment.
+        </p>
+
+        <p>
+            Seeing the ocean together.
+        </p>
+
+        <p>
+            Finally.
+        </p>
+        `,
+        "🌊",
+        [
+            ["🌅 Watch the sunset", "sunset"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        ["s13"]
+    );
+}
+
+/* ==========================================================
+   TWO MOONS
+========================================================== */
+
+function blueMoon() {
+
+    story(
+        "Baby Blue",
+        `
+        <p>
+            Lola touches the blue moon.
+        </p>
+
+        <p>
+            It glows softly beneath her hand.
+        </p>
+
+        <p>
+            It feels gentle.
+            Calm.
+            Like something familiar.
+        </p>
+        `,
+        "💙",
+        [
+            ["🍷 Find the other moon", "burgundyMoon"],
+            ["♡ Stay here a little longer", "betweenMoons"]
+        ],
+        ["s14"]
+    );
+}
+
+function burgundyMoon() {
+
+    story(
+        "Burgundy",
+        `
+        <p>
+            The second moon glows burgundy.
+        </p>
+
+        <p>
+            Somehow, the two colours belong together.
+        </p>
+
+        <p>
+            Not because they are the same.
+            Because they aren't.
+        </p>
+        `,
+        "🍷",
+        [
+            ["💙 Return to the blue moon", "blueMoon"],
+            ["♡ Stand between them", "betweenMoons"]
+        ],
+        ["s15"]
+    );
+}
+
+function betweenMoons() {
+
+    story(
+        "Between Two Moons",
+        `
+        <p>
+            Lola stands between baby blue and burgundy.
+        </p>
+
+        <p>
+            Two colours.
+            Two people.
+            One universe.
+        </p>
+
+        <p>
+            Maybe love was never about being identical.
+        </p>
+
+        <p>
+            Maybe it was always about finding someone whose differences
+            somehow make the world feel more complete.
+        </p>
+        `,
+        "♡",
+        [
+            ["✦ Continue", "gravity"],
+            ["🚀 Return to the galaxy", "map"]
+        ],
+        []
+    );
+}
+
+/* ==========================================================
+   GRAVITY
+========================================================== */
+
+function gravityLaugh() {
+
+    story(
+        "Gravity",
+        `
+        <p>
+            Lola laughs.
+        </p>
+
+        <p>
+            Apparently someone being 5'10 and someone being around 5'1
+            is enough for the universe to create its own gravitational joke.
+        </p>
+
+        <p>
+            A hand reaches up again.
+        </p>
+        `,
+        "😂",
+        [
+            ["🫶 Take the hand", "gravityFall"],
+            ["🚀 Float dramatically away", "gravityAway"]
+        ],
+        ["s16"]
+    );
+}
+
+function gravityFall() {
+
+    story(
+        "Come Here",
+        `
+        <p>
+            Lola lets herself fall.
+        </p>
+
+        <p>
+            Instead of hitting the ground,
+            she lands safely in someone's arms.
+        </p>
+
+        <p>
+            For once, gravity feels like something gentle.
+        </p>
+        `,
+        "🫶",
+        [
+            ["♡ Stay there", "sunset"],
+            ["😂 Laugh about it", "gravityLaugh"]
+        ],
+        ["s17"]
+    );
+}
+
+function gravityAway() {
+
+    story(
+        "The Dramatic Escape",
+        `
+        <p>
+            Lola floats away dramatically.
+        </p>
+
+        <p>
+            Somewhere below her, someone yells:
+        </p>
+
+        <div class="memory">
+            <strong>“COME BACK HERE.”</strong>
+        </div>
+
+        <p>
+            Lola laughs.
+        </p>
+        `,
+        "🚀",
+        [
+            ["😂 Go back", "gravityLaugh"],
+            ["🌅 Fly towards the sunset", "sunset"]
+        ],
+        []
+    );
+}
+
+/* ==========================================================
+   SUNSET
+========================================================== */
+
+function painting() {
+
+    story(
+        "Painting Together",
+        `
+        <p>
+            Lola picks up a paintbrush.
+        </p>
+
+        <p>
+            The sunset becomes a canvas.
+        </p>
+
+        <p>
+            Two people sit beside each other,
+            getting paint everywhere except where it was supposed to go.
+        </p>
+
+        <p>
+            Somehow, the painting turns out beautiful anyway.
+        </p>
+        `,
+        "🎨",
+        [
+            ["🎵 Put on music", "singing"],
+            ["💃 Dance instead", "dancing"]
+        ],
+        ["s19"]
+    );
+}
+
+function singing() {
+
+    story(
+        "The Song",
+        `
+        <p>
+            Someone starts singing.
+        </p>
+
+        <p>
+            Lola joins in.
+        </p>
+
+        <p>
+            Neither of them gets every note right.
+        </p>
+
+        <p>
+            Eventually they're laughing too much to finish the song.
+        </p>
+
+        <p>
+            And somehow that makes it perfect.
+        </p>
+        `,
+        "🎵",
+        [
+            ["💃 Dance anyway", "dancing"],
+            ["🎨 Go back to painting", "painting"]
+        ],
+        ["s20"]
+    );
+}
+
+function dancing() {
+
+    story(
+        "Dancing",
+        `
+        <p>
+            There is no music anymore.
+        </p>
+
+        <p>
+            So they make their own.
+        </p>
+
+        <p>
+            Two people dancing beneath a galaxy,
+            barefoot on warm grass,
+            laughing like nobody else exists.
+        </p>
+        `,
+        "💃",
+        [
+            ["🌾 Keep dancing into the countryside", "countryside"],
+            ["🌅 Sit down together", "sunsetQuiet"]
+        ],
+        ["s21"]
+    );
+}
+
+function sunsetQuiet() {
+
+    story(
+        "Nothing At All",
+        `
+        <p>
+            They sit together.
+        </p>
+
+        <p>
+            No big adventure.
+            No dramatic moment.
+        </p>
+
+        <p>
+            Just being there.
+        </p>
+
+        <p>
+            Sometimes that is enough.
+        </p>
+        `,
+        "♡",
+        [
+            ["🌌 Continue", "map"],
+            ["💍 Look towards the future", "future"]
+        ],
+        []
+    );
+}
+
+/* ==========================================================
+   FUTURE
+========================================================== */
+
+function wedding() {
+
+    story(
+        "The Wedding",
+        `
+        <p>
+            The countryside is glowing beneath a warm afternoon sky.
+        </p>
+
+        <p>
+            Lola walks towards the person waiting for her.
+        </p>
+
+        <p>
+            There are flowers everywhere.
+        </p>
+
+        <p>
+            And when Lola reaches the end of the path,
+            one word echoes through the universe:
+        </p>
+
+        <h2 style="text-align:center;">WIFE.</h2>
+
+        <p>
+            Not a dream anymore.
+            A future.
+        </p>
+        `,
+        "💍",
+        [
+            ["💍 Say “I do”", "weddingVows"],
+            ["♡ Look at her and laugh", "weddingLaugh"],
+            ["🌸 Take in the moment", "weddingQuiet"]
+        ],
+        ["s26"]
+    );
+}
+
+function weddingVows() {
+
+    story(
+        "I Do",
+        `
+        <p>
+            Lola says yes.
+        </p>
+
+        <p>
+            And suddenly every little future they've ever imagined
+            feels a little closer.
+        </p>
+
+        <p>
+            The countryside house.
+            The tree house.
+            The mornings.
+            The paintings.
+            The songs.
+            The ocean.
+        </p>
+
+        <p>
+            A whole life.
+        </p>
+        `,
+        "💍",
+        [
+            ["🌳 Go see the tree house", "treehouse"],
+            ["🌾 Walk through the countryside", "countryside"]
+        ],
+        []
+    );
+}
+
+function weddingLaugh() {
+
+    story(
+        "The Wedding Laugh",
+        `
+        <p>
+            Instead of being perfectly serious,
+            Lola laughs.
+        </p>
+
+        <p>
+            And the person standing opposite her laughs too.
+        </p>
+
+        <p>
+            Because even on the biggest day of their lives,
+            they're still themselves.
+        </p>
+        `,
+        "♡",
+        [
+            ["💍 Say yes", "weddingVows"],
+            ["🌳 Run towards the tree house", "treehouse"]
+        ],
+        []
+    );
+}
+
+function weddingQuiet() {
+
+    story(
+        "The Moment",
+        `
+        <p>
+            Lola takes a breath.
+        </p>
+
+        <p>
+            She looks around.
+        </p>
+
+        <p>
+            And realises this is the kind of happiness she always hoped
+            existed somewhere.
+        </p>
+        `,
+        "🌸",
+        [
+            ["💍 Say yes", "weddingVows"],
+            ["🌾 Walk outside", "countryside"]
+        ],
+        []
+    );
+}
+
+/* =========================
+   TREE HOUSE
+========================= */
+
+function treehouse() {
+
+    story(
+        "The Tree House",
+        `
+        <p>
+            Behind the little countryside house stands an enormous tree.
+        </p>
+
+        <p>
+            Built into its branches is a tree house.
+        </p>
+
+        <p>
+            It has blankets.
+            Fairy lights.
+            Books.
+            Paintings.
+            And a window overlooking the fields.
+        </p>
+
+        <p>
+            This is the place where all the quiet evenings happen.
+        </p>
+        `,
+        "🌳",
+        [
+            ["🌌 Look at the stars", "treeStars"],
+            ["🎨 Paint together", "treePaint"],
+            ["☕ Bring coffee upstairs", "treeCoffee"]
+        ],
+        ["s27"]
+    );
+}
+
+function treeStars() {
+
+    story(
+        "Under the Stars",
+        `
+        <p>
+            Lola lies beneath the little roof of the tree house.
+        </p>
+
+        <p>
+            Above her are thousands of stars.
+        </p>
+
+        <p>
+            Beside her is the person she loves.
+        </p>
+
+        <p>
+            Nothing needs to happen.
+        </p>
+
+        <p>
+            They can simply grow old beneath the same sky.
+        </p>
+        `,
+        "🌌",
+        [
+            ["🌾 Go back to the house", "countryside"],
+            ["💍 Think about the future", "future"]
+        ],
+        []
+    );
+}
+
+function treePaint() {
+
+    story(
+        "Another Painting",
+        `
+        <p>
+            They paint the countryside together.
+        </p>
+
+        <p>
+            The first painting is terrible.
+        </p>
+
+        <p>
+            The second one is somehow worse.
+        </p>
+
+        <p>
+            They keep both anyway.
+        </p>
+        `,
+        "🎨",
+        [
+            ["☕ Make coffee", "treeCoffee"],
+            ["🌾 Go outside", "countryside"]
+        ],
+        []
+    );
+}
+
+function treeCoffee() {
+
+    story(
+        "Morning Coffee",
+        `
+        <p>
+            Two cups of coffee.
+        </p>
+
+        <p>
+            One tree house.
+        </p>
+
+        <p>
+            Morning sunlight through the leaves.
+        </p>
+
+        <p>
+            And the quiet realisation that this is home.
+        </p>
+        `,
+        "☕",
+        [
+            ["🌾 Walk through the fields", "countryside"],
+            ["🌌 Stay here all morning", "treeStars"]
+        ],
+        []
+    );
+}
+
+/* =========================
+   COUNTRYSIDE
+========================= */
+
+function countryside() {
+
+    story(
+        "The Countryside",
+        `
+        <p>
+            Green fields stretch towards the horizon.
+        </p>
+
+        <p>
+            The little house sits quietly in the middle of it all.
+        </p>
+
+        <p>
+            There is no rush here.
+        </p>
+
+        <p>
+            Just two people building a life together.
+        </p>
+        `,
+        "🌾",
+        [
+            ["🌅 Watch the sunset", "countrySunset"],
+            ["🌳 Visit the tree house", "treehouse"],
+            ["🏠 Go inside your home", "marriedLife"]
+        ],
+        ["s24"]
+    );
+}
+
+function countrySunset() {
+
+    story(
+        "A Quiet Evening",
+        `
+        <p>
+            The sun disappears behind the fields.
+        </p>
+
+        <p>
+            Lola reaches for a hand beside her.
+        </p>
+
+        <p>
+            Years from now,
+            this will still be one of their favourite moments.
+        </p>
+        `,
+        "🌅",
+        [
+            ["🏠 Go home", "marriedLife"],
+            ["🌳 Go to the tree house", "treehouse"]
+        ],
+        []
+    );
+}
+
+function marriedLife() {
+
+    story(
+        "Married Life",
+        `
+        <p>
+            Morning.
+        </p>
+
+        <p>
+            The house is quiet.
+        </p>
+
+        <p>
+            Lola wakes beside the person she married.
+        </p>
+
+        <p>
+            There is coffee waiting.
+        </p>
+
+        <p>
+            Somewhere downstairs, music starts playing.
+        </p>
+
+        <p>
+            Someone begins dancing while cooking breakfast.
+        </p>
+
+        <p>
+            Lola laughs.
+        </p>
+
+        <p>
+            This is not some enormous fairytale.
+        </p>
+
+        <p>
+            It's better.
+        </p>
+
+        <p>
+            It's ordinary.
+            It's theirs.
+        </p>
+        `,
+        "🏠",
+        [
+            ["💃 Dance in the kitchen", "marriedDance"],
+            ["🎨 Paint together", "marriedPaint"],
+            ["🎵 Sing together", "marriedSing"],
+            ["☕ Do absolutely nothing", "marriedNothing"]
+        ],
+        []
+    );
+}
+
+function marriedDance() {
+
+    story(
+        "Kitchen Dancing",
+        `
+        <p>
+            Breakfast is forgotten.
+        </p>
+
+        <p>
+            The music gets louder.
+        </p>
+
+        <p>
+            Two people dance around the kitchen,
+            laughing until they can barely stand.
+        </p>
+        `,
+        "💃",
+        [
+            ["☕ Eventually make breakfast", "marriedLife"],
+            ["♡ Keep dancing", "marriedLife"]
+        ],
+        []
+    );
+}
+
+function marriedPaint() {
+
+    story(
+        "The Studio",
+        `
+        <p>
+            Paint covers the table.
+        </p>
+
+        <p>
+            There are unfinished canvases everywhere.
+        </p>
+
+        <p>
+            Some are beautiful.
+            Some are questionable.
+        </p>
+
+        <p>
+            All of them belong to a life they built together.
+        </p>
+        `,
+        "🎨",
+        [
+            ["♡ Look around the room", "studio"],
+            ["🏠 Go back home", "marriedLife"]
+        ],
+        []
+    );
+}
+
+function marriedSing() {
+
+    story(
+        "Singing",
+        `
+        <p>
+            They sing badly.
+        </p>
+
+        <p>
+            They know they sing badly.
+        </p>
+
+        <p>
+            They don't care.
+        </p>
+
+        <p>
+            Because happiness doesn't have to sound perfect.
+        </p>
+        `,
+        "🎵",
+        [
+            ["💃 Dance too", "marriedDance"],
+            ["☕ Make coffee", "marriedLife"]
+        ],
+        []
+    );
+}
+
+function marriedNothing() {
+
+    story(
+        "Nothing",
+        `
+        <p>
+            They stay on the sofa.
+        </p>
+
+        <p>
+            No plans.
+            No adventure.
+            No reason to get up.
+        </p>
+
+        <p>
+            Just each other.
+        </p>
+
+        <p>
+            Sometimes a happy life is simply having someone
+            you want to do nothing with.
+        </p>
+        `,
+        "♡",
+        [
+            ["🌌 Look outside at the stars", "future"],
+            ["🏠 Stay home", "marriedLife"]
+        ],
+        []
+    );
+}
+
+/* =========================
+   FUTURE STUDIO
+========================= */
+
+function studio() {
+
+    story(
+        "The Future Studio",
+        `
+        <p>
+            The studio is covered in memories.
+        </p>
+
+        <p>
+            Paintings.
+            Photographs.
+            Little notes.
+            Tickets from places you've visited.
+        </p>
+
+        <p>
+            On the wall is a blank canvas.
+        </p>
+
+        <p>
+            A message is written beneath it:
+        </p>
+
+        <div class="memory">
+            <strong>THIS ONE IS FOR EVERYTHING WE HAVEN'T DONE YET.</strong>
+        </div>
+        `,
+        "🎨",
+        [
+            ["🎨 Start painting", "studioPaint"],
+            ["♡ Leave it blank for now", "studioBlank"],
+            ["🏠 Go home", "marriedLife"]
+        ],
+        []
+    );
+}
+
+function studioPaint() {
+
+    story(
+        "The Unfinished Painting",
+        `
+        <p>
+            Lola picks up a brush.
+        </p>
+
+        <p>
+            The first colour is baby blue.
+        </p>
+
+        <p>
+            The second is burgundy.
+        </p>
+
+        <p>
+            Then gold.
+            Then green.
+            Then every colour they can find.
+        </p>
+
+        <p>
+            Because the future isn't finished yet.
+        </p>
+
+        <p>
+            There are still so many things left to create.
+        </p>
+        `,
+        "🎨",
+        [
+            ["♡ Keep the painting unfinished", "studioBlank"],
+            ["🌌 Return to the galaxy", "map"]
+        ],
+        []
+    );
+}
+
+function studioBlank() {
+
+    story(
+        "Not Yet",
+        `
+        <p>
+            Lola leaves the canvas blank.
+        </p>
+
+        <p>
+            Not because there is nothing to say.
+        </p>
+
+        <p>
+            Because there is still so much left to live.
+        </p>
+
+        <p>
+            The best parts haven't happened yet.
+        </p>
+        `,
+        "♡",
+        [
+            ["🌌 Return to the galaxy", "map"],
+            ["💍 Look towards the future", "future"]
+        ],
+        []
+    );
+}
+
+/* ==========================================================
    CONSTELLATION
-   ========================================================= */
+========================================================== */
+
+function constellationCheck() {
+
+    updateStarCounter();
+
+    if (state.stars.length < 27) {
+
+        story(
+            "Not Yet",
+            `
+            <p>
+                The universe waits.
+            </p>
+
+            <p>
+                The constellation is incomplete.
+            </p>
+
+            <p>
+                You have found <strong>${state.stars.length}</strong>
+                out of 27 stars.
+            </p>
+
+            <p>
+                There are still stars hiding somewhere in the galaxy.
+            </p>
+
+            <div class="memory">
+                <strong>Look carefully.</strong>
+                <span>
+                    Try revisiting planets. Some stars only appear
+                    in certain parts of the story.
+                </span>
+            </div>
+            `,
+            "⭐",
+            [
+                ["🚀 Return to the galaxy", "map"]
+            ],
+            []
+        );
+
+        return;
+    }
+
+    state.completed = true;
+    saveGame();
+
+    createConstellation();
+    showScreen("constellationScreen");
+}
 
 function createConstellation() {
 
     const box = document.getElementById("constellation");
 
-    if (!box) return;
+    box.innerHTML = "";
 
-    const points = [];
+    const positions = [
+        [8, 25],
+        [16, 40],
+        [25, 18],
+        [34, 32],
+        [43, 12],
+        [51, 28],
+        [59, 16],
+        [68, 36],
+        [78, 21],
+        [88, 33],
+        [13, 60],
+        [22, 74],
+        [32, 57],
+        [42, 70],
+        [52, 52],
+        [61, 72],
+        [70, 56],
+        [80, 70],
+        [90, 55],
+        [18, 88],
+        [31, 84],
+        [44, 91],
+        [56, 84],
+        [68, 91],
+        [79, 82],
+        [90, 91],
+        [50, 43]
+    ];
 
-    for (let i = 0; i < 27; i++) {
+    positions.forEach((position, index) => {
 
-        const angle = (i / 27) * Math.PI * 2;
+        const star = document.createElement("div");
 
-        const radius =
-            100 +
-            Math.sin(i * 2.7) * 55;
+        star.className = "constellation-star";
 
-        const x =
-            50 +
-            Math.cos(angle) * radius / 6.5;
+        star.style.left = position[0] + "%";
+        star.style.top = position[1] + "%";
 
-        const y =
-            50 +
-            Math.sin(angle) * radius / 3.7;
+        star.title = "Star " + (index + 1);
 
-        points.push({x, y});
+        box.appendChild(star);
+    });
 
-        box.innerHTML += `
-            <div
-                class="constellation-star"
-                style="
-                    left:${x}%;
-                    top:${y}%;
-                "
-            ></div>
-        `;
-    }
+    /* draw constellation lines */
 
-    for (let i = 0; i < points.length - 1; i++) {
+    for (let i = 0; i < positions.length - 1; i++) {
 
-        const a = points[i];
-        const b = points[i + 1];
+        const a = positions[i];
+        const b = positions[i + 1];
 
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
+        const x1 = a[0];
+        const y1 = a[1];
+        const x2 = b[0];
+        const y2 = b[1];
 
-        const length = Math.sqrt(dx*dx + dy*dy);
+        const dx = x2 - x1;
+        const dy = y2 - y1;
 
-        const angle =
-            Math.atan2(dy, dx) * 180 / Math.PI;
+        const length = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
 
-        box.innerHTML += `
-            <div
-                class="constellation-line"
-                style="
-                    left:${a.x}%;
-                    top:${a.y}%;
-                    width:${length}%;
-                    transform:rotate(${angle}deg);
-                "
-            ></div>
-        `;
+        const line = document.createElement("div");
+
+        line.className = "constellation-line";
+
+        line.style.left = x1 + "%";
+        line.style.top = y1 + "%";
+        line.style.width = length + "%";
+        line.style.transform = `rotate(${angle}deg)`;
+
+        box.appendChild(line);
     }
 }
 
-
-/* =========================================================
+/* ==========================================================
    FINAL LETTER
-   ========================================================= */
+========================================================== */
 
-function finalLetter() {
-
-    panel(`
-        <h2>For Lola ❤️</h2>
-
-        <div class="letter">
-
-            <p>
-                Lola,
-            </p>
-
-            <p>
-                If you've made it all the way here,
-                then I suppose there's only one thing
-                left for me to tell you.
-            </p>
-
-            <p>
-                I am so incredibly proud of you.
-            </p>
-
-            <p>
-                More than I think I will ever know
-                how to put into words.
-            </p>
-
-            <p>
-                I'm proud of the person you are,
-                of the things you've survived,
-                of the things you've overcome,
-                and of the person you continue to become.
-            </p>
-
-            <p>
-                I'm proud of you for making it through
-                the days that felt impossible.
-                I'm proud of the softness you've managed
-                to keep in a world that hasn't always
-                been soft with you.
-            </p>
-
-            <p>
-                And more than anything,
-                I hope you know that you never have
-                to become someone else to deserve love.
-            </p>
-
-            <p>
-                You are already enough.
-            </p>
-
-            <p>
-                You are my favourite person.
-            </p>
-
-            <p>
-                Not just one of my favourite people.
-                My favourite.
-            </p>
-
-            <p>
-                You have somehow become such a beautiful
-                part of my life that sometimes I don't know
-                how I existed without you in it.
-                You are everything to me and somehow,
-                at the same time, you are still so much more
-                than everything I could ever put into a single word.
-            </p>
-
-            <p>
-                I don't just want the extraordinary moments
-                with you.
-            </p>
-
-            <p>
-                I want the ordinary ones.
-            </p>
-
-            <p>
-                I want to dance with you in the kitchen
-                for absolutely no reason.
-                I want to sing with you until we're laughing
-                because neither of us can remember the words.
-                I want to paint beside you,
-                even if neither of us knows what we're doing.
-                I want to sit somewhere quiet in the countryside
-                with you and watch the sun disappear.
-            </p>
-
-            <p>
-                I want that tree house we've talked about.
-            </p>
-
-            <p>
-                I want somewhere that feels like ours.
-            </p>
-
-            <p>
-                Somewhere surrounded by green fields
-                and open skies, where the nights are dark enough
-                for us to see every star above us.
-                Somewhere we can sit together and talk
-                until we realise we've been talking for hours.
-            </p>
-
-            <p>
-                I want slow mornings.
-            </p>
-
-            <p>
-                Coffee.
-            </p>
-
-            <p>
-                Messy hair.
-            </p>
-
-            <p>
-                Bare feet.
-            </p>
-
-            <p>
-                Your hand finding mine without either of us
-                thinking about it.
-            </p>
-
-            <p>
-                I want to marry you.
-            </p>
-
-            <p>
-                I want the little house in the countryside.
-                I want the tree house and the green fields
-                and the slow mornings.
-                I want to wake up beside you and fall asleep
-                knowing that the person I love is right there.
-            </p>
-
-            <p>
-                I want us to grow older together
-                and still find reasons to laugh.
-            </p>
-
-            <p>
-                More than anything,
-                I want a life where we are simply
-                happy together.
-            </p>
-
-            <p>
-                I want the kind of life where nothing
-                particularly remarkable happens and yet,
-                somehow, I still go to sleep thinking,
-                "I got to spend another day with her."
-            </p>
-
-            <p>
-                I want to see the ocean with you.
-            </p>
-
-            <p>
-                I want to stand beside you while the waves
-                reach the shore and finally watch you experience
-                something you've dreamed about.
-            </p>
-
-            <p>
-                I want photographs we haven't taken yet.
-            </p>
-
-            <p>
-                Songs we haven't sung yet.
-            </p>
-
-            <p>
-                Paintings we haven't made yet.
-            </p>
-
-            <p>
-                Places we haven't found yet.
-            </p>
-
-            <p>
-                Stories we haven't written yet.
-            </p>
-
-            <p>
-                I want all the little things we've imagined
-                scattered throughout our future.
-            </p>
-
-            <p>
-                And I want the things we haven't imagined yet,
-                too.
-            </p>
-
-            <p>
-                Because that's the part that makes me happiest.
-            </p>
-
-            <p>
-                There is still so much life ahead of us
-                that we haven't even discovered.
-            </p>
-
-            <p>
-                So many sunsets.
-                So many nights beneath the stars.
-                So many ridiculous conversations.
-                So many moments where one of us will look
-                at the other and laugh because somehow
-                this is our life.
-            </p>
-
-            <p>
-                And if I could ask the universe for anything,
-                I wouldn't ask for a perfect life.
-            </p>
-
-            <p>
-                I'd ask for a life where I get to keep
-                finding you in it.
-            </p>
-
-            <p>
-                Because somewhere along the way,
-                you became my favourite place to return to.
-            </p>
-
-            <p>
-                My favourite voice.
-            </p>
-
-            <p>
-                My favourite person to talk to.
-            </p>
-
-            <p>
-                My favourite thought at the end of the day.
-            </p>
-
-            <p>
-                My favourite future to imagine.
-            </p>
-
-            <p>
-                And my favourite part of today.
-            </p>
-
-            <p>
-                I hope you never forget how loved you are.
-            </p>
-
-            <p>
-                Not only on your birthday.
-                Not only when everything is beautiful.
-                But on the ordinary days.
-                On the difficult days.
-                On the days when you don't feel particularly lovable.
-            </p>
-
-            <p>
-                Especially then.
-            </p>
-
-            <p>
-                I will still look at you and see you.
-                Not some perfect version of you.
-                Just you.
-            </p>
-
-            <p>
-                And I will still think you are extraordinary.
-            </p>
-
-            <p>
-                So here's to 27.
-            </p>
-
-            <p>
-                Here's to everything you've already survived.
-                Everything you've already become.
-                And everything you haven't become yet.
-            </p>
-
-            <p>
-                Here's to the countryside.
-                The tree house.
-                The paintings.
-                The songs.
-                The dancing.
-                The ocean.
-                The stars.
-                The stingrays.
-                The quiet mornings.
-                The ridiculous nights.
-                The future we keep imagining.
-                And every little thing in between.
-            </p>
-
-            <p>
-                I don't know exactly where life will take us.
-                But I know what I hope is waiting somewhere
-                along the road.
-            </p>
-
-            <p>
-                You and me.
-            </p>
-
-            <p>
-                Still talking.
-                Still laughing.
-                Still dreaming.
-                Still finding new reasons to love each other.
-            </p>
-
-            <p>
-                And maybe one day, we'll look back at this
-                little universe and laugh at how small
-                our dreams seemed compared to everything
-                we actually got to experience.
-            </p>
-
-            <p>
-                Until then, I'll keep dreaming with you.
-                I'll keep writing about you.
-                I'll keep loving you.
-                And I'll keep reminding you,
-                whenever you forget,
-                just how proud I am of the person you are.
-            </p>
-
-            <p>
-                Happy 27th birthday, my love.
-            </p>
-
-            <p>
-                You are my favourite person.
-            </p>
-
-            <p>
-                You are everything.
-            </p>
-
-            <p>
-                And somehow, you are still so much more.
-            </p>
-
-            <p>
-                If there are a million galaxies above us,
-                I hope you know that I'd still look for you.
-            </p>
-
-            <p>
-                Because no matter how enormous the universe becomes,
-                I'd always find my way home to you.
-            </p>
-
-            <p class="signature">
-                — Bree ❤️
-            </p>
-
-        </div>
-
-        ${button(
-            "⭐ There's one last thing...",
-            "transition(starReveal)"
-        )}
-    `);
+function showFinalLetter() {
+    showScreen("letterScreen");
 }
 
-
-/* =========================================================
-   REAL STAR REVEAL
-   ========================================================= */
-
-function starReveal() {
-
-    panel(`
-        <h2>⭐ Your Star</h2>
-
-        <div class="scene">
-
-            <div style="
-                text-align:center;
-                padding:40px 10px;
-            ">
-
-                <div style="
-                    font-size:110px;
-                    animation:hiddenTwinkle 2s infinite;
-                ">
-                    ✦
-                </div>
-
-                <h2>
-                    Somewhere in the real universe,
-                    there is a star with your name on it.
-                </h2>
-
-                <p>
-                    I wanted you to have something
-                    that wasn't only inside this little game.
-                </p>
-
-                <p>
-                    Something that exists beyond the screen.
-                </p>
-
-                <div class="quote">
-                    "Of all the stars in every sky,
-                    somehow I still found my way to you."
-                </div>
-
-            </div>
-
-        </div>
-
-        ${button(
-            "🌌 Play again",
-            "transition(startGame)"
-        )}
-
-        <p style="
-            text-align:center;
-            color:#76505e;
-            font-size:12px;
-        ">
-            Happy 27th birthday, Lola ❤️
-        </p>
-    `);
+function showStarReveal() {
+    showScreen("starReveal");
 }
 
+/* ==========================================================
+   RESET
+========================================================== */
 
-/* =========================================================
+function resetGame() {
+
+    const confirmReset = confirm(
+        "Start the entire universe again? Your 27 collected stars will be reset."
+    );
+
+    if (!confirmReset) return;
+
+    localStorage.removeItem(SAVE_KEY);
+
+    state = {
+        stars: [],
+        visited: [],
+        path: [],
+        completed: false
+    };
+
+    updateStarCounter();
+    showScreen("intro");
+}
+
+/* ==========================================================
+   BACKGROUND STARS
+========================================================== */
+
+function createBackgroundStars() {
+
+    const container = document.getElementById("backgroundStars");
+
+    for (let i = 0; i < 170; i++) {
+
+        const star = document.createElement("div");
+
+        star.className = "bg-star";
+
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+
+        star.style.animationDelay =
+            (Math.random() * 4) + "s";
+
+        star.style.opacity =
+            (0.2 + Math.random() * .7);
+
+        container.appendChild(star);
+    }
+}
+
+/* ==========================================================
    START
-   ========================================================= */
+========================================================== */
 
-startGame();
+createBackgroundStars();
+loadGame();
 
 </script>
 
